@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="pt-PT">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Basic SEO Meta Tags -->
+    <title>MV Studio - Produção Audiovisual em Lisboa</title>
+    <meta name="description" content="Estúdio de produção audiovisual em Lisboa especializado em filmmaking, fotografia e edição criativa. Transformamos ideias em realidade cinematográfica." />
+    <meta name="keywords" content="produção audiovisual, filmmaking, fotografia, edição criativa, Lisboa, Portugal, vídeo corporativo, casamento, comercial" />
+    <meta name="author" content="MV Studio" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="MV Studio - Produção Audiovisual em Lisboa" />
+    <meta property="og:description" content="Estúdio de produção audiovisual em Lisboa especializado em filmmaking, fotografia e edição criativa. Transformamos ideias em realidade cinematográfica." />
+    <meta property="og:image" content="/og-image.jpg" />
+    <meta property="og:url" content="https://mvstudio.pt" />
+    <meta property="og:site_name" content="MV Studio" />
+    <meta property="og:locale" content="pt_PT" />
+
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="MV Studio - Produção Audiovisual em Lisboa" />
+    <meta name="twitter:description" content="Estúdio de produção audiovisual em Lisboa especializado em filmmaking, fotografia e edição criativa." />
+    <meta name="twitter:image" content="/og-image.jpg" />
+    <meta name="twitter:site" content="@mvstudio" />
+
+    <!-- Additional Meta Tags -->
+    <meta name="theme-color" content="#d97706" />
+    <meta name="msapplication-TileColor" content="#d97706" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://mvstudio.pt" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700&display=swap" rel="stylesheet">
+    <script type="module" src="https://unpkg.com/@splinetool/viewer@1.10.75/build/spline-viewer.js"></script>
+    <style>
+      /* Improved accessibility - only hide cursor on specific interactive elements */
+      .custom-cursor-area {
+        cursor: none;
+      }
+
+      /* Ensure focus indicators are visible */
+      button:focus-visible,
+      a:focus-visible,
+      input:focus-visible,
+      textarea:focus-visible,
+      select:focus-visible {
+        outline: 2px solid #d97706;
+        outline-offset: 2px;
+      }
+
+      /* High contrast mode support */
+      @media (prefers-contrast: high) {
+        .text-gray-300 {
+          color: #ffffff !important;
+        }
+        .text-gray-400 {
+          color: #e5e5e5 !important;
+        }
+      }
+
+      /* Reduced motion support */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

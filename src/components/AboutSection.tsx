@@ -1,0 +1,118 @@
+import React from 'react';
+import { useParallax, useScrollAnimation } from '../hooks/useParallax';
+import ImmersiveTransitions from './ImmersiveTransitions';
+
+const AboutSection: React.FC = () => {
+  const { elementRef: sectionRef } = useScrollAnimation(0.1);
+  const { transform: parallaxTransform } = useParallax(0.3);
+
+  return (
+    <section 
+      ref={sectionRef}
+      className="relative py-20 lg:py-32 bg-black overflow-hidden"
+    >
+      {/* Background Parallax */}
+      <div
+        className="absolute inset-0 opacity-5"
+        style={{
+          transform: parallaxTransform,
+          backgroundImage: `
+            radial-gradient(circle, rgba(201,169,97,0.2) 1px, transparent 1px)
+          `,
+          backgroundSize: '80px 80px',
+        }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+          {/* Text Content */}
+          <div className="space-y-8">
+            <ImmersiveTransitions direction="up" delay={300} duration={1000}>
+              <div>
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-8 leading-tight">
+                  Criamos narrativas que
+                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
+                    {" "}conectam
+                  </span>
+                </h2>
+              </div>
+            </ImmersiveTransitions>
+
+            <ImmersiveTransitions direction="up" delay={600} duration={1000}>
+              <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
+                <p>
+                  No MV Studio, acreditamos que cada projeto é uma oportunidade única de contar uma história.
+                  Combinamos técnica cinematográfica avançada com uma abordagem criativa personalizada para
+                  transformar ideias em experiências visuais memoráveis.
+                </p>
+
+                <p>
+                  Desde vídeos corporativos que elevam marcas a documentários de casamento que capturam
+                  momentos únicos, nossa equipa dedica-se a criar conteúdo que ressoa com audiências e
+                  deixa uma impressão duradoura.
+                </p>
+              </div>
+            </ImmersiveTransitions>
+
+              <p>
+                Com anos de experiência em produção audiovisual, desenvolvemos uma metodologia que 
+                combina planeamento estratégico, execução técnica impecável e uma visão artística 
+                que distingue cada projeto.
+              </p>
+            </div>
+
+            {/* Stats */}
+            <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-800">
+              <div className="text-center">
+                <div className="text-3xl font-bold text-amber-400 mb-2">150+</div>
+                <div className="text-gray-400 text-sm uppercase tracking-wide">Projetos</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-amber-400 mb-2">50+</div>
+                <div className="text-gray-400 text-sm uppercase tracking-wide">Clientes</div>
+              </div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-amber-400 mb-2">5</div>
+                <div className="text-gray-400 text-sm uppercase tracking-wide">Anos</div>
+              </div>
+            </div>
+          </div>
+
+          {/* Visual Element */}
+          <div className="relative">
+            <div className="aspect-square bg-gradient-to-br from-amber-600/20 to-amber-800/20 rounded-full relative overflow-hidden">
+              {/* Animated Elements */}
+              <div className="absolute inset-0 border border-amber-400/30 rounded-full animate-pulse"></div>
+              <div className="absolute inset-4 border border-amber-400/20 rounded-full animate-pulse" style={{ animationDelay: '0.5s' }}></div>
+              <div className="absolute inset-8 border border-amber-400/10 rounded-full animate-pulse" style={{ animationDelay: '1s' }}></div>
+              
+              {/* Center Content */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="text-center">
+                  <div className="text-6xl font-light text-white mb-4">MV</div>
+                  <div className="text-amber-400 text-xl tracking-widest">STUDIO</div>
+                </div>
+              </div>
+
+              {/* Floating Dots */}
+              {[...Array(8)].map((_, i) => (
+                <div
+                  key={i}
+                  className="absolute w-2 h-2 bg-amber-400 rounded-full animate-ping"
+                  style={{
+                    top: `${20 + Math.sin(i * Math.PI / 4) * 30}%`,
+                    left: `${50 + Math.cos(i * Math.PI / 4) * 30}%`,
+                    animationDelay: `${i * 0.2}s`,
+                    animationDuration: '2s'
+                  }}
+                />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default AboutSection;
