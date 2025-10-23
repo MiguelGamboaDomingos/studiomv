@@ -14,6 +14,8 @@ import BrandsCarousel from './BrandsCarousel';
 import NewFooter from './NewFooter';
 import Loading from './Loading';
 import SplashScreen from './SplashScreen';
+import ParallaxProvider from './ParallaxProvider';
+import ParallaxDemo from './ParallaxDemo';
 
 // Import lazy-loaded components
 import {
@@ -138,6 +140,20 @@ const ContactPageComponent: React.FC = () => {
   );
 };
 
+// Parallax Demo page component
+const ParallaxDemoPage: React.FC = () => {
+  return (
+    <>
+      <SEO
+        title="Demonstração Parallax - MV Studio"
+        description="Demonstração do sistema de parallax reutilizável do MV Studio"
+        noIndex={true}
+      />
+      <ParallaxDemo />
+    </>
+  );
+};
+
 // 404 Not Found page
 const NotFoundPage: React.FC = () => {
   return (
@@ -216,30 +232,35 @@ const AppRouter: React.FC = () => {
 
   return (
     <HelmetProvider>
-      <BrowserRouter>
-        <Layout>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* Main routes */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/services" element={<ServicesPageComponent />} />
-              <Route path="/catalogo" element={<ServicesPageComponent />} />
-              <Route path="/about" element={<AboutPageComponent />} />
-              <Route path="/contact" element={<ContactPageComponent />} />
+      <ParallaxProvider globalSpeed={1} enabled={true}>
+        <BrowserRouter>
+          <Layout>
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                {/* Main routes */}
+                <Route path="/" element={<HomePage />} />
+                <Route path="/portfolio" element={<PortfolioPage />} />
+                <Route path="/services" element={<ServicesPageComponent />} />
+                <Route path="/catalogo" element={<ServicesPageComponent />} />
+                <Route path="/about" element={<AboutPageComponent />} />
+                <Route path="/contact" element={<ContactPageComponent />} />
 
-              {/* Legacy hash routes - redirect to proper URLs */}
-              <Route path="/home" element={<Navigate to="/" replace />} />
-              <Route path="/services-page" element={<Navigate to="/services" replace />} />
-              <Route path="/about-page" element={<Navigate to="/about" replace />} />
-              <Route path="/contact-page" element={<Navigate to="/contact" replace />} />
+                {/* Demo route (development only) */}
+                <Route path="/parallax-demo" element={<ParallaxDemoPage />} />
 
-              {/* 404 page */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
-        </Layout>
-      </BrowserRouter>
+                {/* Legacy hash routes - redirect to proper URLs */}
+                <Route path="/home" element={<Navigate to="/" replace />} />
+                <Route path="/services-page" element={<Navigate to="/services" replace />} />
+                <Route path="/about-page" element={<Navigate to="/about" replace />} />
+                <Route path="/contact-page" element={<Navigate to="/contact" replace />} />
+
+                {/* 404 page */}
+                <Route path="*" element={<NotFoundPage />} />
+              </Routes>
+            </Suspense>
+          </Layout>
+        </BrowserRouter>
+      </ParallaxProvider>
     </HelmetProvider>
   );
 };
