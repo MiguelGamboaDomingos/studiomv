@@ -1,11 +1,34 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useScrollPerformance, useThrottle } from './usePerformance';
 
-// Hook for parallax effects - DISABLED
-export const useParallax = (speed: number = 0.5, offset: number = 0) => {
+// Hook for parallax effects - HOME PAGE ONLY
+export const useParallax = (speed: number = 0.5, offset: number = 0, enabledOnHome: boolean = false) => {
+  const [transform, setTransform] = useState('translateY(0px)');
   const elementRef = useRef<HTMLElement>(null);
-  // Return no transform - parallax disabled
-  return { transform: 'translateY(0px)', elementRef };
+
+  // Check if we're on home page
+  const isHomePage = window.location.pathname === '/' || window.location.hash === '' || window.location.hash === '#home';
+
+  const updateTransform = useThrottle((scrollY: number) => {
+    if (elementRef.current && enabledOnHome && isHomePage) {
+      const rect = elementRef.current.getBoundingClientRect();
+      const elementTop = rect.top + scrollY;
+      const windowHeight = window.innerHeight;
+
+      // Only apply parallax when element is in viewport
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        const yPos = -(scrollY - elementTop + offset) * speed;
+        setTransform(`translateY(${yPos}px)`);
+      }
+    } else {
+      // No parallax on other pages
+      setTransform('translateY(0px)');
+    }
+  }, 16);
+
+  useScrollPerformance(updateTransform);
+
+  return { transform, elementRef };
 };
 
 // Hook for scroll-triggered animations

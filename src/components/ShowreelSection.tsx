@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useParallax';
 import ImmersiveTransitions from './ImmersiveTransitions';
+import HomeParallax, { ParallaxElement } from './HomeParallax';
+import DramaticTransitions, { SectionTransition } from './DramaticTransitions';
 
 const ShowreelSection: React.FC = () => {
   const [isPlaying, setIsPlaying] = useState(false);
@@ -125,17 +127,23 @@ const ShowreelSection: React.FC = () => {
       ref={sectionRef}
       className="relative py-32 lg:py-48 bg-black overflow-hidden"
     >
-      {/* Background Grid - Static */}
-      <div
+      {/* Background Grid com Parallax */}
+      <ParallaxElement
+        speed={0.4}
         className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '100px 100px',
-        }}
-      />
+      >
+        <div
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '100px 100px',
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      </ParallaxElement>
 
       <div className="relative z-10 w-full px-4 sm:px-6 lg:px-8">
         {/* SHOWREEL Title */}
@@ -176,8 +184,9 @@ const ShowreelSection: React.FC = () => {
           </ImmersiveTransitions>
         </div>
 
-        {/* Video Container */}
-        <div
+        {/* Video Container com Parallax */}
+        <ParallaxElement
+          speed={0.6}
           className="relative flex justify-center w-full mx-auto py-16 px-8 lg:px-16"
         >
           <div className="relative w-full max-w-6xl aspect-video bg-transparent overflow-hidden rounded-3xl group transition-all duration-700">
@@ -271,7 +280,7 @@ const ShowreelSection: React.FC = () => {
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
           </div>
         </div>
-      </div>
+        </ParallaxElement>
 
       {/* Estilos CSS para efeitos glitch e elétricos */}
       <style>{`

@@ -1,6 +1,7 @@
 import React from 'react';
 import { ArrowRight, BookOpen, Users, Award } from 'lucide-react';
 import { useScrollAnimation } from '../hooks/useParallax';
+import { ParallaxElement } from './HomeParallax';
 
 const AcademiaSection: React.FC = () => {
   const { elementRef: sectionRef } = useScrollAnimation(0.1);
@@ -10,17 +11,23 @@ const AcademiaSection: React.FC = () => {
       ref={sectionRef}
       className="relative py-20 lg:py-32 bg-gradient-to-b from-black to-gray-900 overflow-hidden"
     >
-      {/* Background Grid - Static */}
-      <div
+      {/* Background Grid com Parallax */}
+      <ParallaxElement
+        speed={0.2}
         className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `
-            linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '120px 120px',
-        }}
-      />
+      >
+        <div
+          style={{
+            backgroundImage: `
+              linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)
+            `,
+            backgroundSize: '120px 120px',
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      </ParallaxElement>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">

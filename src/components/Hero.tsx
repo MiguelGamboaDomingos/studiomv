@@ -1,6 +1,8 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useScrollAnimation } from '../hooks/useParallax';
 import ImmersiveTransitions from './ImmersiveTransitions';
+import HomeParallax, { ParallaxElement, ParallaxLayers } from './HomeParallax';
+import DramaticTransitions, { TypewriterEffect, WordReveal } from './DramaticTransitions';
 
 // Spline Scene Component
 declare global {
@@ -142,11 +144,13 @@ const Hero: React.FC = () => {
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-between overflow-hidden bg-black"
     >
-      {/* Background Gradient */}
-      <div className="absolute inset-0 bg-black z-0"></div>
+      {/* Background with Parallax Layers */}
+      <ParallaxLayers className="absolute inset-0 z-0">
+        <div className="absolute inset-0 bg-black"></div>
+      </ParallaxLayers>
 
-      {/* Grid Vertical Animada - castanho escuro - Atrás do Spline */}
-      <div className="absolute inset-0 z-0 overflow-hidden">
+      {/* Grid Vertical Animada com Parallax - castanho escuro - Atrás do Spline */}
+      <ParallaxElement speed={0.3} className="absolute inset-0 z-0 overflow-hidden">
         {[...Array(20)].map((_, i) => (
           <div
             key={i}
@@ -158,10 +162,10 @@ const Hero: React.FC = () => {
             }}
           />
         ))}
-      </div>
+      </ParallaxElement>
 
-      {/* Spline 3D maior com sobreposição - Na frente da grid */}
-      <div className="absolute top-1/2 sm:top-1/4 right-1/2 sm:right-8 lg:right-12 w-4/5 sm:w-3/5 lg:w-3/5 h-2/5 sm:h-3/5 z-10 transform translate-x-1/2 -translate-y-1/2 sm:translate-x-0 sm:translate-y-0">
+      {/* Spline 3D maior com sobreposição e Parallax - Na frente da grid */}
+      <ParallaxElement speed={0.6} className="absolute top-1/2 sm:top-1/4 right-1/2 sm:right-8 lg:right-12 w-4/5 sm:w-3/5 lg:w-3/5 h-2/5 sm:h-3/5 z-10 transform translate-x-1/2 -translate-y-1/2 sm:translate-x-0 sm:translate-y-0">
         <div className="w-full h-full relative">
           <spline-viewer
             ref={splineRef}
@@ -176,10 +180,10 @@ const Hero: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-amber-900/10 via-yellow-900/5 to-amber-950/15 blur-xl pointer-events-none"></div>
         </div>
-      </div>
+      </ParallaxElement>
 
-      {/* Elementos 3D adicionais - Atrás do texto mas na frente do Spline */}
-      <div className="absolute inset-0 z-15 pointer-events-none">
+      {/* Elementos 3D adicionais com Parallax - Atrás do texto mas na frente do Spline */}
+      <ParallaxElement speed={0.8} className="absolute inset-0 z-15 pointer-events-none">
         {/* Partículas flutuantes */}
         {[...Array(8)].map((_, i) => (
           <div
@@ -188,7 +192,7 @@ const Hero: React.FC = () => {
             style={{
               left: `${20 + i * 10}%`,
               top: `${30 + (i % 3) * 20}%`,
-              animation: `parallaxFloat ${4 + i * 0.5}s ease-in-out infinite`,
+              animation: `simpleFloat ${4 + i * 0.5}s ease-in-out infinite`,
               animationDelay: `${i * 0.3}s`,
             }}
           />
@@ -198,12 +202,12 @@ const Hero: React.FC = () => {
         <div className="absolute top-1/4 right-1/4 w-16 h-16 border border-amber-900/20 rotate-45 animate-spin" style={{ animationDuration: '20s' }}></div>
         <div className="absolute bottom-1/3 left-1/5 w-8 h-8 bg-amber-800/10 rounded-full animate-pulse"></div>
         <div className="absolute top-1/2 right-1/3 w-12 h-1 bg-gradient-to-r from-transparent via-amber-600/30 to-transparent animate-pulse"></div>
-      </div>
+      </ParallaxElement>
 
       <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-start sm:items-center min-h-screen pt-16 sm:pt-0">
         {/* Left side - Text content */}
         <div className="flex-1 max-w-5xl relative z-30 pr-8 lg:pr-16">
-          <ImmersiveTransitions direction="up" delay={300} duration={1200}>
+          <DramaticTransitions type="cinematic" delay={300} duration={1500}>
             <h1
               className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[0.9] tracking-tight mb-6 cursor-pointer transition-all duration-300 relative"
               style={{
@@ -213,9 +217,11 @@ const Hero: React.FC = () => {
               onMouseLeave={() => setIsHoveringTitle(false)}
             >
               <span className={isHoveringTitle ? 'animate-glitch-text' : ''}>
-                Filmes que carregam<br />
-                emoções, frames que<br />
-                guardam histórias.
+                <WordReveal text="Filmes que carregam" delay={800} wordDelay={150} />
+                <br />
+                <WordReveal text="emoções, frames que" delay={1200} wordDelay={150} />
+                <br />
+                <WordReveal text="guardam histórias." delay={1600} wordDelay={150} />
               </span>
 
               {/* Efeito de matriz elétrica - Grid organizado */}
@@ -272,20 +278,24 @@ const Hero: React.FC = () => {
                 </>
               )}
             </h1>
-          </ImmersiveTransitions>
+          </DramaticTransitions>
 
-          <ImmersiveTransitions direction="up" delay={600} duration={1000}>
+          <DramaticTransitions type="slideUp" delay={2000} duration={1000}>
             <p className="text-base sm:text-lg text-gray-300 font-light mb-8 max-w-2xl">
-              O vídeo que a sua marca precisa, nós criamos com paixão.
+              <TypewriterEffect
+                text="O vídeo que a sua marca precisa, nós criamos com paixão."
+                speed={80}
+                delay={500}
+              />
             </p>
-          </ImmersiveTransitions>
+          </DramaticTransitions>
 
 
         </div>
       </div>
 
-      {/* Scroll Indicator Centralizado e Clicável - Z-index alto para ficar na frente */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+      {/* Scroll Indicator Centralizado e Clicável com Transição Dramática */}
+      <DramaticTransitions type="fadeIn" delay={3000} duration={1000} className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50">
         <button
           onClick={handleScrollClick}
           className="group flex flex-col items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-900 rounded-lg p-2 bg-amber-950/20 backdrop-blur-sm hover:bg-amber-950/40 transition-all duration-300"
@@ -298,7 +308,7 @@ const Hero: React.FC = () => {
             Clique para continuar
           </span>
         </button>
-      </div>
+      </DramaticTransitions>
 
       {/* Estilos CSS para efeitos glitch e elétricos */}
       <style>{`

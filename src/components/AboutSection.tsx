@@ -1,6 +1,8 @@
 import React from 'react';
 import { useScrollAnimation } from '../hooks/useParallax';
 import ImmersiveTransitions from './ImmersiveTransitions';
+import { ParallaxElement } from './HomeParallax';
+import DramaticTransitions, { SectionTransition } from './DramaticTransitions';
 
 const AboutSection: React.FC = () => {
   const { elementRef: sectionRef } = useScrollAnimation(0.1);
@@ -10,16 +12,22 @@ const AboutSection: React.FC = () => {
       ref={sectionRef}
       className="relative py-20 lg:py-32 bg-black overflow-hidden"
     >
-      {/* Background Pattern - Static */}
-      <div
+      {/* Background Pattern com Parallax */}
+      <ParallaxElement
+        speed={0.3}
         className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `
-            radial-gradient(circle, rgba(201,169,97,0.2) 1px, transparent 1px)
-          `,
-          backgroundSize: '80px 80px',
-        }}
-      />
+      >
+        <div
+          style={{
+            backgroundImage: `
+              radial-gradient(circle, rgba(201,169,97,0.2) 1px, transparent 1px)
+            `,
+            backgroundSize: '80px 80px',
+            width: '100%',
+            height: '100%',
+          }}
+        />
+      </ParallaxElement>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
