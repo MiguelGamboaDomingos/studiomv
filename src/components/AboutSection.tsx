@@ -1,123 +1,19 @@
 import React from 'react';
-import { useParallax, useScrollAnimation } from '../hooks/useParallax';
-import { ParallaxSection, ParallaxContent } from './ParallaxElement';
+import { useScrollAnimation } from '../hooks/useParallax';
 import ImmersiveTransitions from './ImmersiveTransitions';
 
 const AboutSection: React.FC = () => {
-  // Manter compatibilidade com sistema antigo como fallback
   const { elementRef: sectionRef } = useScrollAnimation(0.1);
-  const { transform: parallaxTransform } = useParallax(0.3);
 
-  // Usar novo sistema de parallax
-  const useNewParallax = true; // Feature flag para migração gradual
-
-  if (useNewParallax) {
-    return (
-      <ParallaxSection
-        backgroundPattern="dots"
-        backgroundSpeed={0.3}
-        contentSpeed={0.5}
-        className="py-20 lg:py-32 bg-black"
-        patternColor="rgba(201,169,97,0.2)"
-        patternSize={80}
-        patternOpacity={0.05}
-      >
-        <ParallaxContent className="container mx-auto px-6">
-          <ImmersiveTransitions>
-            <div className="max-w-6xl mx-auto">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                {/* Conteúdo da seção About */}
-                <div className="space-y-8">
-                  <div>
-                    <h2 className="text-4xl lg:text-5xl font-bold text-white mb-6">
-                      Sobre o <span className="text-amber-600">MV Studio</span>
-                    </h2>
-                    <p className="text-xl text-gray-300 leading-relaxed">
-                      Somos uma produtora audiovisual especializada em criar conteúdo
-                      cinematográfico de alta qualidade que conta histórias únicas e memoráveis.
-                    </p>
-                  </div>
-
-                  <div className="space-y-6">
-                    <div className="flex items-start space-x-4">
-                      <div className="w-2 h-2 bg-amber-600 rounded-full mt-3 flex-shrink-0"></div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Experiência</h3>
-                        <p className="text-gray-300">
-                          Anos de experiência em produção audiovisual, desde conceito até entrega final.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-4">
-                      <div className="w-2 h-2 bg-amber-600 rounded-full mt-3 flex-shrink-0"></div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Qualidade</h3>
-                        <p className="text-gray-300">
-                          Equipamentos profissionais e técnicas avançadas para resultados excepcionais.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="flex items-start space-x-4">
-                      <div className="w-2 h-2 bg-amber-600 rounded-full mt-3 flex-shrink-0"></div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-white mb-2">Criatividade</h3>
-                        <p className="text-gray-300">
-                          Abordagem criativa e inovadora para cada projeto único.
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-8">
-                    <a
-                      href="#contact"
-                      className="inline-flex items-center px-8 py-4 bg-gradient-to-r from-amber-600 to-amber-800 text-white font-semibold rounded-lg hover:from-amber-700 hover:to-amber-900 transition-all duration-300 transform hover:scale-105"
-                    >
-                      Fale Connosco
-                      <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                      </svg>
-                    </a>
-                  </div>
-                </div>
-
-                {/* Imagem/Visual */}
-                <div className="relative">
-                  <div className="aspect-square bg-gradient-to-br from-amber-900/20 to-amber-600/20 rounded-2xl p-8 backdrop-blur-sm border border-amber-800/30">
-                    <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center">
-                      <div className="text-center">
-                        <div className="w-24 h-24 mx-auto mb-6 bg-amber-600 rounded-full flex items-center justify-center">
-                          <svg className="w-12 h-12 text-black" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M8 5v14l11-7z"/>
-                          </svg>
-                        </div>
-                        <h3 className="text-2xl font-bold text-white mb-2">MV Studio</h3>
-                        <p className="text-gray-300">Produção Audiovisual</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </ImmersiveTransitions>
-        </ParallaxContent>
-      </ParallaxSection>
-    );
-  }
-
-  // Sistema antigo como fallback
   return (
     <section
       ref={sectionRef}
       className="relative py-20 lg:py-32 bg-black overflow-hidden"
     >
-      {/* Background Parallax */}
+      {/* Background Pattern - Static */}
       <div
         className="absolute inset-0 opacity-5"
         style={{
-          transform: parallaxTransform,
           backgroundImage: `
             radial-gradient(circle, rgba(201,169,97,0.2) 1px, transparent 1px)
           `,

@@ -9,8 +9,6 @@ import ServicesSection from './components/ServicesSection';
 import AboutSection from './components/AboutSection';
 import ImageGallery from './components/ImageGallery';
 import AcademiaSection from './components/AcademiaSection';
-import ParallaxWrapper from './components/ParallaxWrapper';
-import OverlapParallax from './components/OverlapParallax';
 import Footer from './components/Footer';
 import Loading from './components/Loading';
 import SEO, { usePageSEO } from './components/SEO';

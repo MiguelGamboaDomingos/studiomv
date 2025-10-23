@@ -1,29 +1,11 @@
 import { useEffect, useState, useRef, useCallback } from 'react';
 import { useScrollPerformance, useThrottle } from './usePerformance';
 
-// Hook for parallax effects
+// Hook for parallax effects - DISABLED
 export const useParallax = (speed: number = 0.5, offset: number = 0) => {
-  const [transform, setTransform] = useState('translateY(0px)');
   const elementRef = useRef<HTMLElement>(null);
-
-  const updateTransform = useThrottle((scrollY: number) => {
-    if (elementRef.current) {
-      const rect = elementRef.current.getBoundingClientRect();
-      const elementTop = rect.top + scrollY;
-      const elementHeight = rect.height;
-      const windowHeight = window.innerHeight;
-      
-      // Only apply parallax when element is in viewport
-      if (rect.top < windowHeight && rect.bottom > 0) {
-        const yPos = -(scrollY - elementTop + offset) * speed;
-        setTransform(`translateY(${yPos}px)`);
-      }
-    }
-  }, 16);
-
-  useScrollPerformance(updateTransform);
-
-  return { transform, elementRef };
+  // Return no transform - parallax disabled
+  return { transform: 'translateY(0px)', elementRef };
 };
 
 // Hook for scroll-triggered animations

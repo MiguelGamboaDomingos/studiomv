@@ -1,21 +1,19 @@
 import React from 'react';
 import { ArrowRight, BookOpen, Users, Award } from 'lucide-react';
-import { useParallax, useScrollAnimation } from '../hooks/useParallax';
+import { useScrollAnimation } from '../hooks/useParallax';
 
 const AcademiaSection: React.FC = () => {
   const { elementRef: sectionRef } = useScrollAnimation(0.1);
-  const { transform: parallaxTransform } = useParallax(0.2);
 
   return (
     <section 
       ref={sectionRef}
       className="relative py-20 lg:py-32 bg-gradient-to-b from-black to-gray-900 overflow-hidden"
     >
-      {/* Background Parallax */}
+      {/* Background Grid - Static */}
       <div
         className="absolute inset-0 opacity-5"
         style={{
-          transform: parallaxTransform,
           backgroundImage: `
             linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)

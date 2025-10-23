@@ -107,8 +107,8 @@ p, span, div, a, button, input, textarea, label {
   }
 }
 
-/* Parallax vertical para toda a página */
-@keyframes parallaxFloat {
+/* Float animation - no parallax */
+@keyframes floatAnimation {
   0%, 100% {
     transform: translateY(0px) scale(1);
   }
@@ -155,7 +155,7 @@ p, span, div, a, button, input, textarea, label {
 }
 
 /* Efeito de flutuação suave para galerias */
-@keyframes parallaxFloat {
+@keyframes galleryFloat {
   0%, 100% {
     transform: translateY(0px) scale(1) rotateZ(0deg);
   }
@@ -175,9 +175,8 @@ html {
   scroll-behavior: smooth;
 }
 
-/* Parallax global para elementos */
-.parallax-element {
-  will-change: transform;
+/* Transform optimizations for elements */
+.transform-element {
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
@@ -403,7 +402,7 @@ body {
   }
 }
 
-@keyframes parallaxFloat {
+@keyframes simpleFloat {
   0%, 100% {
     transform: translateY(0px) rotate(0deg);
   }
@@ -520,13 +519,13 @@ body {
   .animate-slide-in-right,
   .animate-fade-in-scale,
   .animate-rotate-in,
-  .animate-parallax-float,
+  .animate-float,
   .animate-magnetic,
   .animate-hologram {
     animation: none;
   }
 
-  .parallax-layer {
+  .transform-layer {
     transform: none !important;
   }
 }

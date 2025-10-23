@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Play, Pause, Volume2, VolumeX } from 'lucide-react';
-import { useParallax, useScrollAnimation } from '../hooks/useParallax';
+import { useScrollAnimation } from '../hooks/useParallax';
 import ImmersiveTransitions from './ImmersiveTransitions';
 
 const ShowreelSection: React.FC = () => {
@@ -12,8 +12,6 @@ const ShowreelSection: React.FC = () => {
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { elementRef: sectionRef } = useScrollAnimation(0.1);
-  const { transform: parallaxTransform } = useParallax(0.4);
-  const { transform: videoParallaxTransform } = useParallax(0.8); // Parallax mais rápido para o vídeo
 
   // Intersection Observer para detectar quando o vídeo está visível
   useEffect(() => {
@@ -127,11 +125,10 @@ const ShowreelSection: React.FC = () => {
       ref={sectionRef}
       className="relative py-32 lg:py-48 bg-black overflow-hidden"
     >
-      {/* Background Parallax */}
+      {/* Background Grid - Static */}
       <div
         className="absolute inset-0 opacity-5"
         style={{
-          transform: parallaxTransform,
           backgroundImage: `
             linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px),
             linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)
@@ -182,7 +179,6 @@ const ShowreelSection: React.FC = () => {
         {/* Video Container */}
         <div
           className="relative flex justify-center w-full mx-auto py-16 px-8 lg:px-16"
-          style={{ transform: videoParallaxTransform }}
         >
           <div className="relative w-full max-w-6xl aspect-video bg-transparent overflow-hidden rounded-3xl group transition-all duration-700">
             <video
