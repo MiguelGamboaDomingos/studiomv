@@ -33,9 +33,9 @@ const Cursor: React.FC = () => {
       ref={cursorRef}
       className="fixed pointer-events-none z-[9999] transition-all duration-200 ease-out"
       style={{
-        left: position.x - 10,
-        top: position.y - 10,
-        transform: `scale(${isHovering ? 1.5 : 1})`
+        left: position.x,
+        top: position.y,
+        transform: `translate(-50%, -50%) scale(${isHovering ? 1.5 : 1})`
       }}
       aria-hidden="true"
     >
