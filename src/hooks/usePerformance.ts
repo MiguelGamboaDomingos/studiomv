@@ -102,7 +102,7 @@ export const useReducedMotion = () => {
 };
 
 // Hook for managing scroll performance
-export const useScrollPerformance = (callback: (scrollY: number) => void, throttleMs = 16) => {
+export const useScrollPerformance = (callback: (scrollY: number) => void, throttleMs = 32) => {
   const throttledCallback = useThrottle(callback, throttleMs);
 
   useEffect(() => {

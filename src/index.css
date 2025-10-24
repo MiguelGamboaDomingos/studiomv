@@ -8,6 +8,11 @@
   font-weight: 300; /* Default to light weight como no título da Hero */
 }
 
+/* Redução geral de 10% no zoom do site */
+html {
+  zoom: 0.9;
+}
+
 /* Garantir que títulos usem Poppins Light */
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Poppins', sans-serif !important;

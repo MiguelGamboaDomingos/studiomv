@@ -1,8 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useScrollAnimation } from '../hooks/useParallax';
-import ImmersiveTransitions from './ImmersiveTransitions';
-import HomeParallax, { ParallaxElement, ParallaxLayers } from './HomeParallax';
-import DramaticTransitions, { TypewriterEffect, WordReveal } from './DramaticTransitions';
+import { ParallaxElement, ParallaxLayers } from './HomeParallax';
+import DramaticTransitions, { TypewriterEffect } from './DramaticTransitions';
 
 // Spline Scene Component
 declare global {
@@ -59,8 +58,6 @@ const Hero: React.FC = () => {
   const splineRef = useRef<any>(null);
   const { elementRef: heroRef } = useScrollAnimation(0.1);
   const [isHoveringTitle, setIsHoveringTitle] = useState(false);
-  const [hasScrolledToShowreel, setHasScrolledToShowreel] = useState(false);
-  const [autoScrollTimer, setAutoScrollTimer] = useState<NodeJS.Timeout | null>(null);
 
   // Hook para trigger automático no Spline quando faz scroll
   useSplineAutoClick(splineRef);
@@ -70,18 +67,6 @@ const Hero: React.FC = () => {
     const showreelSection = document.querySelector('#showreel');
     if (showreelSection) {
       showreelSection.scrollIntoView({ behavior: 'smooth' });
-      setHasScrolledToShowreel(true);
-
-      // Após 2 segundos, scroll automático para o vídeo se o usuário não fizer scroll
-      const timer = setTimeout(() => {
-        const videoSection = document.querySelector('#showreel .relative.flex.justify-center') ||
-                           document.querySelector('#showreel video')?.parentElement;
-        if (videoSection && !hasUserScrolledAfterShowreel()) {
-          videoSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-      }, 2000);
-
-      setAutoScrollTimer(timer);
     }
   };
 
@@ -120,24 +105,8 @@ const Hero: React.FC = () => {
   const handleScrollClick = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-
-    // Limpar timer anterior se existir
-    if (autoScrollTimer) {
-      clearTimeout(autoScrollTimer);
-      setAutoScrollTimer(null);
-    }
-
     scrollToShowreel();
   };
-
-  // Cleanup do timer quando o componente desmonta
-  useEffect(() => {
-    return () => {
-      if (autoScrollTimer) {
-        clearTimeout(autoScrollTimer);
-      }
-    };
-  }, [autoScrollTimer]);
 
   return (
     <section
@@ -207,21 +176,21 @@ const Hero: React.FC = () => {
       <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-start sm:items-center min-h-screen pt-16 sm:pt-0">
         {/* Left side - Text content */}
         <div className="flex-1 max-w-5xl relative z-30 pr-8 lg:pr-16">
-          <DramaticTransitions type="cinematic" delay={300} duration={1500}>
+          <DramaticTransitions type="fadeIn" delay={300} duration={1000}>
             <h1
-              className="text-4xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[0.9] tracking-tight mb-6 cursor-pointer transition-all duration-300 relative"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-light text-white leading-[0.9] tracking-tight mb-6 cursor-pointer transition-all duration-300 relative"
               style={{
-                transform: isHoveringTitle ? 'scale(1.05)' : 'scale(1)',
+                transform: isHoveringTitle ? 'scale(1.02)' : 'scale(0.9)', // Reduzido 10%
               }}
               onMouseEnter={() => setIsHoveringTitle(true)}
               onMouseLeave={() => setIsHoveringTitle(false)}
             >
               <span className={isHoveringTitle ? 'animate-glitch-text' : ''}>
-                <WordReveal text="Filmes que carregam" delay={800} wordDelay={150} />
+                Filmes que carregam
                 <br />
-                <WordReveal text="emoções, frames que" delay={1200} wordDelay={150} />
+                emoções, frames que
                 <br />
-                <WordReveal text="guardam histórias." delay={1600} wordDelay={150} />
+                guardam histórias.
               </span>
 
               {/* Efeito de matriz elétrica - Grid organizado */}

@@ -12,19 +12,19 @@ export const useParallax = (speed: number = 0.5, offset: number = 0, enabledOnHo
   const updateTransform = useThrottle((scrollY: number) => {
     if (elementRef.current && enabledOnHome && isHomePage) {
       const rect = elementRef.current.getBoundingClientRect();
-      const elementTop = rect.top + scrollY;
       const windowHeight = window.innerHeight;
 
       // Only apply parallax when element is in viewport
       if (rect.top < windowHeight && rect.bottom > 0) {
-        const yPos = -(scrollY - elementTop + offset) * speed;
+        // Simplified parallax calculation - more stable
+        const yPos = scrollY * speed + offset;
         setTransform(`translateY(${yPos}px)`);
       }
     } else {
       // No parallax on other pages
       setTransform('translateY(0px)');
     }
-  }, 16);
+  }, 32); // Increased throttle for better performance
 
   useScrollPerformance(updateTransform);
 
