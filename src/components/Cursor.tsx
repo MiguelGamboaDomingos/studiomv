@@ -7,37 +7,21 @@ const Cursor: React.FC = () => {
   const cursorRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Check if user prefers reduced motion
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (prefersReducedMotion) return;
-
-    // Check if device supports hover (not touch-only)
-    const supportsHover = window.matchMedia('(hover: hover)').matches;
-    if (!supportsHover) return;
-
     const updateCursor = (e: MouseEvent) => {
-      // Use clientX/clientY for viewport-relative positioning
-      const x = e.clientX;
-      const y = e.clientY;
-
-      setPosition({ x, y });
+      setPosition({ x: e.clientX, y: e.clientY });
       setIsVisible(true);
 
-      // Check if hovering over interactive elements
       const target = e.target as HTMLElement;
       const isInteractive = target.closest('button, a, input, textarea, select, [role="button"], [tabindex]');
       setIsHovering(!!isInteractive);
     };
 
-    const hideCursor = () => setIsVisible(false);
-
-    // Apply to entire document for consistent behavior
-    document.addEventListener('mousemove', updateCursor, { passive: true });
-    document.addEventListener('mouseleave', hideCursor);
+    document.addEventListener('mousemove', updateCursor);
+    document.addEventListener('mouseleave', () => setIsVisible(false));
 
     return () => {
       document.removeEventListener('mousemove', updateCursor);
-      document.removeEventListener('mouseleave', hideCursor);
+      document.removeEventListener('mouseleave', () => setIsVisible(false));
     };
   }, []);
 
@@ -49,8 +33,9 @@ const Cursor: React.FC = () => {
       ref={cursorRef}
       className="fixed pointer-events-none z-50 mix-blend-difference transition-transform duration-150 ease-out"
       style={{
-        transform: `translate3d(${position.x - 12}px, ${position.y - 12}px, 0) scale(${isHovering ? 1.3 : 1})`,
-        willChange: 'transform'
+        left: position.x - 12,
+        top: position.y - 12,
+        transform: `scale(${isHovering ? 1.3 : 1})`
       }}
       aria-hidden="true"
     >

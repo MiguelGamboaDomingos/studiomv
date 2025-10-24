@@ -192,7 +192,7 @@ const Hero: React.FC = () => {
         <div className="flex-1 max-w-5xl relative z-30 pr-8 lg:pr-16">
           <DramaticTransitions type="fadeIn" delay={300} duration={1000}>
             <h1
-              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-white leading-[0.9] tracking-tight mb-6 cursor-pointer transition-all duration-300 relative"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-light text-white leading-[0.9] tracking-tight mb-6 cursor-pointer transition-all duration-300 relative"
               style={{
                 transform: isHoveringTitle ? 'scale(1.02)' : 'scale(1)', // Tamanho normal aumentado
               }}
