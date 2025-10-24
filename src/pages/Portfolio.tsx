@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Play, Filter, Calendar, User } from 'lucide-react';
+import { ParallaxElement } from '../components/HomeParallax';
+import DramaticTransitions from '../components/DramaticTransitions';
 
 interface Project {
   id: number;
@@ -94,34 +96,40 @@ const Portfolio: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-black pt-20">
-      {/* Grid Background */}
-      <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
+      {/* Background com Parallax */}
+      <ParallaxElement speed={0.2} className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(139,69,19,0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(139,69,19,0.3) 1px, transparent 1px)
+            linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)
           `,
-          backgroundSize: '40px 40px'
+          backgroundSize: '100px 100px'
         }} />
-      </div>
+      </ParallaxElement>
 
-      {/* Film Grain */}
-      <div className="fixed inset-0 opacity-10 pointer-events-none z-0"
-           style={{
-             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(139,69,19,0.1) 1px)`,
-             backgroundSize: '3px 3px',
-             animation: 'grain 8s steps(10) infinite'
-           }} />
+      {/* Film Grain com Parallax */}
+      <ParallaxElement speed={0.1} className="fixed inset-0 opacity-5 pointer-events-none z-0">
+        <div style={{
+          backgroundImage: `radial-gradient(circle, rgba(201,169,97,0.2) 1px, transparent 1px)`,
+          backgroundSize: '80px 80px',
+          width: '100%',
+          height: '100%',
+        }} />
+      </ParallaxElement>
 
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        {/* Header */}
+        {/* Header com Transições Dramáticas */}
         <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Nosso <span className="text-amber-900">Portfólio</span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Uma coleção dos nossos trabalhos mais impactantes, onde cada projeto conta uma história única.
-          </p>
+          <DramaticTransitions type="cinematic" delay={200} duration={1200}>
+            <h1 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">
+              Nosso <span className="text-amber-600">Portfólio</span>
+            </h1>
+          </DramaticTransitions>
+          <DramaticTransitions type="slideUp" delay={600} duration={1000}>
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto font-light">
+              Uma coleção dos nossos trabalhos mais impactantes, onde cada projeto conta uma história única.
+            </p>
+          </DramaticTransitions>
         </div>
 
         {/* Filters */}

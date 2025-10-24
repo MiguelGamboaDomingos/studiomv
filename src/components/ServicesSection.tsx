@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Camera, Scissors, Monitor, Lightbulb, ArrowRight } from 'lucide-react';
+import { Camera, Scissors, Monitor, Lightbulb, ArrowRight, Zap } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { ParallaxElement } from './HomeParallax';
+import DramaticTransitions from './DramaticTransitions';
 
 interface Service {
   id: number;
@@ -111,8 +113,67 @@ const ServicesSection: React.FC = () => {
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
             >
-              {/* Service Card */}
-              <div className="relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-8 border border-gray-800/50 hover:border-amber-800/50 hover:bg-gray-900/50 transition-all duration-700 ease-out overflow-visible min-h-[200px]">
+              {/* Service Card com Efeitos Eletrizantes */}
+              <div className="relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-8 border border-gray-800/50 hover:border-amber-600/70 hover:bg-gray-900/50 transition-all duration-700 ease-out overflow-visible min-h-[200px] group-hover:shadow-2xl group-hover:shadow-amber-600/20">
+
+                {/* Efeito Elétrico - Linhas Animadas */}
+                {hoveredService === service.id && (
+                  <>
+                    {/* Linhas Elétricas Verticais */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {[...Array(4)].map((_, i) => (
+                        <div
+                          key={`electric-v-${i}`}
+                          className="absolute top-0 h-full bg-gradient-to-b from-transparent via-amber-500 to-transparent opacity-60 animate-pulse"
+                          style={{
+                            left: `${20 + i * 20}%`,
+                            width: '1px',
+                            animationDelay: `${i * 0.2}s`,
+                            animationDuration: '1.5s'
+                          }}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Linhas Elétricas Horizontais */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {[...Array(3)].map((_, i) => (
+                        <div
+                          key={`electric-h-${i}`}
+                          className="absolute left-0 w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-40 animate-pulse"
+                          style={{
+                            top: `${25 + i * 25}%`,
+                            height: '1px',
+                            animationDelay: `${i * 0.3}s`,
+                            animationDuration: '2s'
+                          }}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Pontos de Energia */}
+                    <div className="absolute inset-0 pointer-events-none">
+                      {[...Array(6)].map((_, i) => (
+                        <div
+                          key={`energy-point-${i}`}
+                          className="absolute bg-amber-400 rounded-full animate-ping"
+                          style={{
+                            left: `${15 + i * 15}%`,
+                            top: `${20 + (i % 3) * 20}%`,
+                            width: '3px',
+                            height: '3px',
+                            animationDelay: `${i * 0.4}s`,
+                            animationDuration: '2s'
+                          }}
+                        />
+                      ))}
+                    </div>
+
+                    {/* Borda Elétrica */}
+                    <div className="absolute inset-0 rounded-xl border-2 border-amber-500/50 animate-pulse pointer-events-none"
+                         style={{ animationDuration: '1s' }} />
+                  </>
+                )}
 
                 {/* Hover Image - Sobrepondo completamente o card */}
                 <div className={`absolute top-0 right-0 w-72 h-48 rounded-xl overflow-hidden transition-all duration-500 ease-out z-40 shadow-2xl ${
@@ -228,32 +289,57 @@ const ServicesSection: React.FC = () => {
       </div>
 
       {/* CSS Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes grain {
           0%, 100% { transform: translate(0, 0) }
           50% { transform: translate(-1px, 1px) }
         }
 
-        @keyframes spin-border {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-
-        @keyframes electric-pulse {
+        @keyframes electric-spark {
           0%, 100% {
-            box-shadow: 0 0 5px rgba(251, 191, 36, 0.5), 0 0 10px rgba(251, 191, 36, 0.3), 0 0 15px rgba(251, 191, 36, 0.1);
+            opacity: 0.3;
+            transform: scale(1);
           }
           50% {
-            box-shadow: 0 0 10px rgba(251, 191, 36, 0.8), 0 0 20px rgba(251, 191, 36, 0.6), 0 0 30px rgba(251, 191, 36, 0.4);
+            opacity: 1;
+            transform: scale(1.2);
           }
         }
 
-        .animate-spin-border {
-          animation: spin-border 3s linear infinite;
+        @keyframes electric-flow {
+          0% {
+            opacity: 0;
+            transform: translateX(-100%);
+          }
+          50% {
+            opacity: 1;
+            transform: translateX(0%);
+          }
+          100% {
+            opacity: 0;
+            transform: translateX(100%);
+          }
         }
 
-        .animate-electric-pulse {
-          animation: electric-pulse 2s ease-in-out infinite;
+        @keyframes electric-glow {
+          0%, 100% {
+            box-shadow: 0 0 5px rgba(245, 158, 11, 0.3), 0 0 10px rgba(245, 158, 11, 0.2);
+          }
+          50% {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.6), 0 0 25px rgba(245, 158, 11, 0.4), 0 0 35px rgba(245, 158, 11, 0.2);
+          }
+        }
+
+        .animate-electric-spark {
+          animation: electric-spark 1.5s ease-in-out infinite;
+        }
+
+        .animate-electric-flow {
+          animation: electric-flow 2s ease-in-out infinite;
+        }
+
+        .animate-electric-glow {
+          animation: electric-glow 2s ease-in-out infinite;
         }
       `}</style>
     </section>
