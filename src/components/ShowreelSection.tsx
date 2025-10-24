@@ -185,11 +185,8 @@ const ShowreelSection: React.FC = () => {
         </div>
 
         {/* Video Container com Parallax */}
-        <ParallaxElement
-          speed={0.6}
-          className="relative flex justify-center w-full mx-auto py-16 px-8 lg:px-16"
-        >
-          <div className="relative w-full max-w-6xl aspect-video bg-transparent overflow-hidden rounded-3xl group transition-all duration-700">
+        <div className="relative flex justify-center w-full mx-auto py-16 px-8 lg:px-16">
+          <div className="relative w-full max-w-6xl aspect-video bg-gray-900/20 overflow-hidden rounded-3xl group transition-all duration-700 border border-amber-900/30">
             <video
               ref={videoRef}
               className="w-full h-full object-cover rounded-3xl"
@@ -279,7 +276,7 @@ const ShowreelSection: React.FC = () => {
             {/* Gradient overlay for better text readability */}
             <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black/50 to-transparent pointer-events-none"></div>
           </div>
-        </ParallaxElement>
+        </div>
       </div>
 
       {/* Estilos CSS para efeitos glitch e elétricos */}

@@ -104,8 +104,8 @@ const ServicesSection: React.FC = () => {
           </h2>
         </div>
 
-        {/* Services List */}
-        <div className="space-y-8 max-w-5xl">
+        {/* Services Grid Moderno */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl">
           {services.map((service, index) => (
             <div
               key={service.id}
@@ -113,111 +113,77 @@ const ServicesSection: React.FC = () => {
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
             >
-              {/* Service Card com Efeitos Eletrizantes */}
-              <div className="relative bg-gray-900/30 backdrop-blur-sm rounded-xl p-8 border border-gray-800/50 hover:border-amber-600/70 hover:bg-gray-900/50 transition-all duration-700 ease-out overflow-visible min-h-[200px] group-hover:shadow-2xl group-hover:shadow-amber-600/20">
+              {/* Service Card Moderno */}
+              <div className="relative bg-gradient-to-br from-gray-900/40 to-gray-800/20 backdrop-blur-md rounded-2xl p-8 border border-gray-700/30 hover:border-amber-500/50 transition-all duration-500 ease-out overflow-hidden min-h-[320px] group-hover:shadow-2xl group-hover:shadow-amber-500/10 group-hover:scale-[1.02]">
 
-                {/* Efeito Elétrico - Linhas Animadas */}
-                {hoveredService === service.id && (
-                  <>
-                    {/* Linhas Elétricas Verticais */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      {[...Array(4)].map((_, i) => (
-                        <div
-                          key={`electric-v-${i}`}
-                          className="absolute top-0 h-full bg-gradient-to-b from-transparent via-amber-500 to-transparent opacity-60 animate-pulse"
-                          style={{
-                            left: `${20 + i * 20}%`,
-                            width: '1px',
-                            animationDelay: `${i * 0.2}s`,
-                            animationDuration: '1.5s'
-                          }}
-                        />
-                      ))}
+                {/* Ícone Minimalista Animado */}
+                <div className="relative mb-6">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 flex items-center justify-center transition-all duration-500 ${hoveredService === service.id ? 'scale-110 rotate-6 shadow-lg shadow-amber-500/20' : ''}`}>
+                    <div className={`text-amber-400 transition-all duration-500 ${hoveredService === service.id ? 'scale-125' : ''}`}>
+                      {service.icon}
                     </div>
+                  </div>
 
-                    {/* Linhas Elétricas Horizontais */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      {[...Array(3)].map((_, i) => (
-                        <div
-                          key={`electric-h-${i}`}
-                          className="absolute left-0 w-full bg-gradient-to-r from-transparent via-amber-500 to-transparent opacity-40 animate-pulse"
-                          style={{
-                            top: `${25 + i * 25}%`,
-                            height: '1px',
-                            animationDelay: `${i * 0.3}s`,
-                            animationDuration: '2s'
-                          }}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Pontos de Energia */}
-                    <div className="absolute inset-0 pointer-events-none">
-                      {[...Array(6)].map((_, i) => (
-                        <div
-                          key={`energy-point-${i}`}
-                          className="absolute bg-amber-400 rounded-full animate-ping"
-                          style={{
-                            left: `${15 + i * 15}%`,
-                            top: `${20 + (i % 3) * 20}%`,
-                            width: '3px',
-                            height: '3px',
-                            animationDelay: `${i * 0.4}s`,
-                            animationDuration: '2s'
-                          }}
-                        />
-                      ))}
-                    </div>
-
-                    {/* Borda Elétrica */}
-                    <div className="absolute inset-0 rounded-xl border-2 border-amber-500/50 animate-pulse pointer-events-none"
-                         style={{ animationDuration: '1s' }} />
-                  </>
-                )}
-
-                {/* Hover Image - Sobrepondo completamente o card */}
-                <div className={`absolute top-0 right-0 w-72 h-48 rounded-xl overflow-hidden transition-all duration-500 ease-out z-40 shadow-2xl ${
-                  hoveredService === service.id
-                    ? 'opacity-100 transform translate-x-8 -translate-y-4 scale-100'
-                    : 'opacity-0 transform translate-x-20 -translate-y-12 scale-85'
-                }`}>
-                  <img
-                    src={service.hoverImage}
-                    alt={`${service.title} preview`}
-                    className="w-full h-full object-cover transition-transform duration-500 ease-out"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-br from-amber-900/20 to-amber-800/40"></div>
-
-
-
-                  {/* Enhanced glow effect */}
-                  <div className="absolute -inset-2 bg-gradient-to-r from-amber-800/40 to-amber-600/40 rounded-xl blur-lg -z-10 animate-pulse"></div>
+                  {/* Efeito de Brilho no Ícone */}
+                  {hoveredService === service.id && (
+                    <div className="absolute inset-0 w-16 h-16 rounded-2xl bg-amber-500/20 animate-ping"></div>
+                  )}
                 </div>
 
-                {/* Animated Background */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-amber-900/5 via-transparent to-amber-800/5 transition-opacity duration-700 ease-out ${
+                {/* Efeito de Fundo Moderno */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-amber-600/10 transition-opacity duration-500 ${
                   hoveredService === service.id ? 'opacity-100' : 'opacity-0'
                 }`} />
 
+                {/* Padrão Geométrico de Fundo */}
+                {hoveredService === service.id && (
+                  <div className="absolute inset-0 opacity-10">
+                    <div className="absolute inset-0" style={{
+                      backgroundImage: `
+                        linear-gradient(45deg, rgba(245, 158, 11, 0.1) 25%, transparent 25%),
+                        linear-gradient(-45deg, rgba(245, 158, 11, 0.1) 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, rgba(245, 158, 11, 0.1) 75%),
+                        linear-gradient(-45deg, transparent 75%, rgba(245, 158, 11, 0.1) 75%)
+                      `,
+                      backgroundSize: '20px 20px',
+                      backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
+                    }} />
+                  </div>
+                )}
+
                 {/* Content */}
-                <div className="relative z-10 max-w-2xl">
+                <div className="relative z-10">
                   {/* Title */}
-                  <h3 className={`text-3xl font-light mb-4 transition-all duration-500 ease-out ${
+                  <h3 className={`text-2xl font-light mb-4 transition-all duration-500 ease-out ${
                     hoveredService === service.id
-                      ? 'text-amber-800 transform -translate-y-1'
+                      ? 'text-amber-400 transform translate-y-0'
                       : 'text-white transform translate-y-0'
                   }`}>
                     {service.title}
                   </h3>
 
                   {/* Description */}
-                  <p className={`text-base font-light leading-relaxed mb-6 transition-all duration-500 ease-out delay-100 ${
+                  <p className={`text-sm font-light leading-relaxed mb-6 transition-all duration-500 ease-out ${
                     hoveredService === service.id
-                      ? 'text-gray-200 transform -translate-y-1'
-                      : 'text-gray-300 transform translate-y-0'
+                      ? 'text-gray-200'
+                      : 'text-gray-400'
                   }`}>
                     {service.description}
                   </p>
+
+                  {/* Features List */}
+                  <div className="space-y-2 mb-6">
+                    {service.features.slice(0, 3).map((feature, idx) => (
+                      <div key={idx} className={`flex items-center text-xs transition-all duration-500 delay-${idx * 100} ${
+                        hoveredService === service.id
+                          ? 'text-gray-300 opacity-100 transform translate-x-0'
+                          : 'text-gray-500 opacity-70 transform translate-x-2'
+                      }`}>
+                        <div className="w-1 h-1 bg-amber-500 rounded-full mr-3"></div>
+                        {feature}
+                      </div>
+                    ))}
+                  </div>
 
                   {/* CTA Button */}
                   <button

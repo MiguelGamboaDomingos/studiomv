@@ -113,28 +113,24 @@ const Hero: React.FC = () => {
       ref={heroRef}
       className="relative min-h-screen flex items-center justify-between overflow-hidden bg-black"
     >
-      {/* Background with Parallax Layers */}
-      <ParallaxLayers className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-black"></div>
-      </ParallaxLayers>
+      {/* Background simples sem parallax */}
+      <div className="absolute inset-0 z-0 bg-black"></div>
 
-      {/* Grid Vertical Animada com Parallax - castanho escuro - Atrás do Spline */}
-      <ParallaxElement speed={0.3} className="absolute inset-0 z-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
+      {/* Grid Vertical Estática - castanho escuro - Atrás do Spline */}
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-30">
+        {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-900/30 to-transparent"
+            className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-900/40 to-transparent"
             style={{
-              left: `${(i + 1) * 5}%`,
-              animation: `verticalGrid ${3 + i * 0.2}s ease-in-out infinite`,
-              animationDelay: `${i * 0.1}s`,
+              left: `${(i + 1) * 8.33}%`,
             }}
           />
         ))}
-      </ParallaxElement>
+      </div>
 
-      {/* Spline 3D maior com sobreposição e Parallax - Na frente da grid */}
-      <ParallaxElement speed={0.6} className="absolute top-1/2 sm:top-1/4 right-1/2 sm:right-8 lg:right-12 w-4/5 sm:w-3/5 lg:w-3/5 h-2/5 sm:h-3/5 z-10 transform translate-x-1/2 -translate-y-1/2 sm:translate-x-0 sm:translate-y-0">
+      {/* Spline 3D sem parallax - posição fixa */}
+      <div className="absolute top-1/2 sm:top-1/4 right-1/2 sm:right-8 lg:right-12 w-4/5 sm:w-3/5 lg:w-3/5 h-2/5 sm:h-3/5 z-10 transform translate-x-1/2 -translate-y-1/2 sm:translate-x-0 sm:translate-y-0">
         <div className="w-full h-full relative">
           <spline-viewer
             ref={splineRef}
@@ -149,29 +145,29 @@ const Hero: React.FC = () => {
           />
           <div className="absolute inset-0 bg-gradient-to-r from-amber-900/10 via-yellow-900/5 to-amber-950/15 blur-xl pointer-events-none"></div>
         </div>
-      </ParallaxElement>
+      </div>
 
-      {/* Elementos 3D adicionais com Parallax - Atrás do texto mas na frente do Spline */}
-      <ParallaxElement speed={0.8} className="absolute inset-0 z-15 pointer-events-none">
+      {/* Elementos 3D estáticos - Atrás do texto mas na frente do Spline */}
+      <div className="absolute inset-0 z-15 pointer-events-none opacity-50">
         {/* Partículas flutuantes */}
-        {[...Array(8)].map((_, i) => (
+        {[...Array(6)].map((_, i) => (
           <div
             key={i}
-            className="absolute w-2 h-2 bg-amber-400/30 rounded-full"
+            className="absolute w-2 h-2 bg-amber-400/40 rounded-full animate-pulse"
             style={{
-              left: `${20 + i * 10}%`,
-              top: `${30 + (i % 3) * 20}%`,
-              animation: `simpleFloat ${4 + i * 0.5}s ease-in-out infinite`,
-              animationDelay: `${i * 0.3}s`,
+              left: `${25 + i * 10}%`,
+              top: `${35 + (i % 3) * 15}%`,
+              animationDelay: `${i * 0.8}s`,
+              animationDuration: `${3 + i % 2}s`
             }}
           />
         ))}
 
         {/* Formas geométricas */}
-        <div className="absolute top-1/4 right-1/4 w-16 h-16 border border-amber-900/20 rotate-45 animate-spin" style={{ animationDuration: '20s' }}></div>
-        <div className="absolute bottom-1/3 left-1/5 w-8 h-8 bg-amber-800/10 rounded-full animate-pulse"></div>
-        <div className="absolute top-1/2 right-1/3 w-12 h-1 bg-gradient-to-r from-transparent via-amber-600/30 to-transparent animate-pulse"></div>
-      </ParallaxElement>
+        <div className="absolute top-1/4 right-1/4 w-12 h-12 border border-amber-900/30 rotate-45 animate-spin" style={{ animationDuration: '25s' }}></div>
+        <div className="absolute bottom-1/3 left-1/5 w-6 h-6 bg-amber-800/20 rounded-full animate-pulse"></div>
+        <div className="absolute top-1/2 right-1/3 w-8 h-1 bg-gradient-to-r from-transparent via-amber-600/40 to-transparent animate-pulse"></div>
+      </div>
 
       <div className="relative z-20 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-start sm:items-center min-h-screen pt-16 sm:pt-0">
         {/* Left side - Text content */}

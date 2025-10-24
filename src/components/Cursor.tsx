@@ -15,7 +15,8 @@ const Cursor: React.FC = () => {
     if (!supportsHover) return;
 
     const updateCursor = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      // Use pageX/pageY for accurate positioning accounting for scroll
+      setPosition({ x: e.pageX, y: e.pageY });
       setIsVisible(true);
 
       // Check if hovering over interactive elements
@@ -26,19 +27,13 @@ const Cursor: React.FC = () => {
 
     const hideCursor = () => setIsVisible(false);
 
-    // Only apply custom cursor to specific areas
-    const customCursorElements = document.querySelectorAll('.custom-cursor-area');
-
-    customCursorElements.forEach(element => {
-      element.addEventListener('mousemove', updateCursor);
-      element.addEventListener('mouseleave', hideCursor);
-    });
+    // Apply to entire document for consistent behavior
+    document.addEventListener('mousemove', updateCursor);
+    document.addEventListener('mouseleave', hideCursor);
 
     return () => {
-      customCursorElements.forEach(element => {
-        element.removeEventListener('mousemove', updateCursor);
-        element.removeEventListener('mouseleave', hideCursor);
-      });
+      document.removeEventListener('mousemove', updateCursor);
+      document.removeEventListener('mouseleave', hideCursor);
     };
   }, []);
 
@@ -47,19 +42,19 @@ const Cursor: React.FC = () => {
 
   return (
     <div
-      className="fixed pointer-events-none z-50 mix-blend-difference transition-transform duration-150"
+      className="fixed pointer-events-none z-50 mix-blend-difference transition-transform duration-100"
       style={{
-        left: position.x,
-        top: position.y,
-        transform: `translate(-50%, -50%) scale(${isHovering ? 1.5 : 1})`
+        left: `${position.x}px`,
+        top: `${position.y}px`,
+        transform: `translate(-50%, -50%) scale(${isHovering ? 1.2 : 1})`
       }}
       aria-hidden="true"
     >
-      <div className={`w-8 h-8 border border-white rounded-full flex items-center justify-center transition-all duration-150 ${
-        isHovering ? 'border-amber-500' : 'border-white'
+      <div className={`w-6 h-6 border border-white rounded-full flex items-center justify-center transition-all duration-100 ${
+        isHovering ? 'border-amber-400' : 'border-white'
       }`}>
-        <div className={`w-2 h-2 rounded-full transition-all duration-150 ${
-          isHovering ? 'bg-red-500 scale-150' : 'bg-red-500 animate-pulse'
+        <div className={`w-1 h-1 rounded-full transition-all duration-100 ${
+          isHovering ? 'bg-amber-400 scale-150' : 'bg-white animate-pulse'
         }`}></div>
       </div>
     </div>

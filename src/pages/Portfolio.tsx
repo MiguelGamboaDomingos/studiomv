@@ -95,53 +95,56 @@ const Portfolio: React.FC = () => {
     : projects.filter(project => project.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-black pt-20">
-      {/* Background com Parallax */}
-      <ParallaxElement speed={0.2} className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 pt-20">
+      {/* Background Moderno */}
+      <div className="fixed inset-0 opacity-5 pointer-events-none z-0">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(201,169,97,0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(201,169,97,0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '100px 100px'
+            radial-gradient(circle at 25% 25%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 75% 75%, rgba(245, 158, 11, 0.05) 0%, transparent 50%)
+          `
         }} />
-      </ParallaxElement>
+      </div>
 
-      {/* Film Grain com Parallax */}
-      <ParallaxElement speed={0.1} className="fixed inset-0 opacity-5 pointer-events-none z-0">
-        <div style={{
-          backgroundImage: `radial-gradient(circle, rgba(201,169,97,0.2) 1px, transparent 1px)`,
-          backgroundSize: '80px 80px',
-          width: '100%',
-          height: '100%',
+      {/* Padrão Geométrico Sutil */}
+      <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
+        <div className="absolute inset-0" style={{
+          backgroundImage: `
+            linear-gradient(rgba(245, 158, 11, 0.1) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(245, 158, 11, 0.1) 1px, transparent 1px)
+          `,
+          backgroundSize: '60px 60px'
         }} />
-      </ParallaxElement>
+      </div>
 
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        {/* Header com Transições Dramáticas */}
-        <div className="text-center mb-16">
-          <DramaticTransitions type="cinematic" delay={200} duration={1200}>
-            <h1 className="text-4xl md:text-6xl font-light text-white mb-6 leading-tight">
-              Nosso <span className="text-amber-600">Portfólio</span>
+        {/* Header Moderno */}
+        <div className="text-center mb-20">
+          <DramaticTransitions type="fadeIn" delay={200} duration={800}>
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 mb-8">
+              <div className="w-8 h-8 rounded-lg bg-amber-500/30"></div>
+            </div>
+            <h1 className="text-5xl md:text-7xl font-extralight text-white mb-6 leading-tight tracking-tight">
+              Nosso <span className="text-amber-400 font-light">Portfólio</span>
             </h1>
           </DramaticTransitions>
-          <DramaticTransitions type="slideUp" delay={600} duration={1000}>
-            <p className="text-lg text-gray-300 max-w-3xl mx-auto font-light">
-              Uma coleção dos nossos trabalhos mais impactantes, onde cada projeto conta uma história única.
+          <DramaticTransitions type="slideUp" delay={400} duration={800}>
+            <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
+              Projetos que definem nossa excelência criativa
             </p>
           </DramaticTransitions>
         </div>
 
-        {/* Filters */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {/* Filters Modernos */}
+        <div className="flex flex-wrap justify-center gap-3 mb-16">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-3 rounded-full border transition-all duration-300 ${
+              className={`px-8 py-3 rounded-2xl border transition-all duration-500 backdrop-blur-sm ${
                 selectedCategory === category.id
-                  ? 'bg-amber-900 border-amber-900 text-white'
-                  : 'bg-white/5 border-white/20 text-gray-300 hover:bg-white/10 hover:border-amber-900/40'
+                  ? 'bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-lg shadow-amber-500/20'
+                  : 'bg-gray-800/30 border-gray-700/30 text-gray-400 hover:bg-gray-700/40 hover:border-amber-500/30 hover:text-amber-400'
               }`}
             >
               {category.name}
@@ -149,25 +152,30 @@ const Portfolio: React.FC = () => {
           ))}
         </div>
 
-        {/* Projects Grid */}
+        {/* Projects Grid Moderno */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredProjects.map((project) => (
             <div
               key={project.id}
               className="group relative cursor-pointer"
             >
-              {/* Film Frame */}
-              <div className="relative bg-gradient-to-r from-amber-900 to-amber-800 p-3 rounded-lg shadow-2xl">
-                {/* Film Perforations */}
-                <div className="absolute left-0 top-0 bottom-0 w-6 flex flex-col justify-between py-2">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <div key={i} className="w-3 h-3 bg-black rounded-sm mx-auto"></div>
-                  ))}
-                </div>
-                <div className="absolute right-0 top-0 bottom-0 w-6 flex flex-col justify-between py-2">
-                  {Array.from({ length: 8 }).map((_, i) => (
-                    <div key={i} className="w-3 h-3 bg-black rounded-sm mx-auto"></div>
-                  ))}
+              {/* Card Moderno */}
+              <div className="relative bg-gradient-to-br from-gray-800/40 to-gray-900/60 backdrop-blur-md rounded-3xl overflow-hidden border border-gray-700/30 hover:border-amber-500/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10">
+                {/* Imagem do Projeto */}
+                <div className="aspect-video relative overflow-hidden">
+                  <img
+                    src={project.thumbnail}
+                    alt={project.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+                  {/* Play Button */}
+                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="w-16 h-16 rounded-full bg-amber-500/20 backdrop-blur-sm border border-amber-500/30 flex items-center justify-center">
+                      <Play className="w-6 h-6 text-amber-400 ml-1" />
+                    </div>
+                  </div>
                 </div>
 
                 {/* Project Content */}
