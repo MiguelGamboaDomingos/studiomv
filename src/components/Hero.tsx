@@ -58,9 +58,22 @@ const Hero: React.FC = () => {
   const splineRef = useRef<any>(null);
   const { elementRef: heroRef } = useScrollAnimation(0.1);
   const [isHoveringTitle, setIsHoveringTitle] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   // Hook para trigger automático no Spline quando faz scroll
   useSplineAutoClick(splineRef);
+
+  // Mouse tracking para interação orbital
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 2; // -1 to 1
+      const y = (e.clientY / window.innerHeight - 0.5) * 2; // -1 to 1
+      setMousePosition({ x, y });
+    };
+
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, []);
 
   // Função para scroll suave para showreel
   const scrollToShowreel = () => {
@@ -129,13 +142,18 @@ const Hero: React.FC = () => {
         ))}
       </div>
 
-      {/* Spline 3D sem parallax - posição fixa */}
-      <div className="absolute top-1/2 sm:top-1/4 right-1/2 sm:right-8 lg:right-12 w-4/5 sm:w-3/5 lg:w-3/5 h-2/5 sm:h-3/5 z-10 transform translate-x-1/2 -translate-y-1/2 sm:translate-x-0 sm:translate-y-0">
+      {/* Spline 3D sem parallax - posição fixa e maior com interação orbital */}
+      <div
+        className="absolute top-1/2 sm:top-1/4 right-1/2 sm:right-4 lg:right-8 w-5/6 sm:w-4/6 lg:w-4/6 h-3/5 sm:h-4/5 z-10 transform translate-x-1/2 -translate-y-1/2 sm:translate-x-0 sm:translate-y-0 transition-transform duration-300 ease-out"
+        style={{
+          transform: `translate(${mousePosition.x * 10}px, ${mousePosition.y * 10}px) rotateY(${mousePosition.x * 5}deg) rotateX(${-mousePosition.y * 5}deg)`
+        }}
+      >
         <div className="w-full h-full relative">
           <spline-viewer
             ref={splineRef}
             url="https://prod.spline.design/jTMyGBieAUQfvg0X/scene.splinecode"
-            className="w-full h-full opacity-60"
+            className="w-full h-full opacity-70"
             style={{
               width: '100%',
               height: '100%',
@@ -174,9 +192,9 @@ const Hero: React.FC = () => {
         <div className="flex-1 max-w-5xl relative z-30 pr-8 lg:pr-16">
           <DramaticTransitions type="fadeIn" delay={300} duration={1000}>
             <h1
-              className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-6xl font-light text-white leading-[0.9] tracking-tight mb-6 cursor-pointer transition-all duration-300 relative"
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-light text-white leading-[0.9] tracking-tight mb-6 cursor-pointer transition-all duration-300 relative"
               style={{
-                transform: isHoveringTitle ? 'scale(1.02)' : 'scale(0.9)', // Reduzido 10%
+                transform: isHoveringTitle ? 'scale(1.02)' : 'scale(1)', // Tamanho normal aumentado
               }}
               onMouseEnter={() => setIsHoveringTitle(true)}
               onMouseLeave={() => setIsHoveringTitle(false)}

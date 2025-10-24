@@ -95,26 +95,21 @@ const Portfolio: React.FC = () => {
     : projects.filter(project => project.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-black to-gray-900 pt-20">
-      {/* Background Moderno */}
-      <div className="fixed inset-0 opacity-5 pointer-events-none z-0">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            radial-gradient(circle at 25% 25%, rgba(245, 158, 11, 0.1) 0%, transparent 50%),
-            radial-gradient(circle at 75% 75%, rgba(245, 158, 11, 0.05) 0%, transparent 50%)
-          `
-        }} />
-      </div>
+    <div className="min-h-screen bg-black pt-20">
+      {/* Background igual à home */}
+      <div className="absolute inset-0 z-0 bg-black"></div>
 
-      {/* Padrão Geométrico Sutil */}
-      <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `
-            linear-gradient(rgba(245, 158, 11, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(245, 158, 11, 0.1) 1px, transparent 1px)
-          `,
-          backgroundSize: '60px 60px'
-        }} />
+      {/* Grid Vertical igual à Hero - castanho escuro */}
+      <div className="absolute inset-0 z-0 overflow-hidden opacity-30">
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-900/40 to-transparent"
+            style={{
+              left: `${(i + 1) * 8.33}%`,
+            }}
+          />
+        ))}
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
@@ -178,47 +173,18 @@ const Portfolio: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Project Content */}
-                <div className="mx-6 relative">
-                  <div className="aspect-video bg-black rounded overflow-hidden relative">
-                    <img
-                      src={project.thumbnail}
-                      alt={project.title}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    />
-                    
-                    {/* Glitch Effect on Hover */}
-                    <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
-                      <div className="absolute inset-0 bg-black animate-pulse" style={{ clipPath: 'polygon(0 0, 100% 0, 100% 20%, 0 20%)', animationDuration: '0.1s' }}></div>
-                      <div className="absolute inset-0 bg-white animate-pulse" style={{ clipPath: 'polygon(0 40%, 100% 40%, 100% 60%, 0 60%)', animationDelay: '0.05s', animationDuration: '0.1s' }}></div>
-                      <div className="absolute inset-0 bg-black animate-pulse" style={{ clipPath: 'polygon(0 80%, 100% 80%, 100% 100%, 0 100%)', animationDelay: '0.1s', animationDuration: '0.1s' }}></div>
-                    </div>
-
-                    {/* Play Button */}
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <Play className="w-12 h-12 text-white" />
-                    </div>
-
-                    {/* Duration */}
-                    <div className="absolute bottom-3 right-3 px-2 py-1 bg-black/70 rounded text-white text-xs font-medium">
-                      {project.duration}
-                    </div>
+                {/* Project Info */}
+                <div className="p-6">
+                  <h3 className="text-xl font-light text-white mb-2">{project.title}</h3>
+                  <p className="text-gray-400 text-sm mb-4 line-clamp-2">{project.description}</p>
+                  <div className="flex items-center justify-between">
+                    <span className="text-amber-400 text-sm font-medium">{project.category}</span>
+                    <span className="text-gray-500 text-xs">{project.year}</span>
                   </div>
 
-                  {/* Project Info */}
-                  <div className="mt-4 text-center">
-                    <h3 className="text-xl font-bold text-white mb-2">{project.title}</h3>
-                    <div className="flex items-center justify-center gap-4 text-sm text-gray-300 mb-2">
-                      <span className="flex items-center gap-1">
-                        <User className="w-4 h-4" />
-                        {project.client}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="w-4 h-4" />
-                        {project.year}
-                      </span>
-                    </div>
-                    <p className="text-gray-400 text-sm">{project.description}</p>
+                  {/* Duration */}
+                  <div className="mt-3 text-gray-500 text-xs">
+                    Duração: {project.duration}
                   </div>
                 </div>
               </div>

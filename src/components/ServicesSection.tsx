@@ -104,8 +104,8 @@ const ServicesSection: React.FC = () => {
           </h2>
         </div>
 
-        {/* Services Grid Moderno */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl">
+        {/* Services Grid 2x2 */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
           {services.map((service, index) => (
             <div
               key={service.id}

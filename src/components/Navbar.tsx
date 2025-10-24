@@ -32,7 +32,7 @@ const Navbar: React.FC = () => {
         : 'backdrop-blur-md bg-black/20'
     }`}>
       <div className="w-full px-8 lg:px-16 xl:px-20">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <Link
             to="/"
@@ -41,7 +41,7 @@ const Navbar: React.FC = () => {
             <img
               src="/img/logo/MV_logo Branco.png"
               alt="MV Studio"
-              className="h-8 w-auto object-contain"
+              className="h-10 w-auto object-contain"
             />
           </Link>
 
