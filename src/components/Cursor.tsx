@@ -8,7 +8,11 @@ const Cursor: React.FC = () => {
 
   useEffect(() => {
     const updateCursor = (e: MouseEvent) => {
-      setPosition({ x: e.clientX, y: e.clientY });
+      // Use pageX/pageY para coordenadas absolutas da página
+      const x = e.pageX;
+      const y = e.pageY;
+
+      setPosition({ x, y });
       setIsVisible(true);
 
       const target = e.target as HTMLElement;
@@ -16,7 +20,7 @@ const Cursor: React.FC = () => {
       setIsHovering(!!isInteractive);
     };
 
-    document.addEventListener('mousemove', updateCursor);
+    document.addEventListener('mousemove', updateCursor, { passive: true });
     document.addEventListener('mouseleave', () => setIsVisible(false));
 
     return () => {
