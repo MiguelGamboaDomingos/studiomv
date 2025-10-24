@@ -113,40 +113,39 @@ const ServicesSection: React.FC = () => {
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
             >
-              {/* Service Card Moderno */}
-              <div className="relative bg-gradient-to-br from-gray-900/40 to-gray-800/20 backdrop-blur-md rounded-2xl p-8 border border-gray-700/30 hover:border-amber-500/50 transition-all duration-500 ease-out overflow-hidden min-h-[320px] group-hover:shadow-2xl group-hover:shadow-amber-500/10 group-hover:scale-[1.02]">
+              {/* Service Card Elegante */}
+              <div className="relative bg-gradient-to-br from-amber-950/20 via-stone-900/30 to-amber-900/10 backdrop-blur-xl rounded-3xl p-8 border border-amber-800/20 hover:border-amber-600/40 transition-all duration-700 ease-out overflow-hidden min-h-[360px] group-hover:shadow-2xl group-hover:shadow-amber-500/20 group-hover:scale-[1.03] group-hover:bg-gradient-to-br group-hover:from-amber-950/30 group-hover:via-stone-800/40 group-hover:to-amber-900/20">
 
-                {/* Ícone Minimalista Animado */}
-                <div className="relative mb-6">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 flex items-center justify-center transition-all duration-500 ${hoveredService === service.id ? 'scale-110 rotate-6 shadow-lg shadow-amber-500/20' : ''}`}>
-                    <div className={`text-amber-400 transition-all duration-500 ${hoveredService === service.id ? 'scale-125' : ''}`}>
+                {/* Ícone Elegante Acastanhado */}
+                <div className="relative mb-8">
+                  <div className={`w-18 h-18 rounded-3xl bg-gradient-to-br from-amber-800/30 via-stone-700/20 to-amber-900/40 flex items-center justify-center transition-all duration-700 ${hoveredService === service.id ? 'scale-115 rotate-3 shadow-xl shadow-amber-700/30' : 'shadow-lg shadow-stone-900/20'}`}>
+                    <div className={`transition-all duration-700 ${hoveredService === service.id ? 'scale-125 text-amber-300' : 'text-amber-600/80'}`}>
                       {service.icon}
                     </div>
                   </div>
 
-                  {/* Efeito de Brilho no Ícone */}
+                  {/* Efeito de Brilho Sutil */}
                   {hoveredService === service.id && (
-                    <div className="absolute inset-0 w-16 h-16 rounded-2xl bg-amber-500/20 animate-ping"></div>
+                    <div className="absolute inset-0 w-18 h-18 rounded-3xl bg-gradient-to-br from-amber-600/20 to-stone-600/10 animate-pulse"></div>
                   )}
                 </div>
 
-                {/* Efeito de Fundo Moderno */}
-                <div className={`absolute inset-0 bg-gradient-to-br from-amber-500/5 via-transparent to-amber-600/10 transition-opacity duration-500 ${
+                {/* Efeito de Vidro Elegante */}
+                <div className={`absolute inset-0 bg-gradient-to-br from-amber-800/8 via-stone-700/5 to-amber-900/12 transition-opacity duration-700 ${
                   hoveredService === service.id ? 'opacity-100' : 'opacity-0'
                 }`} />
 
-                {/* Padrão Geométrico de Fundo */}
+                {/* Padrão Sutil de Textura */}
                 {hoveredService === service.id && (
-                  <div className="absolute inset-0 opacity-10">
+                  <div className="absolute inset-0 opacity-5">
                     <div className="absolute inset-0" style={{
                       backgroundImage: `
-                        linear-gradient(45deg, rgba(245, 158, 11, 0.1) 25%, transparent 25%),
-                        linear-gradient(-45deg, rgba(245, 158, 11, 0.1) 25%, transparent 25%),
-                        linear-gradient(45deg, transparent 75%, rgba(245, 158, 11, 0.1) 75%),
-                        linear-gradient(-45deg, transparent 75%, rgba(245, 158, 11, 0.1) 75%)
+                        radial-gradient(circle at 25% 25%, rgba(180, 83, 9, 0.1) 2px, transparent 2px),
+                        radial-gradient(circle at 75% 75%, rgba(120, 53, 15, 0.1) 1px, transparent 1px),
+                        linear-gradient(45deg, rgba(160, 82, 45, 0.05) 1px, transparent 1px)
                       `,
-                      backgroundSize: '20px 20px',
-                      backgroundPosition: '0 0, 0 10px, 10px -10px, -10px 0px'
+                      backgroundSize: '30px 30px, 20px 20px, 15px 15px',
+                      backgroundPosition: '0 0, 10px 10px, 5px 5px'
                     }} />
                   </div>
                 )}
@@ -154,91 +153,93 @@ const ServicesSection: React.FC = () => {
                 {/* Content */}
                 <div className="relative z-10">
                   {/* Title */}
-                  <h3 className={`text-2xl font-light mb-4 transition-all duration-500 ease-out ${
+                  <h3 className={`text-2xl font-light mb-5 transition-all duration-700 ease-out ${
                     hoveredService === service.id
-                      ? 'text-amber-400 transform translate-y-0'
-                      : 'text-white transform translate-y-0'
+                      ? 'text-amber-200 transform translate-y-0'
+                      : 'text-stone-200 transform translate-y-0'
                   }`}>
                     {service.title}
                   </h3>
 
                   {/* Description */}
-                  <p className={`text-sm font-light leading-relaxed mb-6 transition-all duration-500 ease-out ${
+                  <p className={`text-sm font-light leading-relaxed mb-7 transition-all duration-700 ease-out ${
                     hoveredService === service.id
-                      ? 'text-gray-200'
-                      : 'text-gray-400'
+                      ? 'text-stone-300'
+                      : 'text-stone-400'
                   }`}>
                     {service.description}
                   </p>
 
                   {/* Features List */}
-                  <div className="space-y-2 mb-6">
+                  <div className="space-y-3 mb-8">
                     {service.features.slice(0, 3).map((feature, idx) => (
-                      <div key={idx} className={`flex items-center text-xs transition-all duration-500 delay-${idx * 100} ${
+                      <div key={idx} className={`flex items-center text-xs transition-all duration-700 delay-${idx * 150} ${
                         hoveredService === service.id
-                          ? 'text-gray-300 opacity-100 transform translate-x-0'
-                          : 'text-gray-500 opacity-70 transform translate-x-2'
+                          ? 'text-stone-300 opacity-100 transform translate-x-0'
+                          : 'text-stone-500 opacity-80 transform translate-x-1'
                       }`}>
-                        <div className="w-1 h-1 bg-amber-500 rounded-full mr-3"></div>
+                        <div className={`w-1.5 h-1.5 rounded-full mr-4 transition-colors duration-700 ${
+                          hoveredService === service.id ? 'bg-amber-400' : 'bg-amber-700'
+                        }`}></div>
                         {feature}
                       </div>
                     ))}
                   </div>
 
-                  {/* CTA Button */}
+                  {/* CTA Button Elegante */}
                   <button
-                    className={`relative flex items-center px-4 py-2 rounded-full border transition-all duration-500 ease-out delay-200 group/btn overflow-hidden ${
+                    className={`relative flex items-center px-5 py-3 rounded-2xl border transition-all duration-700 ease-out delay-200 group/btn overflow-hidden ${
                       hoveredService === service.id
-                        ? 'text-amber-700 border-amber-700/30 transform -translate-y-1'
-                        : 'text-amber-800 border-amber-800/30 transform translate-y-0'
+                        ? 'text-amber-200 border-amber-600/40 transform -translate-y-1 shadow-lg shadow-amber-900/20'
+                        : 'text-amber-300 border-amber-800/30 transform translate-y-0'
                     } ${
                       hoveredButton === service.id
-                        ? 'w-44 bg-amber-800/10 border-amber-600'
-                        : 'w-36 bg-transparent'
+                        ? 'w-48 bg-gradient-to-r from-amber-900/20 to-stone-800/20 border-amber-500/50'
+                        : 'w-40 bg-gradient-to-r from-amber-950/10 to-stone-900/10'
                     }`}
                     onClick={() => navigate('/catalogo')}
                     onMouseEnter={() => setHoveredButton(service.id)}
                     onMouseLeave={() => setHoveredButton(null)}
                   >
-                    <span className={`font-light text-sm tracking-wide transition-all duration-300 ${
-                      hoveredButton === service.id ? 'transform -translate-y-0.5' : 'transform translate-y-0'
+                    <span className={`font-light text-sm tracking-wider transition-all duration-500 ${
+                      hoveredButton === service.id ? 'transform -translate-y-0.5 text-amber-100' : 'transform translate-y-0'
                     }`}>
                       SABER MAIS
                     </span>
 
-                    {/* Seta animada */}
-                    <div className={`flex items-center justify-center transition-all duration-500 ease-out ${
-                      hoveredButton === service.id ? 'ml-3 opacity-100' : 'ml-2 opacity-70'
+                    {/* Seta elegante */}
+                    <div className={`flex items-center justify-center transition-all duration-700 ease-out ${
+                      hoveredButton === service.id ? 'ml-4 opacity-100' : 'ml-3 opacity-80'
                     }`}>
-                      <ArrowRight className={`w-4 h-4 transition-all duration-500 ease-out ${
+                      <ArrowRight className={`w-4 h-4 transition-all duration-700 ease-out ${
                         hoveredButton === service.id
-                          ? 'transform translate-x-2 text-amber-600'
-                          : 'transform translate-x-0 text-amber-800'
+                          ? 'transform translate-x-2 text-amber-200'
+                          : 'transform translate-x-0 text-amber-400'
                       }`} />
                     </div>
 
-                    {/* Efeito de brilho no fundo */}
-                    <div className={`absolute inset-0 bg-gradient-to-r from-amber-600/0 via-amber-600/10 to-amber-600/0 transition-opacity duration-500 ease-out ${
+                    {/* Efeito de brilho sutil */}
+                    <div className={`absolute inset-0 bg-gradient-to-r from-amber-800/0 via-amber-700/15 to-stone-700/0 transition-opacity duration-700 ease-out ${
                       hoveredButton === service.id ? 'opacity-100' : 'opacity-0'
                     }`}></div>
 
-                    {/* Efeito de raios elétricos sutis */}
-                    <div className={`absolute inset-0 transition-opacity duration-300 ease-out ${
+                    {/* Efeito de vidro elegante */}
+                    <div className={`absolute inset-0 transition-opacity duration-500 ease-out ${
                       hoveredButton === service.id ? 'opacity-100' : 'opacity-0'
                     }`}>
                       <div className="absolute inset-0 opacity-30">
-                        <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-cyan-400 to-transparent animate-pulse"></div>
-                        <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-400 to-transparent animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-amber-300 to-transparent animate-pulse"></div>
+                        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-stone-400 to-transparent animate-pulse" style={{animationDelay: '0.3s'}}></div>
                       </div>
                     </div>
                   </button>
                 </div>
 
-                {/* Hover Effect Lines */}
-                <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-800 to-transparent transform origin-left transition-transform duration-700 ease-out ${
+                {/* Linhas de Elegância */}
+                <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-600/60 to-transparent transform origin-left transition-transform duration-1000 ease-out ${
                   hoveredService === service.id ? 'scale-x-100' : 'scale-x-0'
                 }`} />
-                <div className={`absolute bottom-0 right-0 w-full h-px bg-gradient-to-r from-transparent via-amber-800 to-transparent transform origin-right transition-transform duration-700 ease-out delay-100 ${
+                <div className={`absolute bottom-0 right-0 w-full h-px bg-gradient-to-r from-transparent via-stone-500/40 to-transparent transform origin-right transition-transform duration-1000 ease-out delay-200 ${
                   hoveredService === service.id ? 'scale-x-100' : 'scale-x-0'
                 }`} />
               </div>

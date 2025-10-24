@@ -241,52 +241,52 @@ const ProjectCarousel: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        {/* Header */}
-        <div className="flex items-center justify-between mb-16">
+        {/* Header Elegante */}
+        <div className="flex items-center justify-between mb-20">
           <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white leading-tight">
-            O nosso portfólio em destaque
+            O nosso <span className="text-stone-300">portfólio</span> em destaque
           </h2>
           <button
-            className={`relative px-6 py-3 rounded-full text-sm font-medium shadow-lg overflow-hidden group transform transition-all duration-500 ease-out ${
+            className={`relative px-8 py-4 rounded-2xl text-sm font-medium shadow-xl overflow-hidden group transform transition-all duration-700 ease-out backdrop-blur-xl ${
               isButtonHovered
-                ? 'bg-gray-800 border-2 border-red-500 shadow-red-500/25 scale-105'
-                : 'bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 shadow-amber-500/25 scale-100 hover:scale-105'
+                ? 'bg-gradient-to-r from-stone-800/80 via-amber-900/60 to-stone-800/80 border-2 border-amber-600/50 shadow-amber-700/30 scale-105'
+                : 'bg-gradient-to-r from-amber-800/40 via-stone-700/30 to-amber-900/40 shadow-amber-800/25 scale-100 hover:scale-105 border border-amber-700/30'
             }`}
             onMouseEnter={() => setIsButtonHovered(true)}
             onMouseLeave={() => setIsButtonHovered(false)}
           >
-            <span className={`relative z-10 text-white flex items-center gap-2 transition-all duration-300 ease-out ${
-              isButtonHovered ? 'transform -translate-y-0.5' : 'transform translate-y-0'
+            <span className={`relative z-10 text-white flex items-center gap-3 transition-all duration-500 ease-out ${
+              isButtonHovered ? 'transform -translate-y-0.5 text-stone-200' : 'transform translate-y-0'
             }`}>
-              <Circle className={`w-2 h-2 fill-red-500 text-red-500 transition-all duration-300 ease-out ${
+              <Circle className={`w-2 h-2 fill-amber-400 text-amber-400 transition-all duration-500 ease-out ${
                 isButtonHovered
-                  ? 'opacity-100 scale-100 animate-pulse'
+                  ? 'opacity-100 scale-110 animate-pulse'
                   : 'opacity-0 scale-0'
               }`} />
               Ver todos os projetos
             </span>
 
-            {/* Background transition overlay */}
-            <div className={`absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 transition-opacity duration-500 ease-out ${
+            {/* Efeito de vidro elegante */}
+            <div className={`absolute inset-0 bg-gradient-to-r from-stone-800/60 via-amber-900/40 to-stone-800/60 transition-opacity duration-700 ease-out ${
               isButtonHovered ? 'opacity-100' : 'opacity-0'
             }`}></div>
 
-            {/* Efeito de gradiente eletrizante */}
-            <div className={`absolute inset-0 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 transition-opacity duration-500 ease-out ${
+            {/* Efeito de brilho sutil */}
+            <div className={`absolute inset-0 bg-gradient-to-r from-amber-700/30 via-amber-600/20 to-amber-800/30 transition-opacity duration-700 ease-out ${
               !isButtonHovered ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'
-            } animate-gradient-flow`}></div>
+            }`}></div>
 
-            {/* Efeito de raios elétricos quando hover */}
-            <div className={`absolute inset-0 transition-opacity duration-300 ease-out ${
+            {/* Efeito de textura quando hover */}
+            <div className={`absolute inset-0 transition-opacity duration-500 ease-out ${
               isButtonHovered ? 'opacity-100' : 'opacity-0'
             }`}>
-              <div className="absolute inset-0 animate-electric-flow opacity-60">
-                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-400 to-transparent animate-pulse"></div>
-                <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-400 to-transparent animate-pulse" style={{animationDelay: '0.2s'}}></div>
+              <div className="absolute inset-0 opacity-40">
+                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-amber-300 to-transparent animate-pulse"></div>
+                <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-stone-400 to-transparent animate-pulse" style={{animationDelay: '0.3s'}}></div>
               </div>
 
-              <div className="absolute inset-0 animate-electric-flow-2 opacity-40">
-                <div className="absolute left-0 top-1/3 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse" style={{animationDelay: '0.1s'}}></div>
+              <div className="absolute inset-0 opacity-20">
+                <div className="absolute left-0 top-1/3 w-full h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent animate-pulse" style={{animationDelay: '0.15s'}}></div>
               </div>
             </div>
           </button>
@@ -294,10 +294,10 @@ const ProjectCarousel: React.FC = () => {
 
         {/* Carousel Container */}
         <div className="relative">
-          {/* Navigation Buttons */}
+          {/* Navigation Buttons Elegantes */}
           <button
             onClick={goToPrevious}
-            className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/70 backdrop-blur-sm border border-amber-800/40 rounded-full flex items-center justify-center text-amber-800 hover:bg-amber-800/20 hover:border-amber-800 transition-all duration-300"
+            className="absolute left-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gradient-to-br from-stone-900/80 via-amber-900/60 to-stone-900/80 backdrop-blur-xl border border-amber-700/30 rounded-2xl flex items-center justify-center text-amber-300 hover:bg-gradient-to-br hover:from-amber-900/60 hover:via-stone-800/70 hover:to-amber-900/60 hover:border-amber-600/50 hover:text-amber-200 transition-all duration-500 shadow-lg shadow-amber-900/20"
             aria-label="Anterior"
           >
             <ChevronLeft className="w-5 h-5" />
@@ -305,7 +305,7 @@ const ProjectCarousel: React.FC = () => {
 
           <button
             onClick={goToNext}
-            className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-black/70 backdrop-blur-sm border border-amber-800/40 rounded-full flex items-center justify-center text-amber-800 hover:bg-amber-800/20 hover:border-amber-800 transition-all duration-300"
+            className="absolute right-8 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-gradient-to-br from-stone-900/80 via-amber-900/60 to-stone-900/80 backdrop-blur-xl border border-amber-700/30 rounded-2xl flex items-center justify-center text-amber-300 hover:bg-gradient-to-br hover:from-amber-900/60 hover:via-stone-800/70 hover:to-amber-900/60 hover:border-amber-600/50 hover:text-amber-200 transition-all duration-500 shadow-lg shadow-amber-900/20"
             aria-label="Seguinte"
           >
             <ChevronRight className="w-5 h-5" />
@@ -344,41 +344,41 @@ const ProjectCarousel: React.FC = () => {
                         style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
                       />
 
-                      {/* 🔌 Electric Cinematic Hover (realce no cartão central) */}
+                      {/* Efeito de Vidro Elegante (realce no cartão central) */}
                       <div
                         className={`pointer-events-none absolute inset-0 ${
                           isCenter ? 'opacity-100' : 'opacity-0'
-                        } transition-opacity duration-300`}
+                        } transition-opacity duration-500`}
                       >
-                        {/* Glow pulsante */}
-                        <div className="absolute inset-0 mix-blend-screen animate-electric-glow" />
+                        {/* Brilho sutil */}
+                        <div className="absolute inset-0 mix-blend-soft-light animate-elegant-glow" />
 
-                        {/* Feixes verticais */}
-                        <div className="absolute inset-0 opacity-70">
-                          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-cyan-300 to-transparent animate-electric-beam-1" />
-                          <div className="absolute top-0 left-2/3 w-px h-full bg-gradient-to-b from-transparent via-indigo-300 to-transparent animate-electric-beam-2" />
+                        {/* Feixes verticais elegantes */}
+                        <div className="absolute inset-0 opacity-40">
+                          <div className="absolute top-0 left-1/3 w-px h-full bg-gradient-to-b from-transparent via-amber-300/60 to-transparent animate-elegant-beam-1" />
+                          <div className="absolute top-0 left-2/3 w-px h-full bg-gradient-to-b from-transparent via-stone-300/40 to-transparent animate-elegant-beam-2" />
                         </div>
 
-                        {/* Varredura horizontal */}
-                        <div className="absolute left-0 right-0 h-0.5 top-1/2 bg-gradient-to-r from-transparent via-white/50 to-transparent animate-scanline" />
+                        {/* Varredura horizontal sutil */}
+                        <div className="absolute left-0 right-0 h-px top-1/2 bg-gradient-to-r from-transparent via-amber-200/30 to-transparent animate-elegant-scanline" />
 
-                        {/* Sparks */}
-                        <div className="absolute -top-2 left-4 w-8 h-8 rounded-full blur-[6px] bg-cyan-300/50 animate-spark-1" />
-                        <div className="absolute -bottom-2 right-6 w-8 h-8 rounded-full blur-[6px] bg-indigo-300/50 animate-spark-2" />
+                        {/* Pontos de luz */}
+                        <div className="absolute -top-2 left-4 w-6 h-6 rounded-full blur-[4px] bg-amber-400/30 animate-elegant-spark-1" />
+                        <div className="absolute -bottom-2 right-6 w-6 h-6 rounded-full blur-[4px] bg-stone-400/20 animate-elegant-spark-2" />
                       </div>
 
-                      {/* Overlay CTA */}
-                      <div className="absolute inset-0 bg-black/35 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      {/* Overlay CTA Elegante */}
+                      <div className="absolute inset-0 bg-gradient-to-br from-stone-900/40 via-amber-900/30 to-stone-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-500 backdrop-blur-sm">
                         <div className="absolute inset-0 flex items-center justify-center">
-                          <div className="text-center translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                            <div className="w-14 h-14 bg-amber-800/90 rounded-full flex items-center justify-center mb-3 mx-auto backdrop-blur-sm shadow-[0_0_25px_rgba(255,200,80,0.25)]">
-                              <Play className="w-7 h-7 text-white ml-1" />
+                          <div className="text-center translate-y-3 group-hover:translate-y-0 transition-transform duration-500">
+                            <div className="w-16 h-16 bg-gradient-to-br from-amber-700/90 via-stone-600/80 to-amber-800/90 rounded-2xl flex items-center justify-center mb-4 mx-auto backdrop-blur-md shadow-xl shadow-amber-900/40 border border-amber-600/30">
+                              <Play className="w-8 h-8 text-amber-100 ml-1" />
                             </div>
-                            <div className="text-white text-xs font-light mb-0.5 opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-100">
-                              WATCH
+                            <div className="text-stone-200 text-xs font-light mb-1 opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-150">
+                              ASSISTIR
                             </div>
-                            <div className="text-white text-xs font-light opacity-0 group-hover:opacity-100 transition-opacity duration-200 delay-150">
-                              FULL VIDEO
+                            <div className="text-stone-300 text-xs font-light opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-200">
+                              VÍDEO COMPLETO
                             </div>
                           </div>
                         </div>
@@ -401,38 +401,38 @@ const ProjectCarousel: React.FC = () => {
             <style>{`
               [aria-roledescription="carrossel horizontal"]::-webkit-scrollbar { height: 0; width: 0; }
 
-              /* ====== ELECTRIC CINEMATIC EFFECTS ====== */
-              @keyframes electricGlow {
+              /* ====== ELEGANT GLASS EFFECTS ====== */
+              @keyframes elegantGlow {
                 0%, 100% { box-shadow: inset 0 0 0 rgba(0,0,0,0), 0 0 0 rgba(0,0,0,0); }
-                50%      { box-shadow: inset 0 0 60px rgba(0, 255, 255, .18), 0 0 80px rgba(99, 102, 241, .18); }
+                50%      { box-shadow: inset 0 0 40px rgba(180, 83, 9, .12), 0 0 60px rgba(120, 53, 15, .08); }
               }
-              .animate-electric-glow { animation: electricGlow 1.6s ease-in-out infinite; }
+              .animate-elegant-glow { animation: elegantGlow 2.2s ease-in-out infinite; }
 
-              @keyframes electricBeam1 {
-                0%, 100% { opacity: .25; transform: scaleY(1); }
-                50%      { opacity: .8;  transform: scaleY(1.06); }
+              @keyframes elegantBeam1 {
+                0%, 100% { opacity: .2; transform: scaleY(1); }
+                50%      { opacity: .6;  transform: scaleY(1.03); }
               }
-              @keyframes electricBeam2 {
-                0%, 100% { opacity: .25; transform: scaleY(1); }
-                50%      { opacity: .9;  transform: scaleY(0.94); }
+              @keyframes elegantBeam2 {
+                0%, 100% { opacity: .15; transform: scaleY(1); }
+                50%      { opacity: .5;  transform: scaleY(0.97); }
               }
-              .animate-electric-beam-1 { animation: electricBeam1 .9s ease-in-out infinite; }
-              .animate-electric-beam-2 { animation: electricBeam2 1.1s ease-in-out infinite; }
+              .animate-elegant-beam-1 { animation: elegantBeam1 1.8s ease-in-out infinite; }
+              .animate-elegant-beam-2 { animation: elegantBeam2 2.4s ease-in-out infinite; }
 
-              @keyframes scanline {
-                0%   { transform: translateY(-60%); opacity: 0; }
-                35%  { opacity: .8; }
-                70%  { opacity: .8; }
-                100% { transform: translateY(60%); opacity: 0; }
+              @keyframes elegantScanline {
+                0%   { transform: translateY(-80%); opacity: 0; }
+                40%  { opacity: .3; }
+                60%  { opacity: .3; }
+                100% { transform: translateY(80%); opacity: 0; }
               }
-              .animate-scanline { animation: scanline 1.4s ease-in-out infinite; }
+              .animate-elegant-scanline { animation: elegantScanline 3s ease-in-out infinite; }
 
-              @keyframes spark {
-                0%, 100% { transform: scale(.9); opacity: .35; }
-                50%      { transform: scale(1.15); opacity: .8; }
+              @keyframes elegantSpark {
+                0%, 100% { transform: scale(.8); opacity: .2; }
+                50%      { transform: scale(1.1); opacity: .4; }
               }
-              .animate-spark-1 { animation: spark 1.2s ease-in-out infinite; }
-              .animate-spark-2 { animation: spark 1.6s ease-in-out infinite; }
+              .animate-elegant-spark-1 { animation: elegantSpark 2s ease-in-out infinite; }
+              .animate-elegant-spark-2 { animation: elegantSpark 2.8s ease-in-out infinite; }
             `}</style>
           </div>
         </div>

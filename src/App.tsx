@@ -173,16 +173,18 @@ function App() {
         }} />
       </div>
 
-      <Cursor />
       <Navbar />
       <SocialSidebar />
 
-      {/* Apply custom cursor only to main content areas with padding-top */}
-      <div className="custom-cursor-area pt-6">
+      {/* Main content with padding-top */}
+      <div className="pt-6">
         {renderPage()}
       </div>
 
-        <Footer />
+      <Footer />
+
+      {/* Cursor deve estar no final para ficar sempre no topo */}
+      <Cursor />
       </div>
     </>
   );
