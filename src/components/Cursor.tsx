@@ -31,19 +31,21 @@ const Cursor: React.FC = () => {
   return (
     <div
       ref={cursorRef}
-      className="fixed pointer-events-none z-50 mix-blend-difference transition-transform duration-150 ease-out"
+      className="fixed pointer-events-none z-[9999] transition-all duration-200 ease-out"
       style={{
-        left: position.x - 12,
-        top: position.y - 12,
-        transform: `scale(${isHovering ? 1.3 : 1})`
+        left: position.x - 10,
+        top: position.y - 10,
+        transform: `scale(${isHovering ? 1.5 : 1})`
       }}
       aria-hidden="true"
     >
-      <div className={`w-6 h-6 border-2 rounded-full flex items-center justify-center transition-all duration-150 ${
-        isHovering ? 'border-amber-400 bg-amber-400/10' : 'border-white/80'
+      <div className={`w-5 h-5 rounded-full border-2 transition-all duration-200 ${
+        isHovering
+          ? 'border-amber-400 bg-amber-400/20 shadow-lg shadow-amber-400/50'
+          : 'border-white bg-white/10 shadow-lg shadow-white/30'
       }`}>
-        <div className={`w-1.5 h-1.5 rounded-full transition-all duration-150 ${
-          isHovering ? 'bg-amber-400' : 'bg-white/80 animate-pulse'
+        <div className={`w-1 h-1 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${
+          isHovering ? 'bg-amber-400' : 'bg-white animate-pulse'
         }`}></div>
       </div>
     </div>

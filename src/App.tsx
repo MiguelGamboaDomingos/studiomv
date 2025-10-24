@@ -107,6 +107,11 @@ function App() {
 
         body {
           transition: all 0.3s ease;
+          cursor: none;
+        }
+
+        * {
+          cursor: none !important;
         }
 
         .custom-cursor-area {
