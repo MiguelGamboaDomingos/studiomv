@@ -29,11 +29,12 @@ import { useSettings } from '../../hooks/useFirebase';
 import VideoUploader, { VideoData } from './VideoUploader';
 
 const SettingsManagerNew: React.FC = () => {
-  const { 
-    settings: currentSettings, 
-    loading, 
-    error, 
-    updateSettings 
+  const {
+    settings: currentSettings,
+    loading,
+    error,
+    updateSettings,
+    createSettings
   } = useSettings();
   
   const [activeTab, setActiveTab] = useState('general');
@@ -125,15 +126,7 @@ const SettingsManagerNew: React.FC = () => {
         await updateSettings(currentSettings[0].id, settings);
       } else {
         // Criar novas configurações
-        const newSettings = {
-          ...settings,
-          id: 'site-settings',
-          createdAt: new Date().toISOString(),
-          updatedAt: new Date().toISOString()
-        } as SiteSettings;
-        
-        // Aqui você precisaria de um método createSettings
-        console.log('Criar novas configurações:', newSettings);
+        await createSettings(settings as Omit<SiteSettings, 'id' | 'createdAt' | 'updatedAt'>);
       }
       
       setSaved(true);

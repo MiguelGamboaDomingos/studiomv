@@ -376,48 +376,7 @@ export const useMedia = () => {
   };
 };
 
-// Hook para configurações
-export const useSettings = () => {
-  const [settings, setSettings] = useState<SiteSettings | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  const fetchSettings = async () => {
-    try {
-      setLoading(true);
-      const data = await FirebaseService.getSettings();
-      setSettings(data);
-      setError(null);
-    } catch (err) {
-      setError('Erro ao carregar configurações');
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const updateSettings = async (updates: Partial<SiteSettings>) => {
-    try {
-      await FirebaseService.updateSettings(updates);
-      await fetchSettings();
-    } catch (err) {
-      setError('Erro ao atualizar configurações');
-      throw err;
-    }
-  };
-
-  useEffect(() => {
-    fetchSettings();
-  }, []);
-
-  return {
-    settings,
-    loading,
-    error,
-    fetchSettings,
-    updateSettings,
-  };
-};
 
 // Hook para contactos
 export const useContacts = () => {
