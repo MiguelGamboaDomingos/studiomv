@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit, 
-  Trash2, 
-  Eye, 
+import {
+  Plus,
+  Search,
+  Filter,
+  Edit,
+  Trash2,
+  Eye,
   EyeOff,
   Star,
   Calendar,
@@ -13,22 +13,9 @@ import {
   Play,
   Image as ImageIcon
 } from 'lucide-react';
-
-interface Project {
-  id: string;
-  title: string;
-  description: string;
-  category: string;
-  client: string;
-  year: number;
-  duration: string;
-  thumbnail: string;
-  videoUrl?: string;
-  featured: boolean;
-  published: boolean;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Project } from '../../types';
+import { useProjects } from '../../hooks/useFirebase';
+import VideoUploader, { VideoData } from './VideoUploader';
 
 const ProjectsManager: React.FC = () => {
   const [projects, setProjects] = useState<Project[]>([]);

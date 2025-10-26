@@ -15,7 +15,7 @@ import {
   Mail
 } from 'lucide-react';
 import AdminDashboard from '../components/admin/AdminDashboard';
-import ProjectsManager from '../components/admin/ProjectsManager';
+import ProjectsManagerFirebase from '../components/admin/ProjectsManagerFirebase';
 import ServicesManager from '../components/admin/ServicesManager';
 import TeamManager from '../components/admin/TeamManager';
 import MediaManager from '../components/admin/MediaManager';
@@ -72,7 +72,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
       case 'dashboard':
         return <AdminDashboard />;
       case 'projects':
-        return <ProjectsManager />;
+        return <ProjectsManagerFirebase />;
       case 'services':
         return <ServicesManager />;
       case 'team':
