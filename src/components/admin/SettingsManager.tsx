@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Save, 
-  Globe, 
-  Mail, 
-  Phone, 
+import {
+  Save,
+  Globe,
+  Mail,
+  Phone,
   MapPin,
   Instagram,
   Facebook,
@@ -13,41 +13,17 @@ import {
   Search,
   Palette,
   Shield,
-  Bell
+  Bell,
+  Video,
+  Type,
+  Image as ImageIcon,
+  Play,
+  Link,
+  MessageSquare
 } from 'lucide-react';
-
-interface SiteSettings {
-  // General
-  siteName: string;
-  tagline: string;
-  description: string;
-  
-  // Contact
-  email: string;
-  phone: string;
-  address: string;
-  
-  // Social Media
-  socialLinks: {
-    instagram?: string;
-    facebook?: string;
-    linkedin?: string;
-    youtube?: string;
-    vimeo?: string;
-    behance?: string;
-  };
-  
-  // SEO
-  metaTitle: string;
-  metaDescription: string;
-  metaKeywords: string;
-  
-  // Analytics
-  googleAnalyticsId?: string;
-  facebookPixelId?: string;
-  
-  // Maintenance
-  maintenanceMode: boolean;
+import { SiteSettings } from '../../types';
+import { useSettings } from '../../hooks/useFirebase';
+import VideoUploader, { VideoData } from './VideoUploader';
   maintenanceMessage?: string;
 }
 

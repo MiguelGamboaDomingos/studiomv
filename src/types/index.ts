@@ -149,19 +149,51 @@ export interface ContactForm {
 
 export interface SiteSettings {
   id: string;
-  
+
   // General
   siteName: string;
   tagline: string;
   description: string;
-  logo: MediaAsset;
-  favicon: MediaAsset;
-  
+  logo?: string; // URL da logo
+  favicon?: string; // URL do favicon
+
+  // Hero Section
+  heroTitle: string;
+  heroSubtitle: string;
+  heroDescription: string;
+  showreelVideoUrl: string; // URL do vídeo showreel
+  showreelThumbnail?: string; // Thumbnail do showreel
+
+  // Section Titles
+  sectionTitles: {
+    about: string; // "Sobre Nós"
+    services: string; // "Nossos Serviços"
+    portfolio: string; // "Nosso Portfólio"
+    testimonials: string; // "Testemunhos"
+    contact: string; // "Contacto"
+    team: string; // "Nossa Equipa"
+    process: string; // "Nosso Processo"
+    stats: string; // "Números que Falam"
+  };
+
+  // Section Descriptions
+  sectionDescriptions: {
+    about: string;
+    services: string;
+    portfolio: string;
+    testimonials: string;
+    contact: string;
+    team: string;
+    process: string;
+    stats: string;
+  };
+
   // Contact
   email: string;
   phone: string;
+  whatsapp: string;
   address: string;
-  
+
   // Social Media
   socialLinks: {
     instagram?: string;
@@ -170,23 +202,25 @@ export interface SiteSettings {
     youtube?: string;
     vimeo?: string;
     behance?: string;
+    tiktok?: string;
   };
-  
+
   // SEO
   metaTitle: string;
   metaDescription: string;
   metaKeywords: string[];
-  ogImage: MediaAsset;
-  
+  ogImage?: string; // URL da imagem OG
+
   // Analytics
   googleAnalyticsId?: string;
   facebookPixelId?: string;
-  
+
   // Maintenance
   maintenanceMode: boolean;
   maintenanceMessage?: string;
-  
+
   // Timestamps
+  createdAt: string;
   updatedAt: string;
 }
 

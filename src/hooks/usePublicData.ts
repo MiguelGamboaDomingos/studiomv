@@ -355,3 +355,34 @@ export const useSiteStats = () => {
 
   return { stats, loading, error };
 };
+
+// Hook para configurações do site (público)
+export const usePublicSettings = () => {
+  const [settings, setSettings] = useState<SiteSettings | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        setLoading(true);
+        const allSettings = await FirebaseService.getSettings();
+
+        // Pegar as primeiras configurações (deve haver apenas uma)
+        const siteSettings = allSettings.length > 0 ? allSettings[0] : null;
+
+        setSettings(siteSettings);
+        setError(null);
+      } catch (err) {
+        console.error('Erro ao carregar configurações do site:', err);
+        setError('Erro ao carregar configurações do site');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSettings();
+  }, []);
+
+  return { settings, loading, error };
+};

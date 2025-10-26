@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { useScrollAnimation } from '../hooks/useParallax';
 import { ParallaxElement, ParallaxLayers } from './HomeParallax';
 import DramaticTransitions, { TypewriterEffect } from './DramaticTransitions';
+import { usePublicSettings } from '../hooks/usePublicData';
 
 // Spline Scene Component
 declare global {
@@ -55,10 +56,16 @@ const useSplineAutoClick = (splineRef: React.RefObject<any>) => {
 
 
 const Hero: React.FC = () => {
+  const { settings } = usePublicSettings();
   const splineRef = useRef<any>(null);
   const { elementRef: heroRef } = useScrollAnimation(0.1);
   const [isHoveringTitle, setIsHoveringTitle] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+
+  // Textos do Hero (do Firebase ou padrão)
+  const heroTitle = settings?.heroTitle || 'Filmes que carregam';
+  const heroSubtitle = settings?.heroSubtitle || 'emoções, frames que guardam histórias.';
+  const heroDescription = settings?.heroDescription || 'O vídeo que a sua marca precisa, nós criamos com paixão.';
 
   // Hook para trigger automático no Spline quando faz scroll
   useSplineAutoClick(splineRef);
@@ -200,11 +207,9 @@ const Hero: React.FC = () => {
               onMouseLeave={() => setIsHoveringTitle(false)}
             >
               <span className={isHoveringTitle ? 'animate-glitch-text' : ''}>
-                Filmes que carregam
+                {heroTitle}
                 <br />
-                emoções, frames que
-                <br />
-                guardam histórias.
+                {heroSubtitle}
               </span>
 
               {/* Efeito de matriz elétrica - Grid organizado */}
@@ -266,7 +271,7 @@ const Hero: React.FC = () => {
           <DramaticTransitions type="slideUp" delay={2000} duration={1000}>
             <p className="text-base sm:text-lg text-gray-300 font-light mb-8 max-w-2xl">
               <TypewriterEffect
-                text="O vídeo que a sua marca precisa, nós criamos com paixão."
+                text={heroDescription}
                 speed={80}
                 delay={500}
               />

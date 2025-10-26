@@ -20,7 +20,7 @@ import ServicesManager from '../components/admin/ServicesManager';
 import TeamManager from '../components/admin/TeamManager';
 import MediaManager from '../components/admin/MediaManager';
 import ContactManager from '../components/admin/ContactManager';
-import SettingsManager from '../components/admin/SettingsManager';
+import SettingsManagerNew from '../components/admin/SettingsManagerNew';
 import TestimonialsManager from '../components/admin/TestimonialsManager';
 
 interface AdminPageProps {}
@@ -84,7 +84,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
       case 'contacts':
         return <ContactManager />;
       case 'settings':
-        return <SettingsManager />;
+        return <SettingsManagerNew />;
       default:
         return <AdminDashboard />;
     }

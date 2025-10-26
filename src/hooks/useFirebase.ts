@@ -68,6 +68,61 @@ export const useProjects = () => {
   };
 };
 
+// Hook para configurações do site
+export const useSettings = () => {
+  const [settings, setSettings] = useState<SiteSettings[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchSettings = async () => {
+    try {
+      setLoading(true);
+      const data = await FirebaseService.getSettings();
+      setSettings(data);
+      setError(null);
+    } catch (err) {
+      setError('Erro ao carregar configurações');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createSettings = async (settingsData: Omit<SiteSettings, 'id' | 'createdAt' | 'updatedAt'>) => {
+    try {
+      const id = await FirebaseService.createSettings(settingsData);
+      await fetchSettings(); // Recarregar lista
+      return id;
+    } catch (err) {
+      setError('Erro ao criar configurações');
+      throw err;
+    }
+  };
+
+  const updateSettings = async (id: string, updates: Partial<SiteSettings>) => {
+    try {
+      await FirebaseService.updateSettings(id, updates);
+      await fetchSettings(); // Recarregar lista
+    } catch (err) {
+      setError('Erro ao atualizar configurações');
+      throw err;
+    }
+  };
+
+  useEffect(() => {
+    fetchSettings();
+  }, []);
+
+  return {
+    settings,
+    loading,
+    error,
+    fetchSettings,
+    createSettings,
+    updateSettings,
+  };
+};
+
 // Hook para serviços
 export const useServices = () => {
   const [services, setServices] = useState<Service[]>([]);

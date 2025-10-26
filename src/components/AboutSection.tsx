@@ -3,9 +3,15 @@ import { useScrollAnimation } from '../hooks/useParallax';
 import ImmersiveTransitions from './ImmersiveTransitions';
 import { ParallaxElement } from './HomeParallax';
 import DramaticTransitions, { SectionTransition } from './DramaticTransitions';
+import { usePublicSettings } from '../hooks/usePublicData';
 
 const AboutSection: React.FC = () => {
+  const { settings } = usePublicSettings();
   const { elementRef: sectionRef } = useScrollAnimation(0.1);
+
+  // Títulos da seção (do Firebase ou padrão)
+  const aboutTitle = settings?.sectionTitles?.about || 'Sobre Nós';
+  const aboutDescription = settings?.sectionDescriptions?.about || 'Conheça nossa paixão pela arte cinematográfica';
 
   return (
     <section
@@ -36,11 +42,11 @@ const AboutSection: React.FC = () => {
             <ImmersiveTransitions direction="up" delay={300} duration={1000}>
               <div>
                 <h2 className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-8 leading-tight">
-                  Criamos narrativas que
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-600">
-                    {" "}conectam
-                  </span>
+                  {aboutTitle}
                 </h2>
+                <p className="text-lg text-stone-400 mb-8">
+                  {aboutDescription}
+                </p>
               </div>
             </ImmersiveTransitions>
 

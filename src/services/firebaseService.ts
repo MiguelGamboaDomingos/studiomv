@@ -464,6 +464,61 @@ export class FirebaseService {
       throw error;
     }
   }
+
+  // Configurações do Site
+  static async getSettings(): Promise<SiteSettings[]> {
+    try {
+      const querySnapshot = await getDocs(collection(db, COLLECTIONS.SETTINGS));
+      return querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt,
+          updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt,
+        } as SiteSettings;
+      });
+    } catch (error) {
+      console.error('Erro ao buscar configurações:', error);
+      throw error;
+    }
+  }
+
+  static async createSettings(settingsData: Omit<SiteSettings, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
+    try {
+      const now = Timestamp.now();
+      const docRef = await addDoc(collection(db, COLLECTIONS.SETTINGS), {
+        ...settingsData,
+        createdAt: now,
+        updatedAt: now,
+      });
+      return docRef.id;
+    } catch (error) {
+      console.error('Erro ao criar configurações:', error);
+      throw error;
+    }
+  }
+
+  static async updateSettings(id: string, updates: Partial<SiteSettings>): Promise<void> {
+    try {
+      await updateDoc(doc(db, COLLECTIONS.SETTINGS, id), {
+        ...updates,
+        updatedAt: Timestamp.now(),
+      });
+    } catch (error) {
+      console.error('Erro ao atualizar configurações:', error);
+      throw error;
+    }
+  }
+
+  static async deleteSettings(id: string): Promise<void> {
+    try {
+      await deleteDoc(doc(db, COLLECTIONS.SETTINGS, id));
+    } catch (error) {
+      console.error('Erro ao eliminar configurações:', error);
+      throw error;
+    }
+  }
 }
 
 export default FirebaseService;

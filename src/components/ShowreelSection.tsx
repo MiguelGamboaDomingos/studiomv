@@ -4,8 +4,10 @@ import { useScrollAnimation } from '../hooks/useParallax';
 import ImmersiveTransitions from './ImmersiveTransitions';
 import HomeParallax, { ParallaxElement } from './HomeParallax';
 import DramaticTransitions, { SectionTransition } from './DramaticTransitions';
+import { usePublicSettings } from '../hooks/usePublicData';
 
 const ShowreelSection: React.FC = () => {
+  const { settings, loading: settingsLoading } = usePublicSettings();
   const [isPlaying, setIsPlaying] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [isMuted, setIsMuted] = useState(true); // Iniciar mutado para permitir autoplay
@@ -14,6 +16,9 @@ const ShowreelSection: React.FC = () => {
   const [hasUserInteracted, setHasUserInteracted] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const { elementRef: sectionRef } = useScrollAnimation(0.1);
+
+  // URL do vídeo showreel (do Firebase ou padrão)
+  const showreelVideoUrl = settings?.showreelVideoUrl || '/videos/showreel.mp4';
 
   // Intersection Observer para detectar quando o vídeo está visível
   useEffect(() => {
@@ -212,7 +217,7 @@ const ShowreelSection: React.FC = () => {
               muted={isMuted}
               preload="metadata"
             >
-              <source src="/video/showreel/showreel.mp4" type="video/mp4" />
+              <source src={showreelVideoUrl} type="video/mp4" />
               Seu navegador não suporta vídeo HTML5.
             </video>
 
