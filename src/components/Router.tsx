@@ -26,6 +26,9 @@ import {
   LazyContactPage,
 } from './LazyComponent';
 
+// Import admin page
+import AdminPage from '../pages/AdminPage';
+
 // Import SEO component
 import SEO, { usePageSEO } from './SEO';
 
@@ -40,7 +43,11 @@ const PageLoader: React.FC = () => (
 );
 
 // Layout wrapper component
-const Layout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const Layout: React.FC<{ children: React.ReactNode; isAdmin?: boolean }> = ({ children, isAdmin = false }) => {
+  if (isAdmin) {
+    return <main>{children}</main>;
+  }
+
   return (
     <div className="relative min-h-screen bg-black overflow-x-hidden">
       {/* Background Grid */}
@@ -219,28 +226,43 @@ const AppRouter: React.FC = () => {
   return (
     <HelmetProvider>
       <BrowserRouter>
-        <Layout>
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* Main routes */}
-              <Route path="/" element={<HomePage />} />
-              <Route path="/portfolio" element={<PortfolioPage />} />
-              <Route path="/services" element={<ServicesPageComponent />} />
-              <Route path="/catalogo" element={<ServicesPageComponent />} />
-              <Route path="/about" element={<AboutPageComponent />} />
-              <Route path="/contact" element={<ContactPageComponent />} />
+        <Routes>
+          {/* Admin route - no layout */}
+          <Route
+            path="/admin"
+            element={
+              <Layout isAdmin={true}>
+                <AdminPage />
+              </Layout>
+            }
+          />
 
-              {/* Legacy hash routes - redirect to proper URLs */}
-              <Route path="/home" element={<Navigate to="/" replace />} />
-              <Route path="/services-page" element={<Navigate to="/services" replace />} />
-              <Route path="/about-page" element={<Navigate to="/about" replace />} />
-              <Route path="/contact-page" element={<Navigate to="/contact" replace />} />
+          {/* Main routes with layout */}
+          <Route path="/*" element={
+            <Layout>
+              <Suspense fallback={<PageLoader />}>
+                <Routes>
+                  {/* Main routes */}
+                  <Route path="/" element={<HomePage />} />
+                  <Route path="/portfolio" element={<PortfolioPage />} />
+                  <Route path="/services" element={<ServicesPageComponent />} />
+                  <Route path="/catalogo" element={<ServicesPageComponent />} />
+                  <Route path="/about" element={<AboutPageComponent />} />
+                  <Route path="/contact" element={<ContactPageComponent />} />
 
-              {/* 404 page */}
-              <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-          </Suspense>
-        </Layout>
+                  {/* Legacy hash routes - redirect to proper URLs */}
+                  <Route path="/home" element={<Navigate to="/" replace />} />
+                  <Route path="/services-page" element={<Navigate to="/services" replace />} />
+                  <Route path="/about-page" element={<Navigate to="/about" replace />} />
+                  <Route path="/contact-page" element={<Navigate to="/contact" replace />} />
+
+                  {/* 404 page */}
+                  <Route path="*" element={<NotFoundPage />} />
+                </Routes>
+              </Suspense>
+            </Layout>
+          } />
+        </Routes>
       </BrowserRouter>
     </HelmetProvider>
   );
