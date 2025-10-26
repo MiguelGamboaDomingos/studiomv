@@ -3,6 +3,7 @@ import { Camera, Scissors, Monitor, Lightbulb, ArrowRight, Zap } from 'lucide-re
 import { useNavigate } from 'react-router-dom';
 import { ParallaxElement } from './HomeParallax';
 import DramaticTransitions from './DramaticTransitions';
+import StandardButton from './StandardButton';
 
 interface Service {
   id: number;
@@ -190,53 +191,15 @@ const ServicesSection: React.FC = () => {
                     ))}
                   </div>
 
-                  {/* CTA Button Elegante */}
-                  <button
-                    className={`relative flex items-center px-5 py-3 rounded-2xl border transition-all duration-700 ease-out delay-200 group/btn overflow-hidden ${
-                      hoveredService === service.id
-                        ? 'text-amber-200 border-amber-600/40 transform -translate-y-1 shadow-lg shadow-amber-900/20'
-                        : 'text-amber-300 border-amber-800/30 transform translate-y-0'
-                    } ${
-                      hoveredButton === service.id
-                        ? 'w-48 bg-gradient-to-r from-amber-900/20 to-stone-800/20 border-amber-500/50'
-                        : 'w-40 bg-gradient-to-r from-amber-950/10 to-stone-900/10'
-                    }`}
-                    onClick={() => navigate('/catalogo')}
-                    onMouseEnter={() => setHoveredButton(service.id)}
-                    onMouseLeave={() => setHoveredButton(null)}
+                  {/* CTA Button Padronizado */}
+                  <StandardButton
+                    variant="secondary"
+                    size="sm"
+                    href="/catalogo"
+                    className="w-40"
                   >
-                    <span className={`font-light text-sm tracking-wider transition-all duration-500 ${
-                      hoveredButton === service.id ? 'transform -translate-y-0.5 text-amber-100' : 'transform translate-y-0'
-                    }`}>
-                      SABER MAIS
-                    </span>
-
-                    {/* Seta elegante */}
-                    <div className={`flex items-center justify-center transition-all duration-700 ease-out ${
-                      hoveredButton === service.id ? 'ml-4 opacity-100' : 'ml-3 opacity-80'
-                    }`}>
-                      <ArrowRight className={`w-4 h-4 transition-all duration-700 ease-out ${
-                        hoveredButton === service.id
-                          ? 'transform translate-x-2 text-amber-200'
-                          : 'transform translate-x-0 text-amber-400'
-                      }`} />
-                    </div>
-
-                    {/* Efeito de brilho sutil */}
-                    <div className={`absolute inset-0 bg-gradient-to-r from-amber-800/0 via-amber-700/15 to-stone-700/0 transition-opacity duration-700 ease-out ${
-                      hoveredButton === service.id ? 'opacity-100' : 'opacity-0'
-                    }`}></div>
-
-                    {/* Efeito de vidro elegante */}
-                    <div className={`absolute inset-0 transition-opacity duration-500 ease-out ${
-                      hoveredButton === service.id ? 'opacity-100' : 'opacity-0'
-                    }`}>
-                      <div className="absolute inset-0 opacity-30">
-                        <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-amber-300 to-transparent animate-pulse"></div>
-                        <div className="absolute top-0 right-1/4 w-px h-full bg-gradient-to-b from-transparent via-stone-400 to-transparent animate-pulse" style={{animationDelay: '0.3s'}}></div>
-                      </div>
-                    </div>
-                  </button>
+                    Saber Mais
+                  </StandardButton>
                 </div>
 
                 {/* Linhas de Elegância */}

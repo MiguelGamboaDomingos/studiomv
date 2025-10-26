@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Clock, MessageCircle } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Clock, MessageCircle, Zap } from 'lucide-react';
+import StandardButton from '../components/StandardButton';
 
 const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -76,42 +77,71 @@ const ContactPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black pt-20">
-      {/* Grid Background */}
-      <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
+    <div className="min-h-screen bg-gradient-to-br from-black via-stone-950 to-amber-950/20 pt-20">
+      {/* Electric Grid Background */}
+      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(139,69,19,0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(139,69,19,0.3) 1px, transparent 1px)
+            linear-gradient(rgba(251,191,36,0.4) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(251,191,36,0.4) 1px, transparent 1px)
           `,
-          backgroundSize: '40px 40px'
+          backgroundSize: '50px 50px'
         }} />
       </div>
 
-      {/* Film Grain */}
-      <div className="fixed inset-0 opacity-10 pointer-events-none z-0"
+      {/* Electric Lines Animation */}
+      <div className="fixed inset-0 opacity-5 pointer-events-none z-0">
+        {[...Array(12)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-600/40 to-transparent animate-pulse"
+            style={{
+              left: `${(i + 1) * 8.33}%`,
+              animationDelay: `${i * 0.3}s`,
+              animationDuration: '4s'
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Film Grain Eletrificado */}
+      <div className="fixed inset-0 opacity-8 pointer-events-none z-0"
            style={{
-             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(139,69,19,0.1) 1px)`,
-             backgroundSize: '3px 3px',
-             animation: 'grain 8s steps(10) infinite'
+             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(251,191,36,0.1) 1px)`,
+             backgroundSize: '4px 4px',
+             animation: 'grain 6s steps(8) infinite'
            }} />
 
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-20">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Vamos <span className="text-amber-900">Conversar</span>
+        {/* Header Eletrificado */}
+        <div className="text-center mb-20 relative">
+          {/* Electric Effect Behind Title */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-20">
+            <div className="w-96 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent animate-pulse"></div>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-light text-white mb-6 relative">
+            Vamos <span className="text-amber-400 font-normal">Conversar</span>
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-stone-300 max-w-3xl mx-auto leading-relaxed">
             Conte-nos sobre o seu projeto e transformaremos a sua visão em realidade cinematográfica.
           </p>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-12 mb-20">
-          {/* Contact Form */}
+          {/* Contact Form Eletrificado */}
           <div className="lg:col-span-2">
-            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8">
-              <h2 className="text-3xl font-bold text-white mb-8">Solicitar Orçamento</h2>
+            <div className="bg-gradient-to-br from-stone-950/40 via-amber-950/20 to-stone-900/60 backdrop-blur-xl border border-amber-800/30 rounded-3xl p-8 relative overflow-hidden group">
+              {/* Electric Border Effect */}
+              <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+                <div className="absolute inset-0 rounded-3xl border border-amber-600/50 animate-pulse"></div>
+              </div>
+
+              <h2 className="text-3xl font-light text-white mb-8 relative">
+                Solicitar <span className="text-amber-400">Orçamento</span>
+                <Zap className="inline-block w-6 h-6 ml-2 text-amber-500" />
+              </h2>
               
               {isSubmitted && (
                 <div className="mb-6 p-4 bg-green-900/20 border border-green-900/40 rounded-lg text-green-400">
@@ -122,7 +152,7 @@ const ContactPage: React.FC = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-gray-300 text-sm font-medium mb-2">
+                    <label className="block text-stone-300 text-sm font-light mb-3">
                       Nome Completo *
                     </label>
                     <input
@@ -131,12 +161,12 @@ const ContactPage: React.FC = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-amber-900 transition-colors"
+                      className="w-full px-4 py-3 bg-amber-950/10 backdrop-blur-sm border border-amber-800/30 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:border-amber-600/60 focus:bg-amber-950/20 transition-all duration-500"
                       placeholder="O seu nome completo"
                     />
                   </div>
                   <div>
-                    <label className="block text-gray-300 text-sm font-medium mb-2">
+                    <label className="block text-stone-300 text-sm font-light mb-3">
                       Email *
                     </label>
                     <input
@@ -145,7 +175,7 @@ const ContactPage: React.FC = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-amber-900 transition-colors"
+                      className="w-full px-4 py-3 bg-amber-950/10 backdrop-blur-sm border border-amber-800/30 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:border-amber-600/60 focus:bg-amber-950/20 transition-all duration-500"
                       placeholder="seu@email.com"
                     />
                   </div>

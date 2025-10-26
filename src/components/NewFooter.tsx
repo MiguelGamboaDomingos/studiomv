@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Camera, ArrowRight, Zap, Eye } from 'lucide-react';
+import StandardButton from './StandardButton';
 
 const NewFooter: React.FC = () => {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
@@ -86,47 +87,16 @@ const NewFooter: React.FC = () => {
               Tem dúvidas, ideias para projetos ou só quer dizer oi? Estamos todos ouvindo!
             </p>
 
-            {/* CTA Button */}
-            <button
-              className={`relative px-8 py-4 rounded-full text-lg font-light shadow-lg overflow-hidden group transform transition-all duration-500 ease-out ${
-                isButtonHovered
-                  ? 'bg-gray-800 border-2 border-red-500 shadow-red-500/25 scale-105'
-                  : 'bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 shadow-amber-500/25 scale-100 hover:scale-105'
-              }`}
-              onMouseEnter={() => setIsButtonHovered(true)}
-              onMouseLeave={() => setIsButtonHovered(false)}
+            {/* CTA Button Padronizado */}
+            <StandardButton
+              variant="primary"
+              size="lg"
+              href="https://wa.me/244949838924?text=Olá! Gostaria de saber mais sobre os serviços da MV Studio."
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              <span className={`relative z-10 text-white flex items-center gap-3 transition-all duration-300 ease-out ${
-                isButtonHovered ? 'transform -translate-y-0.5' : 'transform translate-y-0'
-              }`}>
-                Vamos colaborar
-                <ArrowRight className="w-5 h-5" />
-              </span>
-
-              {/* Background transition overlay */}
-              <div className={`absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 transition-opacity duration-500 ease-out ${
-                isButtonHovered ? 'opacity-100' : 'opacity-0'
-              }`}></div>
-
-              {/* Efeito de gradiente eletrizante */}
-              <div className={`absolute inset-0 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 transition-opacity duration-500 ease-out ${
-                !isButtonHovered ? 'opacity-0 group-hover:opacity-100' : 'opacity-0'
-              }`}></div>
-
-              {/* Efeito de raios elétricos quando hover */}
-              <div className={`absolute inset-0 transition-opacity duration-300 ease-out ${
-                isButtonHovered ? 'opacity-100' : 'opacity-0'
-              }`}>
-                <div className="absolute inset-0 opacity-60">
-                  <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-400 to-transparent animate-pulse"></div>
-                  <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-400 to-transparent animate-pulse" style={{animationDelay: '0.2s'}}></div>
-                </div>
-
-                <div className="absolute inset-0 opacity-40">
-                  <div className="absolute left-0 top-1/3 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse" style={{animationDelay: '0.1s'}}></div>
-                </div>
-              </div>
-            </button>
+              Vamos Falar
+            </StandardButton>
           </div>
         </div>
 

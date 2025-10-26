@@ -1,5 +1,5 @@
 import React from 'react';
-import { Users, Award, Clock, Target, Heart, Lightbulb } from 'lucide-react';
+import { Users, Award, Clock, Target, Heart, Lightbulb, Zap, Eye } from 'lucide-react';
 import StandardButton from '../components/StandardButton';
 
 const AboutPage: React.FC = () => {
@@ -79,33 +79,55 @@ const AboutPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black pt-20">
-      {/* Grid Background */}
-      <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
+    <div className="min-h-screen bg-gradient-to-br from-black via-stone-950 to-amber-950/20 pt-20">
+      {/* Electric Grid Background */}
+      <div className="fixed inset-0 opacity-[0.04] pointer-events-none z-0">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(139,69,19,0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(139,69,19,0.3) 1px, transparent 1px)
+            linear-gradient(rgba(251,191,36,0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(251,191,36,0.5) 1px, transparent 1px)
           `,
-          backgroundSize: '40px 40px'
+          backgroundSize: '60px 60px'
         }} />
       </div>
 
-      {/* Film Grain */}
-      <div className="fixed inset-0 opacity-10 pointer-events-none z-0"
+      {/* Electric Lines Animation */}
+      <div className="fixed inset-0 opacity-6 pointer-events-none z-0">
+        {[...Array(10)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-600/30 to-transparent animate-pulse"
+            style={{
+              left: `${(i + 1) * 10}%`,
+              animationDelay: `${i * 0.4}s`,
+              animationDuration: '5s'
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Film Grain Eletrificado */}
+      <div className="fixed inset-0 opacity-12 pointer-events-none z-0"
            style={{
-             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(139,69,19,0.1) 1px)`,
-             backgroundSize: '3px 3px',
-             animation: 'grain 8s steps(10) infinite'
+             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(251,191,36,0.15) 1px)`,
+             backgroundSize: '5px 5px',
+             animation: 'grain 7s steps(12) infinite'
            }} />
 
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-20">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Sobre <span className="text-amber-900">Nós</span>
+        {/* Header Eletrificado */}
+        <div className="text-center mb-20 relative">
+          {/* Electric Effect Behind Title */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-15">
+            <div className="w-80 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent animate-pulse"></div>
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-light text-white mb-6 relative">
+            Sobre <span className="text-amber-400 font-normal">Nós</span>
+            <Zap className="inline-block w-8 h-8 ml-4 text-amber-500 animate-pulse" />
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
           </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+          <p className="text-xl text-stone-300 max-w-3xl mx-auto leading-relaxed">
             Somos contadores de histórias apaixonados, dedicados a criar experiências visuais que inspiram e conectam.
           </p>
         </div>
@@ -113,8 +135,9 @@ const AboutPage: React.FC = () => {
         {/* Manifesto */}
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
           <div>
-            <h2 className="text-4xl font-bold text-white mb-6">
-              O Nosso <span className="text-amber-900">Manifesto</span>
+            <h2 className="text-4xl font-light text-white mb-6 relative">
+              O Nosso <span className="text-amber-400">Manifesto</span>
+              <Eye className="inline-block w-6 h-6 ml-3 text-amber-500" />
             </h2>
             <div className="space-y-6 text-gray-300 leading-relaxed">
               <p>
