@@ -105,8 +105,8 @@ const ServicesSection: React.FC = () => {
           </h2>
         </div>
 
-        {/* Services Grid 2x2 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Services Grid 2x2 - Largura Otimizada */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
           {services.map((service, index) => (
             <div
               key={service.id}
@@ -114,8 +114,8 @@ const ServicesSection: React.FC = () => {
               onMouseEnter={() => setHoveredService(service.id)}
               onMouseLeave={() => setHoveredService(null)}
             >
-              {/* Service Card Elegante */}
-              <div className="relative bg-gradient-to-br from-amber-950/20 via-stone-900/30 to-amber-900/10 backdrop-blur-xl rounded-3xl p-8 border border-amber-800/20 hover:border-amber-600/40 transition-all duration-700 ease-out overflow-hidden min-h-[360px] group-hover:shadow-2xl group-hover:shadow-amber-500/20 group-hover:scale-[1.03] group-hover:bg-gradient-to-br group-hover:from-amber-950/30 group-hover:via-stone-800/40 group-hover:to-amber-900/20">
+              {/* Service Card Elegante - Largura Otimizada */}
+              <div className="relative bg-gradient-to-br from-amber-950/20 via-stone-900/30 to-amber-900/10 backdrop-blur-xl rounded-3xl p-8 lg:p-10 border border-amber-800/20 hover:border-amber-600/40 transition-all duration-700 ease-out overflow-hidden min-h-[380px] lg:min-h-[420px] group-hover:shadow-2xl group-hover:shadow-amber-500/20 group-hover:scale-[1.03] group-hover:bg-gradient-to-br group-hover:from-amber-950/30 group-hover:via-stone-800/40 group-hover:to-amber-900/20">
 
                 {/* Ícone Elegante Acastanhado - Melhorado */}
                 <div className="relative mb-8">

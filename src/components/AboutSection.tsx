@@ -10,7 +10,7 @@ const AboutSection: React.FC = () => {
   return (
     <section
       ref={sectionRef}
-      className="relative py-20 lg:py-32 bg-black overflow-hidden"
+      className="relative py-16 lg:py-24 bg-black overflow-hidden"
     >
       {/* Background Pattern com Parallax */}
       <ParallaxElement
@@ -30,7 +30,7 @@ const AboutSection: React.FC = () => {
       </ParallaxElement>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text Content */}
           <div className="space-y-8">
             <ImmersiveTransitions direction="up" delay={300} duration={1000}>
@@ -57,14 +57,14 @@ const AboutSection: React.FC = () => {
                   momentos únicos, nossa equipa dedica-se a criar conteúdo que ressoa com audiências e
                   deixa uma impressão duradoura.
                 </p>
+
+                <p>
+                  Com anos de experiência em produção audiovisual, desenvolvemos uma metodologia que
+                  combina planeamento estratégico, execução técnica impecável e uma visão artística
+                  que distingue cada projeto.
+                </p>
               </div>
             </ImmersiveTransitions>
-
-              <p>
-                Com anos de experiência em produção audiovisual, desenvolvemos uma metodologia que 
-                combina planeamento estratégico, execução técnica impecável e uma visão artística 
-                que distingue cada projeto.
-              </p>
             </div>
 
             {/* Stats */}
