@@ -113,19 +113,22 @@ const Portfolio: React.FC = () => {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        {/* Header Moderno */}
-        <div className="text-center mb-20">
+        {/* Header Padronizado - Castanho Escuro */}
+        <div className="text-center mb-20 relative">
+          {/* Electric Effect Behind Title */}
+          <div className="absolute inset-0 flex items-center justify-center opacity-15">
+            <div className="w-80 h-px bg-gradient-to-r from-transparent via-stone-600 to-transparent animate-pulse"></div>
+          </div>
+
           <DramaticTransitions type="fadeIn" delay={200} duration={800}>
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-500/20 to-amber-600/10 mb-8">
-              <div className="w-8 h-8 rounded-lg bg-amber-500/30"></div>
-            </div>
-            <h1 className="text-5xl md:text-7xl font-extralight text-white mb-6 leading-tight tracking-tight">
-              Nosso <span className="text-amber-400 font-light">Portfólio</span>
+            <h1 className="text-5xl md:text-7xl font-light text-white mb-6 relative">
+              Nosso <span className="text-stone-400 font-normal">Portfólio</span>
+              <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-stone-600 to-transparent"></div>
             </h1>
           </DramaticTransitions>
           <DramaticTransitions type="slideUp" delay={400} duration={800}>
-            <p className="text-xl text-gray-400 max-w-2xl mx-auto font-light leading-relaxed">
-              Projetos que definem nossa excelência criativa
+            <p className="text-xl text-stone-300 max-w-3xl mx-auto leading-relaxed">
+              Projetos que definem nossa excelência criativa e paixão cinematográfica
             </p>
           </DramaticTransitions>
         </div>
@@ -138,8 +141,8 @@ const Portfolio: React.FC = () => {
               onClick={() => setSelectedCategory(category.id)}
               className={`px-8 py-3 rounded-2xl border transition-all duration-500 backdrop-blur-sm ${
                 selectedCategory === category.id
-                  ? 'bg-amber-500/20 border-amber-500/50 text-amber-300 shadow-lg shadow-amber-500/20'
-                  : 'bg-gray-800/30 border-gray-700/30 text-gray-400 hover:bg-gray-700/40 hover:border-amber-500/30 hover:text-amber-400'
+                  ? 'bg-stone-800/30 border-stone-600/50 text-stone-300 shadow-lg shadow-stone-600/20'
+                  : 'bg-stone-900/30 border-stone-700/30 text-stone-400 hover:bg-stone-800/40 hover:border-stone-600/30 hover:text-stone-300'
               }`}
             >
               {category.name}
@@ -155,7 +158,7 @@ const Portfolio: React.FC = () => {
               className="group relative cursor-pointer"
             >
               {/* Card Moderno */}
-              <div className="relative bg-gradient-to-br from-gray-800/40 to-gray-900/60 backdrop-blur-md rounded-3xl overflow-hidden border border-gray-700/30 hover:border-amber-500/30 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-amber-500/10">
+              <div className="relative bg-gradient-to-br from-stone-900/40 to-stone-950/60 backdrop-blur-md rounded-3xl overflow-hidden border border-stone-700/30 hover:border-stone-600/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-stone-600/10">
                 {/* Imagem do Projeto */}
                 <div className="aspect-video relative overflow-hidden">
                   <img
@@ -167,8 +170,8 @@ const Portfolio: React.FC = () => {
 
                   {/* Play Button */}
                   <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-16 h-16 rounded-full bg-amber-500/20 backdrop-blur-sm border border-amber-500/30 flex items-center justify-center">
-                      <Play className="w-6 h-6 text-amber-400 ml-1" />
+                    <div className="w-16 h-16 rounded-full bg-stone-800/30 backdrop-blur-sm border border-stone-600/40 flex items-center justify-center">
+                      <Play className="w-6 h-6 text-stone-300 ml-1" />
                     </div>
                   </div>
                 </div>

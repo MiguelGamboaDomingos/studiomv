@@ -117,12 +117,12 @@ const ContactPage: React.FC = () => {
         <div className="text-center mb-20 relative">
           {/* Electric Effect Behind Title */}
           <div className="absolute inset-0 flex items-center justify-center opacity-20">
-            <div className="w-96 h-px bg-gradient-to-r from-transparent via-amber-400 to-transparent animate-pulse"></div>
+            <div className="w-96 h-px bg-gradient-to-r from-transparent via-stone-600 to-transparent animate-pulse"></div>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-light text-white mb-6 relative">
-            Vamos <span className="text-amber-400 font-normal">Conversar</span>
-            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent"></div>
+            Vamos <span className="text-stone-400 font-normal">Conversar</span>
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-24 h-px bg-gradient-to-r from-transparent via-stone-600 to-transparent"></div>
           </h1>
           <p className="text-xl text-stone-300 max-w-3xl mx-auto leading-relaxed">
             Conte-nos sobre o seu projeto e transformaremos a sua visão em realidade cinematográfica.

@@ -187,12 +187,12 @@ const ServicesPage: React.FC = () => {
         <div className="text-center mb-16">
           <div className="relative inline-block mb-8">
             <h1 className="text-5xl md:text-7xl font-light text-white mb-6 relative z-10">
-              Catálogo de <span className="text-amber-400 font-light">Serviços</span>
+              Catálogo de <span className="text-stone-400 font-light">Serviços</span>
             </h1>
             {/* Electric Effect Behind Title */}
             <div className="absolute inset-0 opacity-20">
-              <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent animate-pulse" />
-              <div className="absolute top-1/2 left-1/4 w-px h-8 bg-gradient-to-b from-transparent via-amber-400 to-transparent animate-pulse" style={{animationDelay: '0.5s'}} />
+              <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-stone-600 to-transparent animate-pulse" />
+              <div className="absolute top-1/2 left-1/4 w-px h-8 bg-gradient-to-b from-transparent via-stone-500 to-transparent animate-pulse" style={{animationDelay: '0.5s'}} />
               <div className="absolute top-1/2 right-1/4 w-px h-8 bg-gradient-to-b from-transparent via-stone-400 to-transparent animate-pulse" style={{animationDelay: '1s'}} />
             </div>
           </div>
@@ -380,6 +380,83 @@ const ServicesPage: React.FC = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Seção de Projetos Completos */}
+        <div className="relative mt-24 py-20 overflow-hidden">
+          {/* Background com efeito de vidro */}
+          <div className="absolute inset-0 bg-gradient-to-br from-stone-950/40 via-amber-950/10 to-stone-900/60 backdrop-blur-xl"></div>
+
+          <div className="relative z-10 text-center">
+            <h2 className="text-4xl md:text-5xl font-light text-white mb-6 leading-tight">
+              Veja Nossos <span className="text-stone-400">Projetos Completos</span>
+            </h2>
+            <p className="text-stone-300 text-xl mb-12 max-w-3xl mx-auto leading-relaxed">
+              Explore nossa galeria completa de trabalhos realizados e inspire-se com nossas criações cinematográficas.
+            </p>
+
+            {/* Grid de Projetos em Destaque */}
+            <div className="grid md:grid-cols-3 gap-8 mb-12">
+              {[
+                {
+                  title: "Documentário Corporativo",
+                  category: "Produção",
+                  image: "https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=800",
+                  duration: "3:45"
+                },
+                {
+                  title: "Casamento Cinematográfico",
+                  category: "Evento",
+                  image: "https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg?auto=compress&cs=tinysrgb&w=800",
+                  duration: "8:20"
+                },
+                {
+                  title: "Comercial Publicitário",
+                  category: "Publicidade",
+                  image: "https://images.pexels.com/photos/3062541/pexels-photo-3062541.jpeg?auto=compress&cs=tinysrgb&w=800",
+                  duration: "1:30"
+                }
+              ].map((project, index) => (
+                <div key={index} className="group relative cursor-pointer">
+                  <div className="relative bg-gradient-to-br from-stone-900/40 to-stone-950/60 backdrop-blur-md rounded-2xl overflow-hidden border border-stone-700/30 hover:border-stone-600/40 transition-all duration-500 hover:scale-[1.02]">
+                    <div className="aspect-video relative overflow-hidden">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+                      {/* Play Button */}
+                      <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <div className="w-12 h-12 rounded-full bg-stone-800/30 backdrop-blur-sm border border-stone-600/40 flex items-center justify-center">
+                          <div className="w-0 h-0 border-l-[8px] border-l-stone-300 border-t-[6px] border-t-transparent border-b-[6px] border-b-transparent ml-1"></div>
+                        </div>
+                      </div>
+
+                      {/* Duration */}
+                      <div className="absolute bottom-3 right-3 bg-black/60 backdrop-blur-sm px-2 py-1 rounded text-white text-sm">
+                        {project.duration}
+                      </div>
+                    </div>
+
+                    <div className="p-4">
+                      <h3 className="text-white font-light text-lg mb-1">{project.title}</h3>
+                      <p className="text-stone-400 text-sm">{project.category}</p>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <StandardButton
+              variant="secondary"
+              size="lg"
+              href="/portfolio"
+            >
+              Ver Todos os Projetos
+            </StandardButton>
+          </div>
         </div>
 
         {/* CTA Section Elegante */}
