@@ -17,28 +17,52 @@ export interface MediaAsset {
   updatedAt: string;
 }
 
+export interface ProjectMedia {
+  id: string;
+  type: 'image' | 'video';
+  url: string;
+  thumbnailUrl?: string;
+  title: string;
+  description?: string;
+  order: number;
+  isMain?: boolean; // Para thumbnail principal
+  // Para vídeos
+  duration?: string;
+  // Para imagens
+  alt?: string;
+  // Metadados do ficheiro
+  filename?: string;
+  fileSize?: number;
+  mimeType?: string;
+  width?: number;
+  height?: number;
+  // Upload info
+  uploadedAt: string;
+  source: 'upload' | 'link'; // Se foi carregado ou é link externo
+}
+
 export interface Project {
   id: string;
   title: string;
   slug: string;
   description: string;
-  category: ProjectCategory;
+  category: string; // Simplificado para string
   client: string;
-  year: string;
+  year: number;
   duration: string;
   featured: boolean;
   published: boolean;
   order: number;
-  
-  // Media assets
-  thumbnail: MediaAsset;
-  video?: MediaAsset;
-  gallery: MediaAsset[];
-  
+
+  // Media assets - até 6 fotos e 2 vídeos
+  images: ProjectMedia[]; // Máximo 6 imagens
+  videos: ProjectMedia[]; // Máximo 2 vídeos
+  thumbnail: string; // URL da imagem principal
+
   // SEO
   metaTitle?: string;
   metaDescription?: string;
-  
+
   // Timestamps
   createdAt: string;
   updatedAt: string;

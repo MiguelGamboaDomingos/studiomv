@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Filter, 
-  Edit, 
-  Trash2, 
-  Eye, 
+import {
+  Plus,
+  Search,
+  Filter,
+  Edit,
+  Trash2,
+  Eye,
   EyeOff,
   Star,
   Calendar,
@@ -13,11 +13,12 @@ import {
   Play,
   Image as ImageIcon,
   X,
-  Save
+  Save,
+  Video
 } from 'lucide-react';
-import { Project } from '../../types';
+import { Project, ProjectMedia } from '../../types';
 import { useProjects } from '../../hooks/useFirebase';
-import VideoUploader, { VideoData } from './VideoUploader';
+import MediaUploader from './MediaUploader';
 
 const ProjectsManagerFirebase: React.FC = () => {
   const { 
@@ -41,10 +42,10 @@ const ProjectsManagerFirebase: React.FC = () => {
     client: '',
     year: new Date().getFullYear(),
     duration: '',
-    thumbnail: '',
-    videoUrl: '',
     featured: false,
     published: true,
+    images: [] as ProjectMedia[],
+    videos: [] as ProjectMedia[],
   });
 
   const categories = [
@@ -110,14 +111,20 @@ const ProjectsManagerFirebase: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     try {
+      // Preparar dados do projeto
+      const projectData = {
+        ...formData,
+        thumbnail: formData.images.find(img => img.isMain)?.url || formData.images[0]?.url || '',
+      };
+
       if (editingProject) {
-        await updateProject(editingProject.id, formData);
+        await updateProject(editingProject.id, projectData);
       } else {
-        await createProject(formData);
+        await createProject(projectData);
       }
-      
+
       setShowCreateModal(false);
       setEditingProject(null);
       setFormData({
@@ -127,10 +134,10 @@ const ProjectsManagerFirebase: React.FC = () => {
         client: '',
         year: new Date().getFullYear(),
         duration: '',
-        thumbnail: '',
-        videoUrl: '',
         featured: false,
         published: true,
+        images: [],
+        videos: [],
       });
     } catch (error) {
       console.error('Erro ao salvar projeto:', error);
@@ -146,20 +153,12 @@ const ProjectsManagerFirebase: React.FC = () => {
       client: project.client,
       year: project.year,
       duration: project.duration,
-      thumbnail: project.thumbnail,
-      videoUrl: project.videoUrl || '',
       featured: project.featured,
       published: project.published,
+      images: project.images || [],
+      videos: project.videos || [],
     });
     setShowCreateModal(true);
-  };
-
-  const handleVideoAdded = (videoData: VideoData) => {
-    setFormData(prev => ({
-      ...prev,
-      videoUrl: videoData.url,
-      duration: videoData.duration ? `${Math.floor(videoData.duration / 60)}:${(videoData.duration % 60).toString().padStart(2, '0')}` : prev.duration
-    }));
   };
 
   const formatDate = (dateString: string) => {
@@ -251,7 +250,7 @@ const ProjectsManagerFirebase: React.FC = () => {
                   <ImageIcon className="w-12 h-12 text-stone-400" />
                 </div>
               )}
-              
+
               {/* Status Badges */}
               <div className="absolute top-3 left-3 flex gap-2">
                 {project.featured && (
@@ -261,16 +260,32 @@ const ProjectsManagerFirebase: React.FC = () => {
                   </span>
                 )}
                 <span className={`text-xs px-2 py-1 rounded-full ${
-                  project.published 
-                    ? 'bg-green-500 text-white' 
+                  project.published
+                    ? 'bg-green-500 text-white'
                     : 'bg-stone-500 text-white'
                 }`}>
                   {project.published ? 'Publicado' : 'Rascunho'}
                 </span>
               </div>
 
+              {/* Media Count Badges */}
+              <div className="absolute top-3 right-3 flex gap-2">
+                {project.images && project.images.length > 0 && (
+                  <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                    <ImageIcon className="w-3 h-3" />
+                    {project.images.length}
+                  </span>
+                )}
+                {project.videos && project.videos.length > 0 && (
+                  <span className="bg-purple-500 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1">
+                    <Video className="w-3 h-3" />
+                    {project.videos.length}
+                  </span>
+                )}
+              </div>
+
               {/* Video Play Button */}
-              {project.videoUrl && (
+              {project.videos && project.videos.length > 0 && (
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="w-12 h-12 bg-black/50 rounded-full flex items-center justify-center">
                     <Play className="w-6 h-6 text-white ml-1" />
@@ -303,6 +318,20 @@ const ProjectsManagerFirebase: React.FC = () => {
                     <span>{project.duration}</span>
                   </div>
                 )}
+                <div className="flex items-center gap-4 text-xs">
+                  {project.images && project.images.length > 0 && (
+                    <span className="flex items-center gap-1">
+                      <ImageIcon className="w-3 h-3" />
+                      {project.images.length} foto{project.images.length !== 1 ? 's' : ''}
+                    </span>
+                  )}
+                  {project.videos && project.videos.length > 0 && (
+                    <span className="flex items-center gap-1">
+                      <Video className="w-3 h-3" />
+                      {project.videos.length} vídeo{project.videos.length !== 1 ? 's' : ''}
+                    </span>
+                  )}
+                </div>
               </div>
 
               {/* Actions */}
@@ -470,18 +499,6 @@ const ProjectsManagerFirebase: React.FC = () => {
                     className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
                   />
                 </div>
-
-                <div>
-                  <label className="block text-sm font-medium text-stone-900 mb-2">
-                    URL da Thumbnail
-                  </label>
-                  <input
-                    type="url"
-                    value={formData.thumbnail}
-                    onChange={(e) => setFormData(prev => ({ ...prev, thumbnail: e.target.value }))}
-                    className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-                  />
-                </div>
               </div>
 
               <div>
@@ -499,16 +516,21 @@ const ProjectsManagerFirebase: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-stone-900 mb-2">
-                  Vídeo
+                  Fotos e Vídeos
                 </label>
-                <VideoUploader
-                  onVideoAdded={handleVideoAdded}
-                  existingVideo={formData.videoUrl ? {
-                    type: 'link',
-                    url: formData.videoUrl,
-                    title: formData.title || 'Vídeo do projeto'
-                  } : undefined}
-                  onRemove={() => setFormData(prev => ({ ...prev, videoUrl: '' }))}
+                <p className="text-sm text-stone-600 mb-4">
+                  Adicione até 6 fotos e 2 vídeos para este projeto. A primeira imagem será usada como thumbnail principal.
+                </p>
+                <MediaUploader
+                  projectId={editingProject?.id}
+                  images={formData.images}
+                  videos={formData.videos}
+                  onImagesChange={(images) => setFormData(prev => ({ ...prev, images }))}
+                  onVideosChange={(videos) => setFormData(prev => ({ ...prev, videos }))}
+                  maxImages={6}
+                  maxVideos={2}
+                  maxImageSizeMB={10}
+                  maxVideoSizeMB={100}
                 />
               </div>
 

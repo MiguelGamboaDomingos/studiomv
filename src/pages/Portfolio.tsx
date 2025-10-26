@@ -1,99 +1,37 @@
 import React, { useState } from 'react';
-import { Play, Filter, Calendar, User } from 'lucide-react';
+import { Play, Filter, Calendar, User, Image as ImageIcon, Video, Loader } from 'lucide-react';
 import { ParallaxElement } from '../components/HomeParallax';
 import DramaticTransitions from '../components/DramaticTransitions';
 import StandardButton from '../components/StandardButton';
-
-interface Project {
-  id: number;
-  title: string;
-  category: string;
-  year: string;
-  client: string;
-  thumbnail: string;
-  duration: string;
-  description: string;
-}
+import { usePublicProjectsByCategory, useProjectCategories } from '../hooks/usePublicData';
+import { Project } from '../types';
 
 const Portfolio: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
 
-  const projects: Project[] = [
-    {
-      id: 1,
-      title: "Corporate Vision 2024",
-      category: "corporate",
-      year: "2024",
-      client: "Tech Solutions Ltd",
-      thumbnail: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "2:30",
-      description: "Vídeo corporativo que apresenta a visão futurista da empresa"
-    },
-    {
-      id: 2,
-      title: "Wedding Dreams",
-      category: "wedding",
-      year: "2024",
-      client: "Maria & João",
-      thumbnail: "https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "8:45",
-      description: "Documentário cinematográfico de casamento"
-    },
-    {
-      id: 3,
-      title: "Fashion Forward",
-      category: "fashion",
-      year: "2023",
-      client: "Style Magazine",
-      thumbnail: "https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "1:20",
-      description: "Editorial de moda com estética contemporânea"
-    },
-    {
-      id: 4,
-      title: "Event Highlights",
-      category: "event",
-      year: "2024",
-      client: "Innovation Summit",
-      thumbnail: "https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "3:15",
-      description: "Cobertura completa de evento corporativo"
-    },
-    {
-      id: 5,
-      title: "Brand Identity",
-      category: "brand",
-      year: "2023",
-      client: "StartUp Co",
-      thumbnail: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "1:45",
-      description: "Vídeo de apresentação da identidade da marca"
-    },
-    {
-      id: 6,
-      title: "Documentary Series",
-      category: "documentary",
-      year: "2024",
-      client: "Cultural Foundation",
-      thumbnail: "https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=800",
-      duration: "12:30",
-      description: "Série documental sobre património cultural"
-    }
-  ];
-
-  const categories = [
+  // Hooks para dados do Firebase
+  const { projects, loading: projectsLoading, error: projectsError } = usePublicProjectsByCategory(selectedCategory);
+  const { categories, loading: categoriesLoading } = useProjectCategories();
+  // Preparar categorias para o filtro
+  const categoryOptions = [
     { id: 'all', name: 'Todos os Projetos' },
-    { id: 'corporate', name: 'Corporate' },
-    { id: 'wedding', name: 'Casamentos' },
-    { id: 'fashion', name: 'Moda' },
-    { id: 'event', name: 'Eventos' },
-    { id: 'brand', name: 'Branding' },
-    { id: 'documentary', name: 'Documentário' }
+    ...categories.map(cat => ({ id: cat, name: cat }))
   ];
 
-  const filteredProjects = selectedCategory === 'all' 
-    ? projects 
-    : projects.filter(project => project.category === selectedCategory);
+  // Função para formatar nome da categoria
+  const formatCategoryName = (category: string) => {
+    const categoryNames: { [key: string]: string } = {
+      'corporate': 'Corporativo',
+      'wedding': 'Casamentos',
+      'commercial': 'Comercial',
+      'documentary': 'Documentário',
+      'music': 'Música',
+      'event': 'Eventos',
+      'fashion': 'Moda',
+      'brand': 'Branding'
+    };
+    return categoryNames[category] || category;
+  };
 
   return (
     <div className="min-h-screen bg-black pt-20">
@@ -135,66 +73,157 @@ const Portfolio: React.FC = () => {
         </div>
 
         {/* Filters Modernos */}
-        <div className="flex flex-wrap justify-center gap-3 mb-16">
-          {categories.map((category) => (
-            <button
-              key={category.id}
-              onClick={() => setSelectedCategory(category.id)}
-              className={`px-8 py-3 rounded-2xl border transition-all duration-500 backdrop-blur-sm ${
-                selectedCategory === category.id
-                  ? 'bg-stone-800/30 border-stone-600/50 text-stone-300 shadow-lg shadow-stone-600/20'
-                  : 'bg-stone-900/30 border-stone-700/30 text-stone-400 hover:bg-stone-800/40 hover:border-stone-600/30 hover:text-stone-300'
-              }`}
+        {!categoriesLoading && (
+          <div className="flex flex-wrap justify-center gap-3 mb-16">
+            {categoryOptions.map((category) => (
+              <button
+                key={category.id}
+                onClick={() => setSelectedCategory(category.id)}
+                className={`px-8 py-3 rounded-2xl border transition-all duration-500 backdrop-blur-sm ${
+                  selectedCategory === category.id
+                    ? 'bg-stone-800/30 border-stone-600/50 text-stone-300 shadow-lg shadow-stone-600/20'
+                    : 'bg-stone-900/30 border-stone-700/30 text-stone-400 hover:bg-stone-800/40 hover:border-stone-600/30 hover:text-stone-300'
+                }`}
+              >
+                {category.id === 'all' ? category.name : formatCategoryName(category.name)}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Loading State */}
+        {projectsLoading && (
+          <div className="flex items-center justify-center py-20">
+            <div className="flex items-center gap-3 text-stone-400">
+              <Loader className="w-6 h-6 animate-spin" />
+              <span>A carregar projetos...</span>
+            </div>
+          </div>
+        )}
+
+        {/* Error State */}
+        {projectsError && (
+          <div className="text-center py-20">
+            <p className="text-red-400 mb-4">{projectsError}</p>
+            <StandardButton
+              variant="secondary"
+              onClick={() => window.location.reload()}
             >
-              {category.name}
-            </button>
-          ))}
-        </div>
+              Tentar Novamente
+            </StandardButton>
+          </div>
+        )}
 
         {/* Projects Grid Moderno */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProjects.map((project) => (
-            <div
-              key={project.id}
-              className="group relative cursor-pointer"
-            >
-              {/* Card Moderno */}
-              <div className="relative bg-gradient-to-br from-stone-900/40 to-stone-950/60 backdrop-blur-md rounded-3xl overflow-hidden border border-stone-700/30 hover:border-stone-600/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-stone-600/10">
+        {!projectsLoading && !projectsError && (
+          <>
+            {projects.length === 0 ? (
+              <div className="text-center py-20">
+                <p className="text-stone-400 text-lg">
+                  {selectedCategory === 'all'
+                    ? 'Nenhum projeto encontrado.'
+                    : `Nenhum projeto encontrado na categoria "${formatCategoryName(selectedCategory)}".`
+                  }
+                </p>
+              </div>
+            ) : (
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {projects.map((project) => (
+                  <div
+                    key={project.id}
+                    className="group relative cursor-pointer"
+                  >
+                    {/* Card Moderno */}
+                    <div className="relative bg-gradient-to-br from-stone-900/40 to-stone-950/60 backdrop-blur-md rounded-3xl overflow-hidden border border-stone-700/30 hover:border-stone-600/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-stone-600/10">
                 {/* Imagem do Projeto */}
                 <div className="aspect-video relative overflow-hidden">
-                  <img
-                    src={project.thumbnail}
-                    alt={project.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
+                  {project.thumbnail ? (
+                    <img
+                      src={project.thumbnail}
+                      alt={project.title}
+                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    />
+                  ) : (
+                    <div className="w-full h-full bg-stone-800 flex items-center justify-center">
+                      <ImageIcon className="w-12 h-12 text-stone-600" />
+                    </div>
+                  )}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
 
-                  {/* Play Button */}
-                  <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <div className="w-16 h-16 rounded-full bg-stone-800/30 backdrop-blur-sm border border-stone-600/40 flex items-center justify-center">
-                      <Play className="w-6 h-6 text-stone-300 ml-1" />
-                    </div>
+                  {/* Media Count Badges */}
+                  <div className="absolute top-3 right-3 flex gap-2">
+                    {project.images && project.images.length > 0 && (
+                      <span className="bg-blue-500/80 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1 backdrop-blur-sm">
+                        <ImageIcon className="w-3 h-3" />
+                        {project.images.length}
+                      </span>
+                    )}
+                    {project.videos && project.videos.length > 0 && (
+                      <span className="bg-purple-500/80 text-white text-xs px-2 py-1 rounded-full flex items-center gap-1 backdrop-blur-sm">
+                        <Video className="w-3 h-3" />
+                        {project.videos.length}
+                      </span>
+                    )}
                   </div>
+
+                  {/* Play Button */}
+                  {project.videos && project.videos.length > 0 && (
+                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-16 h-16 rounded-full bg-stone-800/30 backdrop-blur-sm border border-stone-600/40 flex items-center justify-center">
+                        <Play className="w-6 h-6 text-stone-300 ml-1" />
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Project Info */}
                 <div className="p-6">
                   <h3 className="text-xl font-light text-white mb-2">{project.title}</h3>
                   <p className="text-gray-400 text-sm mb-4 line-clamp-2">{project.description}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-amber-400 text-sm font-medium">{project.category}</span>
+
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-stone-400 text-sm font-medium">
+                      {formatCategoryName(project.category)}
+                    </span>
                     <span className="text-gray-500 text-xs">{project.year}</span>
                   </div>
 
-                  {/* Duration */}
-                  <div className="mt-3 text-gray-500 text-xs">
-                    Duração: {project.duration}
+                  {/* Client and Duration */}
+                  <div className="space-y-1 text-xs text-gray-500">
+                    <div className="flex items-center gap-2">
+                      <User className="w-3 h-3" />
+                      <span>{project.client}</span>
+                    </div>
+                    {project.duration && (
+                      <div className="flex items-center gap-2">
+                        <Play className="w-3 h-3" />
+                        <span>{project.duration}</span>
+                      </div>
+                    )}
+                    {/* Media Summary */}
+                    <div className="flex items-center gap-4 pt-1">
+                      {project.images && project.images.length > 0 && (
+                        <span className="flex items-center gap-1">
+                          <ImageIcon className="w-3 h-3" />
+                          {project.images.length} foto{project.images.length !== 1 ? 's' : ''}
+                        </span>
+                      )}
+                      {project.videos && project.videos.length > 0 && (
+                        <span className="flex items-center gap-1">
+                          <Video className="w-3 h-3" />
+                          {project.videos.length} vídeo{project.videos.length !== 1 ? 's' : ''}
+                        </span>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
+            )}
+          </>
+        )}
 
         {/* CTA */}
         <div className="text-center mt-16">

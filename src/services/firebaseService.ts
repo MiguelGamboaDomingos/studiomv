@@ -53,12 +53,19 @@ export class FirebaseService {
       const querySnapshot = await getDocs(
         query(collection(db, COLLECTIONS.PROJECTS), orderBy('createdAt', 'desc'))
       );
-      return querySnapshot.docs.map(doc => ({
-        id: doc.id,
-        ...doc.data(),
-        createdAt: doc.data().createdAt?.toDate?.() || new Date(),
-        updatedAt: doc.data().updatedAt?.toDate?.() || new Date(),
-      })) as Project[];
+      return querySnapshot.docs.map(doc => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          ...data,
+          // Garantir que images e videos são arrays
+          images: data.images || [],
+          videos: data.videos || [],
+          // Converter timestamps
+          createdAt: data.createdAt?.toDate?.()?.toISOString() || data.createdAt,
+          updatedAt: data.updatedAt?.toDate?.()?.toISOString() || data.updatedAt,
+        } as Project;
+      });
     } catch (error) {
       console.error('Erro ao buscar projetos:', error);
       throw error;
@@ -88,6 +95,9 @@ export class FirebaseService {
       const now = Timestamp.now();
       const docRef = await addDoc(collection(db, COLLECTIONS.PROJECTS), {
         ...project,
+        // Garantir que images e videos são arrays
+        images: project.images || [],
+        videos: project.videos || [],
         createdAt: now,
         updatedAt: now,
       });
@@ -100,10 +110,20 @@ export class FirebaseService {
 
   static async updateProject(id: string, updates: Partial<Project>): Promise<void> {
     try {
-      await updateDoc(doc(db, COLLECTIONS.PROJECTS, id), {
+      const updateData = {
         ...updates,
         updatedAt: Timestamp.now(),
-      });
+      };
+
+      // Se images ou videos estão sendo atualizados, garantir que são arrays
+      if (updates.images !== undefined) {
+        updateData.images = updates.images || [];
+      }
+      if (updates.videos !== undefined) {
+        updateData.videos = updates.videos || [];
+      }
+
+      await updateDoc(doc(db, COLLECTIONS.PROJECTS, id), updateData);
     } catch (error) {
       console.error('Erro ao atualizar projeto:', error);
       throw error;
