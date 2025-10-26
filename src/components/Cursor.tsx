@@ -8,9 +8,9 @@ const Cursor: React.FC = () => {
 
   useEffect(() => {
     const updateCursor = (e: MouseEvent) => {
-      // Use pageX/pageY para coordenadas absolutas da página
-      const x = e.pageX;
-      const y = e.pageY;
+      // Use clientX/Y com scroll offset para coordenadas precisas
+      const x = e.clientX + window.scrollX;
+      const y = e.clientY + window.scrollY;
 
       setPosition({ x, y });
       setIsVisible(true);

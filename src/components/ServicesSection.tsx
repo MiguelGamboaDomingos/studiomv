@@ -105,7 +105,7 @@ const ServicesSection: React.FC = () => {
         </div>
 
         {/* Services Grid 2x2 */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {services.map((service, index) => (
             <div
               key={service.id}
@@ -116,17 +116,21 @@ const ServicesSection: React.FC = () => {
               {/* Service Card Elegante */}
               <div className="relative bg-gradient-to-br from-amber-950/20 via-stone-900/30 to-amber-900/10 backdrop-blur-xl rounded-3xl p-8 border border-amber-800/20 hover:border-amber-600/40 transition-all duration-700 ease-out overflow-hidden min-h-[360px] group-hover:shadow-2xl group-hover:shadow-amber-500/20 group-hover:scale-[1.03] group-hover:bg-gradient-to-br group-hover:from-amber-950/30 group-hover:via-stone-800/40 group-hover:to-amber-900/20">
 
-                {/* Ícone Elegante Acastanhado */}
+                {/* Ícone Elegante Acastanhado - Melhorado */}
                 <div className="relative mb-8">
-                  <div className={`w-18 h-18 rounded-3xl bg-gradient-to-br from-amber-800/30 via-stone-700/20 to-amber-900/40 flex items-center justify-center transition-all duration-700 ${hoveredService === service.id ? 'scale-115 rotate-3 shadow-xl shadow-amber-700/30' : 'shadow-lg shadow-stone-900/20'}`}>
-                    <div className={`transition-all duration-700 ${hoveredService === service.id ? 'scale-125 text-amber-300' : 'text-amber-600/80'}`}>
-                      {service.icon}
+                  <div className={`w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-800/30 via-stone-700/20 to-amber-900/40 flex items-center justify-center transition-all duration-700 ${hoveredService === service.id ? 'scale-110 rotate-2 shadow-2xl shadow-amber-700/40' : 'shadow-xl shadow-stone-900/30'}`}>
+                    <div className={`transition-all duration-700 ${hoveredService === service.id ? 'scale-110 text-amber-200' : 'text-amber-500'}`}>
+                      <div className="w-12 h-12 flex items-center justify-center">
+                        {React.cloneElement(service.icon as React.ReactElement, {
+                          className: "w-10 h-10"
+                        })}
+                      </div>
                     </div>
                   </div>
 
                   {/* Efeito de Brilho Sutil */}
                   {hoveredService === service.id && (
-                    <div className="absolute inset-0 w-18 h-18 rounded-3xl bg-gradient-to-br from-amber-600/20 to-stone-600/10 animate-pulse"></div>
+                    <div className="absolute inset-0 w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-600/20 to-stone-600/10 animate-pulse"></div>
                   )}
                 </div>
 
