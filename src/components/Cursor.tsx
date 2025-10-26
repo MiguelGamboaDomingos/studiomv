@@ -108,13 +108,13 @@ const Cursor: React.FC = () => {
       <div
         className={`w-5 h-5 rounded-full border-2 transition-all duration-200 ${
           isHovering
-            ? 'border-amber-400 bg-amber-400/20 shadow-lg shadow-amber-400/50'
+            ? 'border-stone-400 bg-stone-400/20 shadow-lg shadow-stone-400/50'
             : 'border-white bg-white/10 shadow-lg shadow-white/30'
         }`}
       >
         <div
           className={`w-1 h-1 rounded-full absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${
-            isHovering ? 'bg-amber-400' : 'bg-white animate-pulse'
+            isHovering ? 'bg-stone-400' : 'bg-white animate-pulse'
           }`}
         ></div>
       </div>

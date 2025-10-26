@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Play, Filter, Calendar, User } from 'lucide-react';
 import { ParallaxElement } from '../components/HomeParallax';
 import DramaticTransitions from '../components/DramaticTransitions';
+import StandardButton from '../components/StandardButton';
 
 interface Project {
   id: number;
@@ -197,9 +198,15 @@ const Portfolio: React.FC = () => {
 
         {/* CTA */}
         <div className="text-center mt-16">
-          <button className="px-10 py-4 bg-gradient-to-r from-amber-900 to-amber-800 text-white font-bold rounded-full hover:from-amber-800 hover:to-amber-700 transition-all duration-300 transform hover:scale-105">
+          <StandardButton
+            variant="primary"
+            size="lg"
+            href="https://wa.me/244949838924?text=Olá! Gostaria de criar um projeto como estes da MV Studio."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
             Quero um Projeto Como Este
-          </button>
+          </StandardButton>
         </div>
       </div>
 

@@ -77,13 +77,13 @@ const ContactPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-stone-950 to-amber-950/20 pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-black via-stone-950 to-stone-950/20 pt-20">
       {/* Electric Grid Background */}
       <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(251,191,36,0.4) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(251,191,36,0.4) 1px, transparent 1px)
+            linear-gradient(rgba(120,113,108,0.4) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(120,113,108,0.4) 1px, transparent 1px)
           `,
           backgroundSize: '50px 50px'
         }} />
@@ -94,7 +94,7 @@ const ContactPage: React.FC = () => {
         {[...Array(12)].map((_, i) => (
           <div
             key={i}
-            className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-600/40 to-transparent animate-pulse"
+            className="absolute h-full w-px bg-gradient-to-b from-transparent via-stone-600/40 to-transparent animate-pulse"
             style={{
               left: `${(i + 1) * 8.33}%`,
               animationDelay: `${i * 0.3}s`,
@@ -132,15 +132,15 @@ const ContactPage: React.FC = () => {
         <div className="grid lg:grid-cols-3 gap-12 mb-20">
           {/* Contact Form Eletrificado */}
           <div className="lg:col-span-2">
-            <div className="bg-gradient-to-br from-stone-950/40 via-amber-950/20 to-stone-900/60 backdrop-blur-xl border border-amber-800/30 rounded-3xl p-8 relative overflow-hidden group">
+            <div className="bg-gradient-to-br from-stone-950/40 via-stone-950/20 to-stone-900/60 backdrop-blur-xl border border-stone-800/30 rounded-3xl p-8 relative overflow-hidden group">
               {/* Electric Border Effect */}
               <div className="absolute inset-0 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                <div className="absolute inset-0 rounded-3xl border border-amber-600/50 animate-pulse"></div>
+                <div className="absolute inset-0 rounded-3xl border border-stone-600/50 animate-pulse"></div>
               </div>
 
               <h2 className="text-3xl font-light text-white mb-8 relative">
-                Solicitar <span className="text-amber-400">Orçamento</span>
-                <Zap className="inline-block w-6 h-6 ml-2 text-amber-500" />
+                Solicitar <span className="text-stone-400">Orçamento</span>
+                <Zap className="inline-block w-6 h-6 ml-2 text-stone-500" />
               </h2>
               
               {isSubmitted && (
@@ -161,7 +161,7 @@ const ContactPage: React.FC = () => {
                       value={formData.name}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-amber-950/10 backdrop-blur-sm border border-amber-800/30 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:border-amber-600/60 focus:bg-amber-950/20 transition-all duration-500"
+                      className="w-full px-4 py-3 bg-stone-950/10 backdrop-blur-sm border border-stone-800/30 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:border-stone-600/60 focus:bg-stone-950/20 transition-all duration-500"
                       placeholder="O seu nome completo"
                     />
                   </div>
@@ -175,7 +175,7 @@ const ContactPage: React.FC = () => {
                       value={formData.email}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-amber-950/10 backdrop-blur-sm border border-amber-800/30 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:border-amber-600/60 focus:bg-amber-950/20 transition-all duration-500"
+                      className="w-full px-4 py-3 bg-stone-950/10 backdrop-blur-sm border border-stone-800/30 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:border-stone-600/60 focus:bg-stone-950/20 transition-all duration-500"
                       placeholder="seu@email.com"
                     />
                   </div>
@@ -191,7 +191,7 @@ const ContactPage: React.FC = () => {
                       name="company"
                       value={formData.company}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-amber-900 transition-colors"
+                      className="w-full px-4 py-3 bg-stone-950/10 backdrop-blur-sm border border-stone-800/30 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:border-stone-600/60 focus:bg-stone-950/20 transition-all duration-500"
                       placeholder="Nome da empresa"
                     />
                   </div>
@@ -204,7 +204,7 @@ const ContactPage: React.FC = () => {
                       value={formData.project}
                       onChange={handleChange}
                       required
-                      className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg text-white focus:outline-none focus:border-amber-900 transition-colors"
+                      className="w-full px-4 py-3 bg-stone-950/10 backdrop-blur-sm border border-stone-800/30 rounded-xl text-white focus:outline-none focus:border-stone-600/60 focus:bg-stone-950/20 transition-all duration-500"
                     >
                       <option value="">Selecione o tipo de projeto</option>
                       <option value="filmmaking">Filmmaking</option>
@@ -225,7 +225,7 @@ const ContactPage: React.FC = () => {
                       name="budget"
                       value={formData.budget}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg text-white focus:outline-none focus:border-amber-900 transition-colors"
+                      className="w-full px-4 py-3 bg-stone-950/10 backdrop-blur-sm border border-stone-800/30 rounded-xl text-white focus:outline-none focus:border-stone-600/60 focus:bg-stone-950/20 transition-all duration-500"
                     >
                       <option value="">Selecione o orçamento</option>
                       <option value="1000-2500">€1.000 - €2.500</option>
@@ -242,7 +242,7 @@ const ContactPage: React.FC = () => {
                       name="timeline"
                       value={formData.timeline}
                       onChange={handleChange}
-                      className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg text-white focus:outline-none focus:border-amber-900 transition-colors"
+                      className="w-full px-4 py-3 bg-stone-950/10 backdrop-blur-sm border border-stone-800/30 rounded-xl text-white focus:outline-none focus:border-stone-600/60 focus:bg-stone-950/20 transition-all duration-500"
                     >
                       <option value="">Selecione o prazo</option>
                       <option value="urgente">Urgente (1-2 semanas)</option>
@@ -262,20 +262,20 @@ const ContactPage: React.FC = () => {
                     onChange={handleChange}
                     required
                     rows={6}
-                    className="w-full px-4 py-3 bg-white/5 backdrop-blur-sm border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-amber-900 transition-colors resize-none"
+                    className="w-full px-4 py-3 bg-stone-950/10 backdrop-blur-sm border border-stone-800/30 rounded-xl text-white placeholder-stone-400 focus:outline-none focus:border-stone-600/60 focus:bg-stone-950/20 transition-all duration-500 resize-none"
                     placeholder="Conte-nos sobre o seu projeto, objetivos, público-alvo e qualquer informação relevante..."
                   />
                 </div>
 
-                <button
-                  type="submit"
-                  className="group relative w-full px-8 py-4 bg-gradient-to-r from-emerald-600/20 via-teal-500/20 to-cyan-500/20 backdrop-blur-sm border border-white/20 text-white font-bold rounded-lg hover:from-emerald-500/30 hover:via-teal-400/30 hover:to-cyan-400/30 hover:border-white/40 hover:scale-105 transition-all duration-500 flex items-center justify-center gap-2 overflow-hidden"
+                <StandardButton
+                  variant="primary"
+                  size="lg"
+                  className="w-full"
+                  onClick={handleSubmit}
                 >
-                  <div className="absolute inset-0 bg-gradient-to-r from-emerald-400/10 via-teal-300/10 to-cyan-300/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-pulse"></div>
-                  <Send className="w-5 h-5" />
-                  <span className="relative z-10">Enviar Pedido de Orçamento</span>
-                  <div className="absolute inset-0 rounded-lg bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 group-hover:animate-ping transition-all duration-700" />
-                </button>
+                  <Send className="w-5 h-5 mr-2" />
+                  Enviar Pedido de Orçamento
+                </StandardButton>
               </form>
             </div>
           </div>
@@ -290,8 +290,8 @@ const ContactPage: React.FC = () => {
                   className="bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-6 hover:bg-white/10 transition-all duration-300 group"
                 >
                   <div className="flex items-start gap-4">
-                    <div className="w-12 h-12 bg-amber-900/20 rounded-lg flex items-center justify-center group-hover:bg-amber-900/30 transition-colors">
-                      <div className="text-amber-900">{info.icon}</div>
+                    <div className="w-12 h-12 bg-stone-800/30 rounded-lg flex items-center justify-center group-hover:bg-stone-700/40 transition-colors">
+                      <div className="text-stone-400">{info.icon}</div>
                     </div>
                     <div>
                       <h3 className="text-white font-bold mb-1">{info.title}</h3>
@@ -306,7 +306,7 @@ const ContactPage: React.FC = () => {
             {/* Social Links */}
             <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-6">
               <h3 className="text-white font-bold mb-4 flex items-center gap-2">
-                <MessageCircle className="w-5 h-5 text-amber-900" />
+                <MessageCircle className="w-5 h-5 text-stone-400" />
                 Siga-nos
               </h3>
               <div className="grid grid-cols-2 gap-3">
@@ -314,7 +314,7 @@ const ContactPage: React.FC = () => {
                   <a
                     key={social}
                     href="#"
-                    className="px-4 py-2 bg-white/5 border border-white/20 rounded-lg text-gray-300 hover:text-white hover:border-amber-900/40 transition-all duration-300 text-center text-sm"
+                    className="px-4 py-2 bg-stone-950/10 border border-stone-800/30 rounded-lg text-stone-300 hover:text-white hover:border-stone-600/40 transition-all duration-300 text-center text-sm"
                   >
                     {social}
                   </a>
@@ -339,7 +339,7 @@ const ContactPage: React.FC = () => {
         <div className="mb-20">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">
-              Perguntas <span className="text-amber-900">Frequentes</span>
+              Perguntas <span className="text-stone-400">Frequentes</span>
             </h2>
             <p className="text-gray-300 text-lg">
               Respostas às dúvidas mais comuns dos nossos clientes.
@@ -360,16 +360,16 @@ const ContactPage: React.FC = () => {
         </div>
 
         {/* Emergency Contact */}
-        <div className="text-center bg-amber-900/10 border border-amber-900/20 rounded-2xl p-8">
+        <div className="text-center bg-stone-900/20 border border-stone-800/30 rounded-2xl p-8">
           <h2 className="text-2xl font-bold text-white mb-4">
             Projeto Urgente?
           </h2>
-          <p className="text-gray-300 mb-6">
+          <p className="text-stone-300 mb-6">
             Para projetos com prazos apertados, contacte-nos diretamente.
           </p>
           <a
             href="tel:+244949838924"
-            className="inline-flex items-center gap-2 px-8 py-3 bg-amber-900 text-white font-bold rounded-full hover:bg-amber-800 transition-all duration-300"
+            className="inline-flex items-center gap-2 px-8 py-3 bg-stone-800 text-white font-bold rounded-full hover:bg-stone-700 transition-all duration-300"
           >
             <Phone className="w-5 h-5" />
             Ligar Agora

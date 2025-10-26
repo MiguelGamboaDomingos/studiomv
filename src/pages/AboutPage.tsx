@@ -79,13 +79,13 @@ const AboutPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-stone-950 to-amber-950/20 pt-20">
+    <div className="min-h-screen bg-gradient-to-br from-black via-stone-950 to-stone-950/20 pt-20">
       {/* Electric Grid Background */}
       <div className="fixed inset-0 opacity-[0.04] pointer-events-none z-0">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(251,191,36,0.5) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(251,191,36,0.5) 1px, transparent 1px)
+            linear-gradient(rgba(120,113,108,0.5) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(120,113,108,0.5) 1px, transparent 1px)
           `,
           backgroundSize: '60px 60px'
         }} />
@@ -96,7 +96,7 @@ const AboutPage: React.FC = () => {
         {[...Array(10)].map((_, i) => (
           <div
             key={i}
-            className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-600/30 to-transparent animate-pulse"
+            className="absolute h-full w-px bg-gradient-to-b from-transparent via-stone-600/30 to-transparent animate-pulse"
             style={{
               left: `${(i + 1) * 10}%`,
               animationDelay: `${i * 0.4}s`,
@@ -109,7 +109,7 @@ const AboutPage: React.FC = () => {
       {/* Film Grain Eletrificado */}
       <div className="fixed inset-0 opacity-12 pointer-events-none z-0"
            style={{
-             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(251,191,36,0.15) 1px)`,
+             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(120,113,108,0.15) 1px)`,
              backgroundSize: '5px 5px',
              animation: 'grain 7s steps(12) infinite'
            }} />

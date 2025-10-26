@@ -49,6 +49,7 @@ const ServicesPage: React.FC = () => {
       title: "Filmagem Principal",
       category: "Produção",
       description: "Captura profissional com equipamentos 4K, iluminação cinematográfica e direção especializada. Nossa equipe experiente garante que cada frame conte sua história.",
+      detailedDescription: "A filmagem principal é onde a magia acontece. Com equipamentos de última geração e uma equipe técnica altamente qualificada, capturamos cada momento com precisão cinematográfica. Utilizamos câmeras 4K, drones profissionais, estabilizadores e um sistema de iluminação completo para garantir a máxima qualidade visual.",
       image: "/api/placeholder/400/250",
       duration: "1-3 dias",
       rating: 5,
@@ -56,33 +57,44 @@ const ServicesPage: React.FC = () => {
       tags: ["4K", "Cinematografia", "Direção"],
       featured: true,
       icon: <Camera className="w-6 h-6" />,
-      price: "A partir de €1.500"
+      price: "A partir de €1.500",
+      features: ["Filmagem em 4K Ultra HD", "Equipamento cinematográfico profissional", "Direção especializada", "Iluminação cinematográfica", "Captação de áudio profissional", "Múltiplos ângulos e perspetivas"],
+      process: ["Setup e preparação do equipamento", "Briefing da equipe e ensaios", "Filmagem das sequências principais", "Captação de B-roll e detalhes", "Backup e organização do material"],
+      deliverables: ["Material filmado em 4K", "Áudio sincronizado", "B-roll e material adicional", "Backup seguro dos ficheiros", "Relatório de filmagem"]
     },
     {
       id: 3,
       title: "Pós-Produção",
       category: "Finalização",
       description: "Edição profissional, color grading, sound design e efeitos visuais para resultado cinematográfico. Transformamos material bruto em obras de arte visuais.",
+      detailedDescription: "A pós-produção é onde damos vida ao material filmado. Utilizando software profissional como DaVinci Resolve, Adobe Premiere e After Effects, criamos uma narrativa coesa e visualmente impactante. Cada projeto recebe tratamento personalizado de cor, áudio e efeitos visuais.",
       image: "/api/placeholder/400/250",
       duration: "1-2 semanas",
       rating: 5,
       views: "1.8k",
       tags: ["Edição", "Color Grading", "VFX"],
       icon: <Edit className="w-6 h-6" />,
-      price: "A partir de €1.200"
+      price: "A partir de €1.200",
+      features: ["Edição cinematográfica profissional", "Color grading avançado", "Sound design e mixagem", "Efeitos visuais e motion graphics", "Correção e estabilização", "Múltiplos formatos de entrega"],
+      process: ["Organização e sincronização do material", "Montagem e estruturação narrativa", "Color grading e correção de cor", "Sound design e mixagem de áudio", "Efeitos visuais e finalizações", "Renderização e entrega final"],
+      deliverables: ["Vídeo final em alta resolução", "Versões para diferentes plataformas", "Ficheiros de áudio separados", "Projeto editável", "Backup do projeto completo"]
     },
     {
       id: 4,
       title: "Motion Graphics",
       category: "Animação",
       description: "Criação de animações, títulos e elementos gráficos para enriquecer a narrativa visual. Damos vida às suas ideias com movimento e impacto visual.",
+      detailedDescription: "Motion graphics são elementos essenciais para criar vídeos modernos e envolventes. Criamos animações personalizadas, títulos dinâmicos, infográficos animados e elementos visuais que complementam perfeitamente a sua narrativa, sempre alinhados com a identidade visual da sua marca.",
       image: "/api/placeholder/400/250",
       duration: "3-5 dias",
       rating: 4.8,
       views: "950",
       tags: ["Animação", "Gráficos", "Títulos"],
       icon: <Palette className="w-6 h-6" />,
-      price: "A partir de €900"
+      price: "A partir de €900",
+      features: ["Animações 2D e 3D personalizadas", "Títulos e lower thirds dinâmicos", "Infográficos animados", "Transições cinematográficas", "Elementos de marca animados", "Integração perfeita com o vídeo"],
+      process: ["Análise do projeto e briefing criativo", "Desenvolvimento de conceitos visuais", "Criação de storyboard animado", "Produção das animações", "Integração e ajustes finais"],
+      deliverables: ["Animações em alta resolução", "Elementos gráficos separados", "Versões com transparência", "Projeto editável", "Guia de utilização"]
     },
     {
       id: 5,
