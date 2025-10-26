@@ -7,16 +7,16 @@ const Footer: React.FC = () => {
   
   const footerLinks = {
     "Empresa": [
-      { name: "Sobre Nós", href: "#about" },
-      { name: "Portfólio", href: "#portfolio" },
-      { name: "Serviços", href: "#services" },
-      { name: "Equipa", href: "#team" }
+      { name: "Sobre Nós", href: "/sobre" },
+      { name: "Portfólio", href: "/portfolio" },
+      { name: "Serviços", href: "/catalogo" },
+      { name: "Contacto", href: "/contacto" }
     ],
     "Serviços": [
-      { name: "Filmmaking", href: "#filmmaking" },
-      { name: "Fotografia", href: "#photography" },
-      { name: "Edição", href: "#editing" },
-      { name: "Pós-produção", href: "#post-production" }
+      { name: "Pré-Produção", href: "/catalogo" },
+      { name: "Produção", href: "/catalogo" },
+      { name: "Pós-Produção", href: "/catalogo" },
+      { name: "Motion Graphics", href: "/catalogo" }
     ],
     "Contacto": [
       { name: "hello@mvstudio.pt", href: "mailto:hello@mvstudio.pt", icon: <Mail className="w-4 h-4" /> },
@@ -103,13 +103,13 @@ const Footer: React.FC = () => {
 
             {/* Legal Links */}
             <div className="flex gap-6 text-sm">
-              <a href="#privacy" className="text-gray-400 hover:text-white transition-colors duration-300">
+              <a href="/privacidade" className="text-gray-400 hover:text-white transition-colors duration-300">
                 Política de Privacidade
               </a>
-              <a href="#terms" className="text-gray-400 hover:text-white transition-colors duration-300">
+              <a href="/termos" className="text-gray-400 hover:text-white transition-colors duration-300">
                 Termos de Serviço
               </a>
-              <a href="#cookies" className="text-gray-400 hover:text-white transition-colors duration-300">
+              <a href="/cookies" className="text-gray-400 hover:text-white transition-colors duration-300">
                 Cookies
               </a>
             </div>

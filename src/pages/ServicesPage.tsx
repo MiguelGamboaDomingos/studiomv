@@ -1,5 +1,6 @@
-import React from 'react';
-import { Camera, Video, Edit, Palette, Play, Star, Clock, Users, Film, Clapperboard, Mic, Lightbulb } from 'lucide-react';
+import React, { useState } from 'react';
+import { Camera, Video, Edit, Palette, Play, Star, Clock, Users, Film, Clapperboard, Mic, Lightbulb, X, ArrowRight, Zap } from 'lucide-react';
+import StandardButton from '../components/StandardButton';
 
 interface CatalogItem {
   id: number;
@@ -14,15 +15,23 @@ interface CatalogItem {
   featured?: boolean;
   icon?: React.ReactNode;
   price?: string;
+  detailedDescription?: string;
+  features?: string[];
+  process?: string[];
+  deliverables?: string[];
 }
 
 const ServicesPage: React.FC = () => {
+  const [selectedService, setSelectedService] = useState<CatalogItem | null>(null);
+  const [hoveredCard, setHoveredCard] = useState<number | null>(null);
+
   const catalogItems: CatalogItem[] = [
     {
       id: 1,
       title: "Pré-Produção",
       category: "Desenvolvimento",
       description: "Planejamento detalhado do projeto audiovisual, incluindo roteiro, storyboard e cronograma de produção. Desenvolvemos a base criativa crucial onde lançamos as bases para um projeto bem-sucedido.",
+      detailedDescription: "A pré-produção é a fase mais crucial de qualquer projeto audiovisual. É aqui que transformamos ideias em planos concretos e executáveis. Nossa equipe trabalha em estreita colaboração com você para desenvolver cada aspecto do projeto, desde o conceito inicial até os detalhes técnicos mais específicos.",
       image: "/api/placeholder/400/250",
       duration: "2-4 semanas",
       rating: 5,
@@ -30,7 +39,10 @@ const ServicesPage: React.FC = () => {
       tags: ["Roteiro", "Storyboard", "Planejamento"],
       featured: true,
       icon: <Lightbulb className="w-6 h-6" />,
-      price: "A partir de €800"
+      price: "A partir de €800",
+      features: ["Desenvolvimento de conceito criativo", "Roteiro e storyboard detalhado", "Planeamento de cronogramas", "Scouting de localizações", "Casting e seleção de talentos", "Orçamentação detalhada"],
+      process: ["Briefing inicial e análise de objetivos", "Desenvolvimento do conceito criativo", "Criação do roteiro e storyboard", "Planeamento logístico e cronograma", "Apresentação e aprovação final"],
+      deliverables: ["Roteiro completo", "Storyboard ilustrado", "Cronograma de produção", "Lista de equipamentos", "Plano de localizações", "Orçamento detalhado"]
     },
     {
       id: 2,
@@ -135,160 +147,221 @@ const ServicesPage: React.FC = () => {
     : catalogItems.filter(item => item.category === selectedCategory);
 
   return (
-    <div className="min-h-screen bg-black pt-20">
-      {/* Grid Background */}
-      <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
+    <div className="min-h-screen bg-black pt-20 relative">
+      {/* Grid Background - Castanho */}
+      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(201,169,97,0.3) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(201,169,97,0.3) 1px, transparent 1px)
+            linear-gradient(rgba(139,69,19,0.4) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(139,69,19,0.4) 1px, transparent 1px)
           `,
           backgroundSize: '40px 40px'
         }} />
       </div>
 
-      {/* Film Grain */}
-      <div className="fixed inset-0 opacity-10 pointer-events-none z-0"
+      {/* Film Grain - Castanho */}
+      <div className="fixed inset-0 opacity-15 pointer-events-none z-0"
            style={{
-             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(201,169,97,0.1) 1px)`,
+             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(139,69,19,0.15) 1px)`,
              backgroundSize: '3px 3px',
              animation: 'grain 8s steps(10) infinite'
            }} />
 
+      {/* Electric Grid Effect */}
+      <div className="fixed inset-0 opacity-5 pointer-events-none z-0">
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-600/30 to-transparent animate-pulse"
+            style={{
+              left: `${(i + 1) * 12.5}%`,
+              animationDelay: `${i * 0.5}s`,
+              animationDuration: '3s'
+            }}
+          />
+        ))}
+      </div>
+
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            <span className="text-amber-600">Catálogo</span>
-          </h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Explore nossos serviços de produção audiovisual e descubra como podemos transformar suas ideias em realidade.
+        {/* Header Elegante */}
+        <div className="text-center mb-16">
+          <div className="relative inline-block mb-8">
+            <h1 className="text-5xl md:text-7xl font-light text-white mb-6 relative z-10">
+              Catálogo de <span className="text-amber-400 font-light">Serviços</span>
+            </h1>
+            {/* Electric Effect Behind Title */}
+            <div className="absolute inset-0 opacity-20">
+              <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-600 to-transparent animate-pulse" />
+              <div className="absolute top-1/2 left-1/4 w-px h-8 bg-gradient-to-b from-transparent via-amber-400 to-transparent animate-pulse" style={{animationDelay: '0.5s'}} />
+              <div className="absolute top-1/2 right-1/4 w-px h-8 bg-gradient-to-b from-transparent via-stone-400 to-transparent animate-pulse" style={{animationDelay: '1s'}} />
+            </div>
+          </div>
+          <p className="text-xl text-stone-300 max-w-3xl mx-auto leading-relaxed">
+            Explore nossos serviços de produção audiovisual e descubra como podemos transformar suas ideias em realidade cinematográfica.
           </p>
         </div>
 
-        {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        {/* Category Filter Elegante */}
+        <div className="flex flex-wrap justify-center gap-4 mb-16">
           {categories.map((category) => (
             <button
               key={category}
               onClick={() => setSelectedCategory(category)}
-              className={`px-6 py-3 rounded-full font-medium transition-all duration-300 ${
+              className={`relative px-6 py-3 rounded-2xl font-light tracking-wider transition-all duration-500 overflow-hidden group ${
                 selectedCategory === category
-                  ? 'bg-amber-600 text-black'
-                  : 'bg-white/10 text-white hover:bg-white/20'
+                  ? 'bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 text-black shadow-lg shadow-amber-500/30 scale-105'
+                  : 'bg-gradient-to-r from-stone-900/40 via-amber-950/20 to-stone-900/40 text-stone-200 border border-amber-800/20 hover:border-amber-600/40 hover:bg-gradient-to-r hover:from-amber-950/30 hover:via-stone-800/30 hover:to-amber-950/30 hover:text-amber-200 hover:scale-105'
               }`}
             >
-              {category}
+              <span className="relative z-10">{category}</span>
+              {selectedCategory !== category && (
+                <div className="absolute inset-0 bg-gradient-to-r from-amber-800/0 via-amber-700/10 to-amber-800/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              )}
             </button>
           ))}
         </div>
 
-        {/* Catalog Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-20">
+        {/* Catalog Grid Elegante */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
           {filteredItems.map((item, index) => (
             <div
               key={item.id}
-              className="group relative bg-black/80 backdrop-blur-md border border-amber-600/20 rounded-2xl overflow-hidden hover:bg-black/90 hover:border-amber-600/50 hover:scale-105 transition-all duration-500 hover:shadow-2xl hover:shadow-amber-600/20"
+              className="group relative bg-gradient-to-br from-stone-950/40 via-amber-950/20 to-stone-900/60 backdrop-blur-xl border border-amber-800/20 rounded-3xl overflow-hidden hover:border-amber-600/50 hover:scale-[1.02] transition-all duration-700 hover:shadow-2xl hover:shadow-amber-600/25 cursor-pointer"
               style={{
-                animation: `fadeInUp 0.6s ease-out ${index * 0.1}s both`
+                animation: `fadeInUp 0.8s ease-out ${index * 0.15}s both`
               }}
+              onMouseEnter={() => setHoveredCard(item.id)}
+              onMouseLeave={() => setHoveredCard(null)}
+              onClick={() => setSelectedService(item)}
             >
+              {/* Electric Border Effect */}
+              <div className={`absolute inset-0 rounded-3xl transition-opacity duration-700 ${
+                hoveredCard === item.id ? 'opacity-100' : 'opacity-0'
+              }`}>
+                <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-500 to-transparent" />
+                <div className="absolute bottom-0 right-0 w-full h-px bg-gradient-to-r from-transparent via-stone-400 to-transparent" />
+                <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-transparent via-amber-600 to-transparent" />
+                <div className="absolute top-0 right-0 w-px h-full bg-gradient-to-b from-transparent via-stone-500 to-transparent" />
+              </div>
+
               {/* Featured Badge */}
               {item.featured && (
-                <div className="absolute top-3 left-3 z-20 bg-gradient-to-r from-amber-600 to-amber-500 text-black px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                  ⭐ Destaque
+                <div className="absolute top-4 left-4 z-20 bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 text-black px-4 py-2 rounded-2xl text-xs font-medium shadow-xl shadow-amber-500/30 flex items-center gap-2">
+                  <Zap className="w-3 h-3" />
+                  Destaque
                 </div>
               )}
 
               {/* Video/Image Container */}
-              <div className="relative h-40 bg-gradient-to-br from-black via-gray-900 to-black overflow-hidden">
-                {/* Dark video-like background */}
-                <div className="absolute inset-0 bg-gradient-to-br from-black/60 via-gray-900/80 to-black/90"></div>
+              <div className="relative h-48 bg-gradient-to-br from-stone-950 via-amber-950/30 to-stone-900 overflow-hidden">
+                {/* Glass Effect Background */}
+                <div className="absolute inset-0 bg-gradient-to-br from-amber-950/20 via-stone-900/40 to-amber-900/30 backdrop-blur-sm" />
 
-                {/* Animated icon */}
+                {/* Electric Grid Pattern */}
+                {hoveredCard === item.id && (
+                  <div className="absolute inset-0 opacity-20">
+                    {[...Array(4)].map((_, i) => (
+                      <div
+                        key={i}
+                        className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-400 to-transparent animate-pulse"
+                        style={{
+                          left: `${(i + 1) * 20}%`,
+                          animationDelay: `${i * 0.3}s`
+                        }}
+                      />
+                    ))}
+                  </div>
+                )}
+
+                {/* Animated Icon */}
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="relative">
-                    {/* Icon with animation */}
-                    <div className="text-amber-600 group-hover:scale-110 group-hover:rotate-12 transition-all duration-500">
-                      {item.icon}
+                    <div className={`w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-800/40 via-stone-700/30 to-amber-900/50 flex items-center justify-center transition-all duration-700 ${
+                      hoveredCard === item.id ? 'scale-110 rotate-3 shadow-2xl shadow-amber-600/40' : 'shadow-xl shadow-stone-900/30'
+                    }`}>
+                      <div className={`transition-all duration-700 ${
+                        hoveredCard === item.id ? 'scale-110 text-amber-200' : 'text-amber-500'
+                      }`}>
+                        {React.cloneElement(item.icon as React.ReactElement, {
+                          className: "w-8 h-8"
+                        })}
+                      </div>
                     </div>
 
-                    {/* Pulsing ring effect */}
-                    <div className="absolute inset-0 border-2 border-amber-600/30 rounded-full animate-ping group-hover:border-amber-600/60"></div>
-                    <div className="absolute inset-0 border border-amber-600/20 rounded-full animate-pulse"></div>
+                    {/* Electric Pulse Effect */}
+                    {hoveredCard === item.id && (
+                      <div className="absolute inset-0 w-20 h-20 rounded-3xl bg-gradient-to-br from-amber-600/20 to-stone-600/10 animate-pulse" />
+                    )}
                   </div>
                 </div>
 
-                {/* Play button overlay */}
-                <div className="absolute bottom-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="w-8 h-8 bg-amber-600/80 backdrop-blur-sm rounded-full flex items-center justify-center">
-                    <Play className="w-4 h-4 text-black ml-0.5" />
-                  </div>
-                </div>
-
-                {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent"></div>
+                {/* Gradient Overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-stone-950/80 via-transparent to-transparent" />
               </div>
 
               {/* Content */}
-              <div className="p-4">
+              <div className="p-6">
                 {/* Category & Price */}
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-amber-600 text-xs font-medium uppercase tracking-wider">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-amber-400 text-xs font-light uppercase tracking-widest">
                     {item.category}
                   </span>
                   {item.price && (
-                    <span className="text-amber-600 text-xs font-bold">
+                    <span className="text-stone-300 text-xs font-medium bg-amber-950/30 px-2 py-1 rounded-lg">
                       {item.price}
                     </span>
                   )}
                 </div>
 
                 {/* Title */}
-                <h3 className="text-lg font-bold text-white mb-2 group-hover:text-amber-600 transition-colors duration-300 line-clamp-1">
+                <h3 className={`text-xl font-light mb-3 transition-colors duration-700 line-clamp-1 ${
+                  hoveredCard === item.id ? 'text-amber-200' : 'text-stone-200'
+                }`}>
                   {item.title}
                 </h3>
 
                 {/* Description */}
-                <p className="text-gray-300 text-xs mb-3 leading-relaxed line-clamp-3">
+                <p className={`text-sm mb-4 leading-relaxed line-clamp-3 transition-colors duration-700 ${
+                  hoveredCard === item.id ? 'text-stone-300' : 'text-stone-400'
+                }`}>
                   {item.description}
                 </p>
 
                 {/* Meta Info */}
-                <div className="flex items-center justify-between text-xs text-gray-400 mb-3">
-                  <div className="flex items-center gap-1">
-                    <Clock className="w-3 h-3" />
-                    {item.duration}
+                <div className="flex items-center justify-between text-xs text-stone-400 mb-4">
+                  <div className="flex items-center gap-2">
+                    <Clock className="w-3 h-3 text-amber-600" />
+                    <span>{item.duration}</span>
                   </div>
-                  <div className="flex items-center gap-1">
-                    <Users className="w-3 h-3" />
-                    {item.views}
+                  <div className="flex items-center gap-2">
+                    <Users className="w-3 h-3 text-amber-600" />
+                    <span>{item.views}</span>
                   </div>
                 </div>
 
                 {/* Rating */}
                 {item.rating && (
-                  <div className="flex items-center gap-1 mb-3">
+                  <div className="flex items-center gap-1 mb-4">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
                         className={`w-3 h-3 ${
                           i < Math.floor(item.rating!)
-                            ? 'text-amber-600 fill-current'
-                            : 'text-gray-600'
+                            ? 'text-amber-500 fill-current'
+                            : 'text-stone-600'
                         }`}
                       />
                     ))}
-                    <span className="text-gray-400 text-xs ml-1">{item.rating}</span>
+                    <span className="text-stone-400 text-xs ml-2">{item.rating}</span>
                   </div>
                 )}
 
                 {/* Tags */}
-                <div className="flex flex-wrap gap-1 mb-3">
+                <div className="flex flex-wrap gap-2 mb-6">
                   {item.tags.slice(0, 3).map((tag, tagIndex) => (
                     <span
                       key={tagIndex}
-                      className="px-2 py-0.5 bg-amber-600/20 text-amber-600 text-xs rounded-full border border-amber-600/30"
+                      className="px-3 py-1 bg-amber-800/20 text-amber-400 text-xs rounded-full border border-amber-700/30 font-light"
                     >
                       {tag}
                     </span>
@@ -296,27 +369,161 @@ const ServicesPage: React.FC = () => {
                 </div>
 
                 {/* CTA Button */}
-                <button className="w-full px-3 py-2 bg-gradient-to-r from-amber-600/20 to-amber-500/20 border border-amber-600/40 text-amber-600 font-medium text-sm rounded-lg hover:from-amber-600 hover:to-amber-500 hover:text-black hover:border-amber-600 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-amber-600/30">
+                <StandardButton
+                  variant="secondary"
+                  size="sm"
+                  className="w-full"
+                  onClick={() => setSelectedService(item)}
+                >
                   Ver Detalhes
-                </button>
+                </StandardButton>
               </div>
             </div>
           ))}
         </div>
 
-        {/* CTA Section */}
-        <div className="text-center bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-12">
-          <h2 className="text-4xl font-bold text-white mb-4">
-            Pronto para começar o seu projeto?
-          </h2>
-          <p className="text-gray-300 text-lg mb-8">
-            Entre em contacto connosco e transformemos a sua visão em realidade.
-          </p>
-          <button className="group relative px-10 py-4 bg-amber-600/20 border border-amber-600/30 text-amber-600 font-bold rounded-full hover:bg-amber-600 hover:text-black hover:scale-105 transition-all duration-500 overflow-hidden">
-            <span className="relative z-10">Vamos Criar Juntos</span>
-          </button>
+        {/* CTA Section Elegante */}
+        <div className="text-center bg-gradient-to-br from-amber-950/20 via-stone-900/30 to-amber-900/10 backdrop-blur-xl border border-amber-800/30 rounded-3xl p-16 relative overflow-hidden">
+          {/* Electric Background Effect */}
+          <div className="absolute inset-0 opacity-10">
+            {[...Array(6)].map((_, i) => (
+              <div
+                key={i}
+                className="absolute h-full w-px bg-gradient-to-b from-transparent via-amber-400 to-transparent animate-pulse"
+                style={{
+                  left: `${(i + 1) * 16.66}%`,
+                  animationDelay: `${i * 0.5}s`,
+                  animationDuration: '3s'
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="relative z-10">
+            <h2 className="text-4xl md:text-5xl font-light text-white mb-6 leading-tight">
+              Pronto para começar o seu <span className="text-amber-400">projeto</span>?
+            </h2>
+            <p className="text-stone-300 text-xl mb-10 max-w-2xl mx-auto leading-relaxed">
+              Entre em contacto connosco e transformemos a sua visão em realidade cinematográfica.
+            </p>
+            <StandardButton
+              variant="primary"
+              size="lg"
+              href="https://wa.me/244949838924?text=Olá! Gostaria de saber mais sobre os serviços da MV Studio."
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Vamos Falar
+            </StandardButton>
+          </div>
         </div>
       </div>
+
+      {/* Modal de Detalhes do Serviço */}
+      {selectedService && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div className="bg-gradient-to-br from-stone-950 via-amber-950/20 to-stone-900 backdrop-blur-xl border border-amber-800/30 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto relative">
+            {/* Close Button */}
+            <button
+              onClick={() => setSelectedService(null)}
+              className="absolute top-6 right-6 w-10 h-10 bg-stone-800/50 hover:bg-amber-900/50 rounded-full flex items-center justify-center text-stone-300 hover:text-amber-200 transition-all duration-300 z-10"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            {/* Header */}
+            <div className="p-8 border-b border-amber-800/20">
+              <div className="flex items-center gap-6 mb-4">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-800/40 via-stone-700/30 to-amber-900/50 flex items-center justify-center">
+                  {React.cloneElement(selectedService.icon as React.ReactElement, {
+                    className: "w-8 h-8 text-amber-400"
+                  })}
+                </div>
+                <div>
+                  <h2 className="text-3xl font-light text-white mb-2">{selectedService.title}</h2>
+                  <div className="flex items-center gap-4">
+                    <span className="text-amber-400 text-sm uppercase tracking-wider">{selectedService.category}</span>
+                    {selectedService.price && (
+                      <span className="text-stone-300 text-sm bg-amber-950/30 px-3 py-1 rounded-lg">{selectedService.price}</span>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-8">
+              {/* Description */}
+              <div className="mb-8">
+                <h3 className="text-xl font-light text-amber-300 mb-4">Sobre o Serviço</h3>
+                <p className="text-stone-300 leading-relaxed">
+                  {selectedService.detailedDescription || selectedService.description}
+                </p>
+              </div>
+
+              {/* Features, Process, Deliverables */}
+              <div className="grid md:grid-cols-3 gap-8">
+                {selectedService.features && (
+                  <div>
+                    <h4 className="text-lg font-light text-amber-300 mb-4">Características</h4>
+                    <ul className="space-y-2">
+                      {selectedService.features.map((feature, index) => (
+                        <li key={index} className="flex items-start gap-2 text-stone-300 text-sm">
+                          <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 flex-shrink-0" />
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {selectedService.process && (
+                  <div>
+                    <h4 className="text-lg font-light text-amber-300 mb-4">Processo</h4>
+                    <ul className="space-y-2">
+                      {selectedService.process.map((step, index) => (
+                        <li key={index} className="flex items-start gap-2 text-stone-300 text-sm">
+                          <span className="w-5 h-5 rounded-full bg-amber-800/30 text-amber-400 text-xs flex items-center justify-center mt-0.5 flex-shrink-0">
+                            {index + 1}
+                          </span>
+                          {step}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+
+                {selectedService.deliverables && (
+                  <div>
+                    <h4 className="text-lg font-light text-amber-300 mb-4">Entregáveis</h4>
+                    <ul className="space-y-2">
+                      {selectedService.deliverables.map((deliverable, index) => (
+                        <li key={index} className="flex items-start gap-2 text-stone-300 text-sm">
+                          <div className="w-1.5 h-1.5 rounded-full bg-amber-400 mt-2 flex-shrink-0" />
+                          {deliverable}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+              </div>
+
+              {/* CTA */}
+              <div className="mt-8 pt-8 border-t border-amber-800/20 text-center">
+                <StandardButton
+                  variant="primary"
+                  size="lg"
+                  href="https://wa.me/244949838924?text=Olá! Gostaria de saber mais sobre os serviços da MV Studio."
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Solicitar Orçamento
+                </StandardButton>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes grain {

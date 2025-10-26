@@ -1,5 +1,6 @@
 import React from 'react';
 import { Users, Award, Clock, Target, Heart, Lightbulb } from 'lucide-react';
+import StandardButton from '../components/StandardButton';
 
 const AboutPage: React.FC = () => {
   const stats = [
@@ -299,9 +300,15 @@ const AboutPage: React.FC = () => {
           <p className="text-gray-300 text-lg mb-8">
             Entre em contacto connosco e descubra como podemos dar vida à sua visão.
           </p>
-          <button className="px-10 py-4 bg-gradient-to-r from-amber-900 to-amber-800 text-white font-bold rounded-full hover:from-amber-800 hover:to-amber-700 transition-all duration-300 transform hover:scale-105">
-            Vamos Criar Juntos
-          </button>
+          <StandardButton
+            variant="primary"
+            size="lg"
+            href="https://wa.me/244949838924?text=Olá! Gostaria de saber mais sobre os serviços da MV Studio."
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Vamos Falar
+          </StandardButton>
         </div>
       </div>
 

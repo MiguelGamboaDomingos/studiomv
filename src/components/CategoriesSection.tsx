@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import StandardButton from './StandardButton';
 
 interface Category {
   id: number;
@@ -166,17 +167,13 @@ const CategoriesSection: React.FC = () => {
 
         {/* CTA Button */}
         <div className="text-center">
-          <button className="group relative px-8 py-4 bg-gradient-to-r from-amber-700 via-amber-600 to-amber-800 rounded-full text-white font-light tracking-wide transition-all duration-500 ease-out hover:scale-105 hover:shadow-2xl hover:shadow-amber-500/25">
-            <span className="relative z-10 flex items-center">
-              Veja Todas as Categorias
-              <div className="w-6 h-6 ml-3 border border-white/50 rounded-full flex items-center justify-center group-hover:border-white transition-colors duration-300">
-                <div className="w-2 h-2 bg-white rounded-full group-hover:scale-125 transition-transform duration-300"></div>
-              </div>
-            </span>
-            
-            {/* Hover effect */}
-            <div className="absolute inset-0 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          </button>
+          <StandardButton
+            variant="primary"
+            size="lg"
+            href="/catalogo"
+          >
+            Ver Catálogo Completo
+          </StandardButton>
         </div>
       </div>
 
