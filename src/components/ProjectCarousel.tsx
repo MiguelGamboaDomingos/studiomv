@@ -1,13 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Play, Circle } from 'lucide-react';
-
-interface Project {
-  id: number;
-  title: string;
-  subtitle: string;
-  image: string;
-  category: string;
-}
+import { usePublicProjects, usePublicSettings } from '../hooks/usePublicData';
+import { Project as ProjectType } from '../types';
 
 const ProjectCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -15,51 +9,80 @@ const ProjectCarousel: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const projects: Project[] = [
+  const { projects: firebaseProjects, loading } = usePublicProjects();
+  const { settings } = usePublicSettings();
+
+  // Títulos da seção (do Firebase ou padrão)
+  const portfolioTitle = settings?.sectionTitles?.portfolio || 'Nosso Portfólio';
+  const portfolioDescription = settings?.sectionDescriptions?.portfolio || 'Projetos que definem nossa excelência criativa';
+
+  // Filtrar apenas projetos em destaque
+  const featuredProjects = firebaseProjects.filter(project => project.featured && project.published);
+
+  // Projetos padrão se não houver projetos do Firebase
+  const defaultProjects = [
     {
-      id: 1,
+      id: '1',
       title: 'Casamento Civil',
-      subtitle: 'Casamento',
-      image:
-        'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1',
+      description: 'Casamento',
       category: 'Wedding',
+      client: 'Cliente Exemplo',
+      year: 2024,
+      duration: '2 min',
+      featured: true,
+      published: true,
+      images: [{
+        id: '1',
+        url: 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1',
+        type: 'image',
+        title: 'Casamento Civil',
+        alt: 'Casamento Civil',
+        isMain: true,
+        order: 0,
+        size: 0,
+        filename: '',
+        path: '',
+        createdAt: '',
+        updatedAt: ''
+      }],
+      videos: [],
+      createdAt: '',
+      updatedAt: ''
     },
     {
-      id: 2,
+      id: '2',
       title: 'Pixel Fusion',
-      subtitle: 'Evento',
-      image:
-        'https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1',
+      description: 'Evento',
       category: 'Event',
-    },
-    {
-      id: 3,
-      title: 'EcoEV',
-      subtitle: 'Corporate',
-      image:
-        'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1',
-      category: 'Corporate',
-    },
-    {
-      id: 4,
-      title: 'Fashion Story',
-      subtitle: 'Moda',
-      image:
-        'https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1',
-      category: 'Fashion',
-    },
-    {
-      id: 5,
-      title: 'Brand Identity',
-      subtitle: 'Branding',
-      image:
-        'https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1',
-      category: 'Brand',
-    },
+      client: 'Cliente Exemplo',
+      year: 2024,
+      duration: '3 min',
+      featured: true,
+      published: true,
+      images: [{
+        id: '2',
+        url: 'https://images.pexels.com/photos/2747449/pexels-photo-2747449.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1',
+        type: 'image',
+        title: 'Pixel Fusion',
+        alt: 'Pixel Fusion',
+        isMain: true,
+        order: 0,
+        size: 0,
+        filename: '',
+        path: '',
+        createdAt: '',
+        updatedAt: ''
+      }],
+      videos: [],
+      createdAt: '',
+      updatedAt: ''
+    }
   ];
 
+  const displayProjects = featuredProjects.length > 0 ? featuredProjects : defaultProjects;
+
   const goToSlide = (index: number) => {
-    const clamped = Math.max(0, Math.min(index, projects.length - 1));
+    const clamped = Math.max(0, Math.min(index, displayProjects.length - 1));
     setCurrentIndex(clamped);
   };
 
@@ -129,7 +152,7 @@ const ProjectCarousel: React.FC = () => {
       if (!active) return;
 
       const atStart = currentIndex === 0;
-      const atEnd = currentIndex === projects.length - 1;
+      const atEnd = currentIndex === displayProjects.length - 1;
 
       // acumula delta e só previne quando vamos consumir
       deltaBuffer += e.deltaY;
@@ -146,7 +169,7 @@ const ProjectCarousel: React.FC = () => {
 
         if (animating) return;
 
-        if (deltaBuffer >= WHEEL_THRESHOLD && currentIndex < projects.length - 1) {
+        if (deltaBuffer >= WHEEL_THRESHOLD && currentIndex < displayProjects.length - 1) {
           triggerTo(currentIndex + 1);
         } else if (deltaBuffer <= -WHEEL_THRESHOLD && currentIndex > 0) {
           triggerTo(currentIndex - 1);
@@ -175,7 +198,7 @@ const ProjectCarousel: React.FC = () => {
       // só intercepta se gesto for predominantemente vertical
       if (Math.abs(dy) > Math.abs(dx)) {
         const atStart = currentIndex === 0;
-        const atEnd = currentIndex === projects.length - 1;
+        const atEnd = currentIndex === displayProjects.length - 1;
         const goingDown = dy < -TOUCH_THRESHOLD;
         const goingUp = dy > TOUCH_THRESHOLD;
 
@@ -185,7 +208,7 @@ const ProjectCarousel: React.FC = () => {
         if (shouldCapture) {
           e.preventDefault();
           if (animating) return;
-          if (goingDown && currentIndex < projects.length - 1) triggerTo(currentIndex + 1);
+          if (goingDown && currentIndex < displayProjects.length - 1) triggerTo(currentIndex + 1);
           else if (goingUp && currentIndex > 0) triggerTo(currentIndex - 1);
         }
       }
@@ -194,13 +217,13 @@ const ProjectCarousel: React.FC = () => {
     // Teclado (coeso com o ritmo suave)
     const onKeyDown = (e: KeyboardEvent) => {
       if (!active || animating) return;
-      if ((e.key === 'ArrowDown' || e.key === 'PageDown') && currentIndex < projects.length - 1) {
+      if ((e.key === 'ArrowDown' || e.key === 'PageDown') && currentIndex < displayProjects.length - 1) {
         e.preventDefault();
         triggerTo(currentIndex + 1);
       } else if ((e.key === 'ArrowUp' || e.key === 'PageUp') && currentIndex > 0) {
         e.preventDefault();
         triggerTo(currentIndex - 1);
-      } else if (e.key === 'ArrowRight' && currentIndex < projects.length - 1) {
+      } else if (e.key === 'ArrowRight' && currentIndex < displayProjects.length - 1) {
         e.preventDefault();
         triggerTo(currentIndex + 1);
       } else if (e.key === 'ArrowLeft' && currentIndex > 0) {
@@ -222,7 +245,7 @@ const ProjectCarousel: React.FC = () => {
       window.removeEventListener('keydown', onKeyDown as any);
       if (cooldownTO) window.clearTimeout(cooldownTO);
     };
-  }, [currentIndex, projects.length]);
+  }, [currentIndex, displayProjects.length]);
 
   return (
     <section ref={sectionRef} className="relative py-16 lg:py-24 bg-black overflow-hidden">
@@ -322,7 +345,7 @@ const ProjectCarousel: React.FC = () => {
                 padding: '0 12vw',
               }}
             >
-              {projects.map((project, idx) => {
+              {displayProjects.map((project, idx) => {
                 const isCenter = idx === currentIndex;
                 return (
                   <div
@@ -337,7 +360,7 @@ const ProjectCarousel: React.FC = () => {
                   >
                     <div className="relative bg-gray-900 rounded-xl overflow-hidden shadow-2xl h-[520px]">
                       <img
-                        src={project.image}
+                        src={project.images?.[0]?.url || 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1'}
                         alt={project.title}
                         className="w-full h-full object-cover transition-transform duration-[750ms] group-hover:scale-110"
                         draggable={false}

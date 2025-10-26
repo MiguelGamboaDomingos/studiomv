@@ -13,6 +13,12 @@ const AboutSection: React.FC = () => {
   const aboutTitle = settings?.sectionTitles?.about || 'Sobre Nós';
   const aboutDescription = settings?.sectionDescriptions?.about || 'Conheça nossa paixão pela arte cinematográfica';
 
+  // Dados da empresa (do Firebase ou padrão)
+  const companyTitle = settings?.companyInfo?.aboutTitle || 'MV Studio';
+  const companyDescription = settings?.companyInfo?.aboutDescription || 'Estúdio de produção audiovisual especializado em conteúdo cinematográfico de alta qualidade';
+  const yearsOfExperience = settings?.companyInfo?.yearsOfExperience || 8;
+  const foundedYear = settings?.companyInfo?.foundedYear || 2016;
+
   return (
     <section
       ref={sectionRef}
@@ -53,21 +59,15 @@ const AboutSection: React.FC = () => {
             <ImmersiveTransitions direction="up" delay={600} duration={1000}>
               <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
                 <p>
-                  No MV Studio, acreditamos que cada projeto é uma oportunidade única de contar uma história.
-                  Combinamos técnica cinematográfica avançada com uma abordagem criativa personalizada para
-                  transformar ideias em experiências visuais memoráveis.
+                  {companyDescription}
                 </p>
 
                 <p>
-                  Desde vídeos corporativos que elevam marcas a documentários de casamento que capturam
-                  momentos únicos, nossa equipa dedica-se a criar conteúdo que ressoa com audiências e
-                  deixa uma impressão duradoura.
+                  {settings?.companyInfo?.missionStatement || 'Desde vídeos corporativos que elevam marcas a documentários de casamento que capturam momentos únicos, nossa equipa dedica-se a criar conteúdo que ressoa com audiências e deixa uma impressão duradoura.'}
                 </p>
 
                 <p>
-                  Com anos de experiência em produção audiovisual, desenvolvemos uma metodologia que
-                  combina planeamento estratégico, execução técnica impecável e uma visão artística
-                  que distingue cada projeto.
+                  {settings?.companyInfo?.visionStatement || `Com ${yearsOfExperience} anos de experiência em produção audiovisual, desenvolvemos uma metodologia que combina planeamento estratégico, execução técnica impecável e uma visão artística que distingue cada projeto.`}
                 </p>
               </div>
             </ImmersiveTransitions>
@@ -76,15 +76,15 @@ const AboutSection: React.FC = () => {
             {/* Stats */}
             <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-800">
               <div className="text-center">
-                <div className="text-3xl font-bold text-amber-400 mb-2">150+</div>
+                <div className="text-3xl font-bold text-stone-400 mb-2">150+</div>
                 <div className="text-gray-400 text-sm uppercase tracking-wide">Projetos</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-amber-400 mb-2">50+</div>
+                <div className="text-3xl font-bold text-stone-400 mb-2">50+</div>
                 <div className="text-gray-400 text-sm uppercase tracking-wide">Clientes</div>
               </div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-amber-400 mb-2">5</div>
+                <div className="text-3xl font-bold text-stone-400 mb-2">{yearsOfExperience}</div>
                 <div className="text-gray-400 text-sm uppercase tracking-wide">Anos</div>
               </div>
             </div>

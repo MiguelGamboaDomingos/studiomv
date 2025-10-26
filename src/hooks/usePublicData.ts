@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Project, Service, TeamMember, Testimonial, SiteSettings } from '../types';
+import { Project, Service, TeamMember, Testimonial, Brand, SiteSettings } from '../types';
 import { FirebaseService } from '../services/firebaseService';
 
 // Hook para dados públicos do site (apenas dados publicados)
@@ -385,4 +385,31 @@ export const usePublicSettings = () => {
   }, []);
 
   return { settings, loading, error };
+};
+
+// Hook para marcas públicas (apenas publicadas)
+export const usePublicBrands = () => {
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchBrands = async () => {
+      try {
+        setLoading(true);
+        const publishedBrands = await FirebaseService.getPublishedBrands();
+        setBrands(publishedBrands);
+        setError(null);
+      } catch (err) {
+        setError('Erro ao carregar marcas');
+        console.error(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchBrands();
+  }, []);
+
+  return { brands, loading, error };
 };

@@ -23,7 +23,7 @@ import {
   UploadTaskSnapshot,
 } from 'firebase/storage';
 import { db, storage } from '../config/firebase';
-import { Project, Service, TeamMember, Testimonial, MediaAsset, SiteSettings } from '../types';
+import { Project, Service, TeamMember, Testimonial, Brand, MediaAsset, SiteSettings } from '../types';
 
 // Tipos para upload
 export interface UploadProgress {
@@ -39,6 +39,7 @@ const COLLECTIONS = {
   SERVICES: 'services',
   TEAM: 'team',
   TESTIMONIALS: 'testimonials',
+  BRANDS: 'brands',
   MEDIA: 'media',
   CONTACTS: 'contacts',
   SETTINGS: 'settings',
@@ -516,6 +517,81 @@ export class FirebaseService {
       await deleteDoc(doc(db, COLLECTIONS.SETTINGS, id));
     } catch (error) {
       console.error('Erro ao eliminar configurações:', error);
+      throw error;
+    }
+  }
+
+  // ===== BRANDS METHODS =====
+  static async getBrands(): Promise<Brand[]> {
+    try {
+      const querySnapshot = await getDocs(
+        query(collection(db, COLLECTIONS.BRANDS), orderBy('order', 'asc'))
+      );
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate?.()?.toISOString(),
+        updatedAt: doc.data().updatedAt?.toDate?.()?.toISOString(),
+      } as Brand));
+    } catch (error) {
+      console.error('Erro ao buscar marcas:', error);
+      throw error;
+    }
+  }
+
+  static async getPublishedBrands(): Promise<Brand[]> {
+    try {
+      const querySnapshot = await getDocs(
+        query(
+          collection(db, COLLECTIONS.BRANDS),
+          where('published', '==', true),
+          orderBy('order', 'asc')
+        )
+      );
+      return querySnapshot.docs.map(doc => ({
+        id: doc.id,
+        ...doc.data(),
+        createdAt: doc.data().createdAt?.toDate?.()?.toISOString(),
+        updatedAt: doc.data().updatedAt?.toDate?.()?.toISOString(),
+      } as Brand));
+    } catch (error) {
+      console.error('Erro ao buscar marcas publicadas:', error);
+      throw error;
+    }
+  }
+
+  static async createBrand(brand: Omit<Brand, 'id' | 'createdAt' | 'updatedAt'>): Promise<string> {
+    try {
+      const now = Timestamp.now();
+      const docRef = await addDoc(collection(db, COLLECTIONS.BRANDS), {
+        ...brand,
+        createdAt: now,
+        updatedAt: now,
+      });
+      return docRef.id;
+    } catch (error) {
+      console.error('Erro ao criar marca:', error);
+      throw error;
+    }
+  }
+
+  static async updateBrand(id: string, updates: Partial<Brand>): Promise<void> {
+    try {
+      await updateDoc(doc(db, COLLECTIONS.BRANDS, id), {
+        ...updates,
+        updatedAt: Timestamp.now(),
+      });
+    } catch (error) {
+      console.error('Erro ao atualizar marca:', error);
+      throw error;
+    }
+  }
+
+  static async deleteBrand(id: string): Promise<void> {
+    try {
+      await deleteDoc(doc(db, COLLECTIONS.BRANDS, id));
+    } catch (error) {
+      console.error('Erro ao deletar marca:', error);
       throw error;
     }
   }

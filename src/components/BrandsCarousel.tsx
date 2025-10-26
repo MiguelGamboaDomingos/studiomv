@@ -1,22 +1,30 @@
 import React from 'react';
+import { usePublicBrands, usePublicSettings } from '../hooks/usePublicData';
 
 const BrandsCarousel: React.FC = () => {
-  // Logos de marcas/clientes (usando placeholders por agora)
-  const brands = [
-    { id: 1, name: 'Netflix', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png' },
-    { id: 2, name: 'Apple', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Apple-Logo.png' },
-    { id: 3, name: 'Google', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Google-Logo.png' },
-    { id: 4, name: 'Microsoft', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Microsoft-Logo.png' },
-    { id: 5, name: 'Amazon', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Amazon-Logo.png' },
-    { id: 6, name: 'Meta', logo: 'https://logos-world.net/wp-content/uploads/2020/11/Facebook-Logo.png' },
-    { id: 7, name: 'Tesla', logo: 'https://logos-world.net/wp-content/uploads/2020/09/Tesla-Logo.png' },
-    { id: 8, name: 'Nike', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Nike-Logo.png' },
-    { id: 9, name: 'Coca-Cola', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Coca-Cola-Logo.png' },
-    { id: 10, name: 'Samsung', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Samsung-Logo.png' },
+  const { brands, loading } = usePublicBrands();
+  const { settings } = usePublicSettings();
+
+  // Títulos da seção (do Firebase ou padrão)
+  const brandsTitle = settings?.sectionTitles?.brands || 'Clientes & Parceiros';
+  const brandsDescription = settings?.sectionDescriptions?.brands || 'Orgulhamo-nos de trabalhar com marcas que confiam na nossa visão criativa';
+
+  // Se não há marcas ou está carregando, usar marcas padrão
+  const defaultBrands = [
+    { id: '1', name: 'Netflix', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Netflix-Logo.png', featured: true, published: true, order: 1, createdAt: '', updatedAt: '' },
+    { id: '2', name: 'Apple', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Apple-Logo.png', featured: true, published: true, order: 2, createdAt: '', updatedAt: '' },
+    { id: '3', name: 'Google', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Google-Logo.png', featured: true, published: true, order: 3, createdAt: '', updatedAt: '' },
+    { id: '4', name: 'Microsoft', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Microsoft-Logo.png', featured: true, published: true, order: 4, createdAt: '', updatedAt: '' },
+    { id: '5', name: 'Amazon', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Amazon-Logo.png', featured: true, published: true, order: 5, createdAt: '', updatedAt: '' },
+    { id: '6', name: 'Meta', logo: 'https://logos-world.net/wp-content/uploads/2020/11/Facebook-Logo.png', featured: true, published: true, order: 6, createdAt: '', updatedAt: '' },
+    { id: '7', name: 'Tesla', logo: 'https://logos-world.net/wp-content/uploads/2020/09/Tesla-Logo.png', featured: true, published: true, order: 7, createdAt: '', updatedAt: '' },
+    { id: '8', name: 'Nike', logo: 'https://logos-world.net/wp-content/uploads/2020/04/Nike-Logo.png', featured: true, published: true, order: 8, createdAt: '', updatedAt: '' },
   ];
 
+  const displayBrands = brands.length > 0 ? brands : defaultBrands;
+
   // Duplicar os logos para criar efeito infinito
-  const duplicatedBrands = [...brands, ...brands];
+  const duplicatedBrands = [...displayBrands, ...displayBrands];
 
   return (
     <section className="relative py-16 lg:py-24 bg-black overflow-hidden">
@@ -50,10 +58,10 @@ const BrandsCarousel: React.FC = () => {
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-light text-white mb-4">
-            Clientes & Parceiros
+            {brandsTitle}
           </h2>
           <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Orgulhamo-nos de trabalhar com marcas que confiam na nossa visão criativa
+            {brandsDescription}
           </p>
         </div>
 

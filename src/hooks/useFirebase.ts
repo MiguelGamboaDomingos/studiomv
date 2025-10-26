@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { FirebaseService } from '../services/firebaseService';
-import { Project, Service, TeamMember, Testimonial, MediaAsset, SiteSettings } from '../types';
+import { Project, Service, TeamMember, Testimonial, Brand, MediaAsset, SiteSettings } from '../types';
 
 // Hook para projetos
 export const useProjects = () => {
@@ -441,5 +441,71 @@ export const useContacts = () => {
     createContact,
     updateContact,
     deleteContact,
+  };
+};
+
+// Hook para marcas
+export const useBrands = () => {
+  const [brands, setBrands] = useState<Brand[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const fetchBrands = async () => {
+    try {
+      setLoading(true);
+      const data = await FirebaseService.getBrands();
+      setBrands(data);
+      setError(null);
+    } catch (err) {
+      setError('Erro ao carregar marcas');
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const createBrand = async (brand: Omit<Brand, 'id' | 'createdAt' | 'updatedAt'>) => {
+    try {
+      const id = await FirebaseService.createBrand(brand);
+      await fetchBrands(); // Recarregar lista
+      return id;
+    } catch (err) {
+      setError('Erro ao criar marca');
+      throw err;
+    }
+  };
+
+  const updateBrand = async (id: string, updates: Partial<Brand>) => {
+    try {
+      await FirebaseService.updateBrand(id, updates);
+      await fetchBrands(); // Recarregar lista
+    } catch (err) {
+      setError('Erro ao atualizar marca');
+      throw err;
+    }
+  };
+
+  const deleteBrand = async (id: string) => {
+    try {
+      await FirebaseService.deleteBrand(id);
+      await fetchBrands(); // Recarregar lista
+    } catch (err) {
+      setError('Erro ao deletar marca');
+      throw err;
+    }
+  };
+
+  useEffect(() => {
+    fetchBrands();
+  }, []);
+
+  return {
+    brands,
+    loading,
+    error,
+    fetchBrands,
+    createBrand,
+    updateBrand,
+    deleteBrand,
   };
 };

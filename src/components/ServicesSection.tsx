@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { ParallaxElement } from './HomeParallax';
 import DramaticTransitions from './DramaticTransitions';
 import StandardButton from './StandardButton';
+import { usePublicServices, usePublicSettings } from '../hooks/usePublicData';
 
 interface Service {
   id: number;
@@ -15,9 +16,13 @@ interface Service {
 }
 
 const ServicesSection: React.FC = () => {
-  const [hoveredService, setHoveredService] = useState<number | null>(null);
-  const [hoveredButton, setHoveredButton] = useState<number | null>(null);
-  const navigate = useNavigate();
+  const [hoveredService, setHoveredService] = useState<string | null>(null);
+  const { services: firebaseServices, loading } = usePublicServices();
+  const { settings } = usePublicSettings();
+
+  // Títulos da seção (do Firebase ou padrão)
+  const servicesTitle = settings?.sectionTitles?.services || 'Nossos Serviços';
+  const servicesDescription = settings?.sectionDescriptions?.services || 'Soluções completas em produção audiovisual';
 
   const services: Service[] = [
     {

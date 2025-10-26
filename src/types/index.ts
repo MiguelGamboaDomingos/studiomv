@@ -91,23 +91,25 @@ export interface Service {
   featured: boolean;
   published: boolean;
   order: number;
-  
-  // Pricing
-  priceFrom?: number;
+
+  // Pricing in Kwanzas
+  priceFromKz?: number; // Preço em Kwanzas Angolanos
   priceType: 'fixed' | 'from' | 'quote';
-  
+  priceDisplay?: string; // Texto personalizado para exibição (ex: "A partir de 50.000 Kz")
+
   // Details
   deliverables: string[];
   process: string[];
-  
+  features: string[]; // Características do serviço
+
   // Media
   thumbnail?: MediaAsset;
   gallery: MediaAsset[];
-  
+
   // SEO
   metaTitle?: string;
   metaDescription?: string;
-  
+
   // Timestamps
   createdAt: string;
   updatedAt: string;
@@ -157,6 +159,16 @@ export interface SiteSettings {
   logo?: string; // URL da logo
   favicon?: string; // URL do favicon
 
+  // Company Info
+  companyInfo: {
+    yearsOfExperience: number; // Anos de trabalho
+    foundedYear: number; // Ano de fundação
+    aboutTitle: string; // Título da seção sobre
+    aboutDescription: string; // Descrição da empresa
+    missionStatement?: string; // Declaração de missão
+    visionStatement?: string; // Declaração de visão
+  };
+
   // Hero Section
   heroTitle: string;
   heroSubtitle: string;
@@ -174,6 +186,7 @@ export interface SiteSettings {
     team: string; // "Nossa Equipa"
     process: string; // "Nosso Processo"
     stats: string; // "Números que Falam"
+    brands: string; // "Clientes & Parceiros"
   };
 
   // Section Descriptions
@@ -186,6 +199,7 @@ export interface SiteSettings {
     team: string;
     process: string;
     stats: string;
+    brands: string;
   };
 
   // Contact
@@ -220,6 +234,19 @@ export interface SiteSettings {
   maintenanceMessage?: string;
 
   // Timestamps
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Brand {
+  id: string;
+  name: string;
+  logo: string; // URL do logo
+  website?: string; // Site da marca
+  description?: string; // Descrição da marca
+  featured: boolean; // Se aparece em destaque
+  published: boolean;
+  order: number; // Ordem de exibição
   createdAt: string;
   updatedAt: string;
 }
