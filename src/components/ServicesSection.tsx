@@ -3,7 +3,8 @@ import { Camera, Scissors, Monitor, Lightbulb, ArrowRight, Zap } from 'lucide-re
 import { useNavigate } from 'react-router-dom';
 import { ParallaxElement } from './HomeParallax';
 import DramaticTransitions from './DramaticTransitions';
-import StandardButton from './StandardButton';
+import ResponsiveButton from './ui/ResponsiveButton';
+import { AnimatedElement, useStaggeredAnimation } from '../hooks/useScrollAnimation';
 import { usePublicServices, usePublicSettings } from '../hooks/usePublicData';
 
 interface Service {
@@ -247,15 +248,15 @@ const ServicesSection: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* CTA Button Padronizado */}
-                  <StandardButton
+                  {/* CTA Button Responsivo */}
+                  <ResponsiveButton
                     variant="secondary"
                     size="sm"
                     href="/catalogo"
-                    className="w-40"
+                    className="w-32 sm:w-40"
                   >
                     Saber Mais
-                  </StandardButton>
+                  </ResponsiveButton>
                 </div>
 
                 {/* Linhas de Elegância */}

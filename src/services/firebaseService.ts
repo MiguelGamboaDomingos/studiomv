@@ -544,16 +544,18 @@ export class FirebaseService {
       const querySnapshot = await getDocs(
         query(
           collection(db, COLLECTIONS.BRANDS),
-          where('published', '==', true),
-          orderBy('order', 'asc')
+          where('published', '==', true)
         )
       );
-      return querySnapshot.docs.map(doc => ({
+      const brands = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data(),
         createdAt: doc.data().createdAt?.toDate?.()?.toISOString(),
         updatedAt: doc.data().updatedAt?.toDate?.()?.toISOString(),
       } as Brand));
+
+      // Ordenar no cliente para evitar índice composto
+      return brands.sort((a, b) => (a.order || 0) - (b.order || 0));
     } catch (error) {
       console.error('Erro ao buscar marcas publicadas:', error);
       throw error;

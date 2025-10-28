@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import StandardButton from './StandardButton';
+import ResponsiveButton from './ui/ResponsiveButton';
+import { AnimatedElement, useStaggeredAnimation } from '../hooks/useScrollAnimation';
 
 interface Category {
   id: number;
@@ -166,28 +167,28 @@ const CategoriesSection: React.FC = () => {
         </div>
 
         {/* CTA Button */}
-        <div className="text-center">
-          <StandardButton
+        <AnimatedElement animation="slideUp" delay={600} className="text-center">
+          <ResponsiveButton
             variant="primary"
             size="lg"
             href="/catalogo"
           >
             Ver Catálogo Completo
-          </StandardButton>
-        </div>
+          </ResponsiveButton>
+        </AnimatedElement>
       </div>
 
       {/* CSS Animations */}
-      <style jsx>{`
+      <style>{`
         @keyframes electric-glow {
-          0%, 100% { 
+          0%, 100% {
             box-shadow: 0 0 5px rgba(251, 191, 36, 0.3), 0 0 10px rgba(251, 191, 36, 0.2);
           }
-          50% { 
+          50% {
             box-shadow: 0 0 10px rgba(251, 191, 36, 0.6), 0 0 20px rgba(251, 191, 36, 0.4);
           }
         }
-        
+
         .animate-electric-glow {
           animation: electric-glow 2s ease-in-out infinite;
         }

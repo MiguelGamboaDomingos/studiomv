@@ -389,7 +389,7 @@ const ContactPage: React.FC = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes grain {
           0%, 100% { transform: translate(0, 0) }
           50% { transform: translate(-1px, 1px) }

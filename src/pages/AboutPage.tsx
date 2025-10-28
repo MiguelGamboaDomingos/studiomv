@@ -1,8 +1,10 @@
-import React from 'react';
-import { Users, Award, Clock, Target, Heart, Lightbulb, Zap, Eye } from 'lucide-react';
-import StandardButton from '../components/StandardButton';
+import React, { useState } from 'react';
+import { Users, Award, Clock, Target, Heart, Lightbulb, Zap, Eye, Circle } from 'lucide-react';
+import { AnimatedElement, useStaggeredAnimation } from '../hooks/useScrollAnimation';
 
 const AboutPage: React.FC = () => {
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
+
   const stats = [
     { icon: <Award className="w-8 h-8" />, number: "150+", label: "Projetos Concluídos" },
     { icon: <Users className="w-8 h-8" />, number: "80+", label: "Clientes Satisfeitos" },
@@ -93,21 +95,21 @@ const AboutPage: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
         {/* Header Eletrificado */}
-        <div className="text-center mb-20 relative">
+        <AnimatedElement animation="slideUp" className="text-center mb-20 relative">
           {/* Electric Effect Behind Title */}
           <div className="absolute inset-0 flex items-center justify-center opacity-15">
             <div className="w-80 h-px bg-gradient-to-r from-transparent via-stone-600 to-transparent animate-pulse"></div>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-light text-white mb-6 relative">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-light text-white mb-6 relative">
             Sobre <span className="text-stone-400 font-normal">Nós</span>
-            <Zap className="inline-block w-8 h-8 ml-4 text-stone-500 animate-pulse" />
+            <Zap className="inline-block w-6 h-6 sm:w-8 sm:h-8 ml-4 text-stone-500 animate-pulse" />
             <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-32 h-px bg-gradient-to-r from-transparent via-stone-600 to-transparent"></div>
           </h1>
-          <p className="text-xl text-stone-300 max-w-3xl mx-auto leading-relaxed">
+          <p className="text-lg sm:text-xl text-stone-300 max-w-3xl mx-auto leading-relaxed px-4">
             Somos contadores de histórias apaixonados, dedicados a criar experiências visuais que inspiram e conectam.
           </p>
-        </div>
+        </AnimatedElement>
 
         {/* Manifesto */}
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
@@ -300,22 +302,73 @@ const AboutPage: React.FC = () => {
           <p className="text-gray-300 text-lg mb-8">
             Entre em contacto connosco e descubra como podemos dar vida à sua visão.
           </p>
-          <StandardButton
-            variant="primary"
-            size="lg"
+          <a
             href="https://wa.me/244949838924?text=Olá! Gostaria de saber mais sobre os serviços da MV Studio."
             target="_blank"
             rel="noopener noreferrer"
+            className={`relative inline-flex items-center gap-2 px-8 py-4 sm:px-10 sm:py-5 rounded-full text-lg sm:text-xl text-white font-bold shadow-lg overflow-hidden group transform transition-all duration-500 ease-out ${
+              isButtonHovered
+                ? 'bg-gray-800 border-2 border-red-500 shadow-red-500/25 scale-105'
+                : 'bg-gradient-to-r from-stone-700 via-stone-600 to-stone-800 shadow-stone-500/25 scale-100 hover:scale-105'
+            }`}
+            onMouseEnter={() => setIsButtonHovered(true)}
+            onMouseLeave={() => setIsButtonHovered(false)}
           >
-            Vamos Falar
-          </StandardButton>
+            <span className={`relative z-10 flex items-center gap-2 transition-all duration-300 ease-out ${
+              isButtonHovered ? 'transform -translate-y-0.5' : 'transform translate-y-0'
+            }`}>
+              <Circle className={`w-2 h-2 fill-red-500 text-red-500 transition-all duration-300 ease-out ${
+                isButtonHovered
+                  ? 'opacity-100 scale-100 animate-pulse'
+                  : 'opacity-0 scale-0'
+              }`} />
+              Vamos Falar
+            </span>
+
+            {/* Background transition overlay */}
+            <div className={`absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 transition-opacity duration-500 ease-out ${
+              isButtonHovered ? 'opacity-100' : 'opacity-0'
+            }`}></div>
+
+            {/* Electric flow animations */}
+            <div className={`absolute inset-0 transition-opacity duration-300 ease-out ${
+              isButtonHovered ? 'opacity-100' : 'opacity-0'
+            }`}>
+              <div className="absolute inset-0 animate-electric-flow opacity-60">
+                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-400 to-transparent animate-pulse"></div>
+                <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-400 to-transparent animate-pulse" style={{animationDelay: '0.2s'}}></div>
+              </div>
+
+              <div className="absolute inset-0 animate-electric-flow-2 opacity-40">
+                <div className="absolute left-0 top-1/3 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse" style={{animationDelay: '0.1s'}}></div>
+              </div>
+            </div>
+          </a>
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes grain {
           0%, 100% { transform: translate(0, 0) }
           50% { transform: translate(-1px, 1px) }
+        }
+
+        @keyframes electric-flow {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
+        }
+
+        @keyframes electric-flow-2 {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.6; }
+        }
+
+        .animate-electric-flow {
+          animation: electric-flow 1.5s ease-in-out infinite;
+        }
+
+        .animate-electric-flow-2 {
+          animation: electric-flow-2 2s ease-in-out infinite;
         }
       `}</style>
     </div>

@@ -25,6 +25,27 @@ Este guia explica como configurar o Firebase para o back office do MV Studio.
 3. **NÃO** marque "Firebase Hosting" por enquanto
 4. Clique em **"Registrar app"**
 5. **COPIE** a configuração mostrada (será necessária depois)
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDNFXWoUnFXgsMVLly_3pWSflSgTqopUto",
+  authDomain: "mvstudio-backoffice.firebaseapp.com",
+  projectId: "mvstudio-backoffice",
+  storageBucket: "mvstudio-backoffice.firebasestorage.app",
+  messagingSenderId: "588071766231",
+  appId: "1:588071766231:web:7cc626105ad88c9b018892",
+  measurementId: "G-WZPQMYF2G3"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 6. Clique em **"Continuar para o console"**
 
 ### 3. Configurar Firestore Database
@@ -41,6 +62,16 @@ Este guia explica como configurar o Firebase para o back office do MV Studio.
 2. Clique em **"Começar"**
 3. Selecione **"Iniciar no modo de teste"**
 4. Mantenha a mesma localização do Firestore
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if
+          request.time < timestamp.date(2025, 11, 25);
+    }
+  }
+}
 5. Clique em **"Concluído"**
 
 ### 5. Configurar Authentication (Opcional)
@@ -50,8 +81,8 @@ Este guia explica como configurar o Firebase para o back office do MV Studio.
 3. Ative **"Email/Password"**
 4. Vá para a aba **"Users"**
 5. Clique em **"Adicionar usuário"**
-6. Email: `admin@mvstudio.pt`
-7. Senha: `mvstudio2024`
+6. Email: `admin@mvstudio.ao`
+7. Senha: `mvstudio2025`
 
 ## ⚙️ Configuração no Código
 

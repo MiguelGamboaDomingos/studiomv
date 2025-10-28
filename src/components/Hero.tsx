@@ -3,6 +3,8 @@ import { useScrollAnimation } from '../hooks/useParallax';
 import { ParallaxElement, ParallaxLayers } from './HomeParallax';
 import DramaticTransitions, { TypewriterEffect } from './DramaticTransitions';
 import { usePublicSettings } from '../hooks/usePublicData';
+import { AnimatedElement } from '../hooks/useScrollAnimation';
+import ResponsiveButton from './ui/ResponsiveButton';
 
 // Spline Scene Component
 declare global {
@@ -283,20 +285,24 @@ const Hero: React.FC = () => {
       </div>
 
       {/* Scroll Indicator Centralizado e Clicável com Transição Dramática */}
-      <DramaticTransitions type="fadeIn" delay={3000} duration={1000} className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-50">
+      <AnimatedElement
+        animation="fadeIn"
+        delay={3000}
+        className="absolute bottom-4 sm:bottom-8 left-1/2 transform -translate-x-1/2 z-50"
+      >
         <button
           onClick={handleScrollClick}
-          className="group flex flex-col items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-amber-900 rounded-lg p-2 bg-amber-950/20 backdrop-blur-sm hover:bg-amber-950/40 transition-all duration-300"
+          className="group flex flex-col items-center gap-2 cursor-pointer focus:outline-none focus:ring-2 focus:ring-stone-600 rounded-lg p-2 sm:p-3 bg-stone-950/20 backdrop-blur-sm hover:bg-stone-950/40 transition-all duration-300"
           aria-label="Scroll para showreel e ativar Spline"
         >
-          <div className="w-6 h-10 border-2 border-amber-900/50 rounded-full flex justify-center animate-bounce group-hover:border-amber-800 group-hover:shadow-lg group-hover:shadow-amber-900/30 transition-all duration-300">
-            <div className="w-1 h-3 bg-amber-900 rounded-full mt-2 animate-pulse group-hover:bg-amber-800"></div>
+          <div className="w-5 h-8 sm:w-6 sm:h-10 border-2 border-stone-600/50 rounded-full flex justify-center animate-bounce group-hover:border-stone-500 group-hover:shadow-lg group-hover:shadow-stone-600/30 transition-all duration-300">
+            <div className="w-1 h-2 sm:h-3 bg-stone-600 rounded-full mt-1 sm:mt-2 animate-pulse group-hover:bg-stone-500"></div>
           </div>
-          <span className="text-amber-900 text-xs font-light opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          <span className="text-stone-600 text-xs font-light opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             Clique para continuar
           </span>
         </button>
-      </DramaticTransitions>
+      </AnimatedElement>
 
       {/* Estilos CSS para efeitos glitch e elétricos */}
       <style>{`
