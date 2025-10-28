@@ -23,6 +23,7 @@ import ContactManager from '../components/admin/ContactManager';
 import SettingsManagerNew from '../components/admin/SettingsManagerNew';
 import TestButton from '../components/admin/TestButton';
 import TestimonialsManager from '../components/admin/TestimonialsManager';
+import BrandsManager from '../components/admin/BrandsManager';
 
 interface AdminPageProps {}
 
@@ -63,6 +64,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     { id: 'services', label: 'Serviços', icon: Settings },
     { id: 'team', label: 'Equipa', icon: Users },
     { id: 'testimonials', label: 'Testemunhos', icon: Star },
+    { id: 'brands', label: 'Marcas', icon: Image },
     { id: 'media', label: 'Media', icon: Image },
     { id: 'contacts', label: 'Contactos', icon: Mail },
     { id: 'settings', label: 'Configurações', icon: Settings },
@@ -81,6 +83,8 @@ const AdminPage: React.FC<AdminPageProps> = () => {
         return <TeamManager />;
       case 'testimonials':
         return <TestimonialsManager />;
+      case 'brands':
+        return <BrandsManager />;
       case 'media':
         return <MediaManager />;
       case 'contacts':

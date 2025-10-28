@@ -26,10 +26,12 @@ const ServicesSection: React.FC = () => {
 
   const services: Service[] = [
     {
-      id: 1,
+      id: "1",
       icon: <Lightbulb className="w-8 h-8" />,
       title: "Pré-Produção",
       description: "Na MV Studio, a pré-produção é o momento onde planeamos cada passo, refinamos conceitos e organizamos todos os detalhes necessários para dar vida ao seu projecto criativo.",
+      priceFromKz: 150000,
+      priceDisplay: "A partir de 150.000 Kz",
       features: [
         "Desenvolvimento de conceito criativo",
         "Planeamento de cronogramas",
@@ -39,10 +41,12 @@ const ServicesSection: React.FC = () => {
       hoverImage: "https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1"
     },
     {
-      id: 2,
+      id: "2",
       icon: <Camera className="w-8 h-8" />,
       title: "Produção",
       description: "Na MV Studio, a produção é a fase dinâmica de cada projecto criativo, onde os planos da pré-produção ganham vida com as câmeras a rodar e a visão criativa a tomar-se realidade.",
+      priceFromKz: 300000,
+      priceDisplay: "A partir de 300.000 Kz",
       features: [
         "Filmagem com equipamento 4K",
         "Direção criativa e técnica",
@@ -52,10 +56,12 @@ const ServicesSection: React.FC = () => {
       hoverImage: "https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1"
     },
     {
-      id: 3,
+      id: "3",
       icon: <Scissors className="w-8 h-8" />,
       title: "Pós-Produção",
       description: "A pós-produção é onde a magia acontece. Transformamos o material bruto em narrativas envolventes através de edição criativa, color grading e sound design profissional.",
+      priceFromKz: 200000,
+      priceDisplay: "A partir de 200.000 Kz",
       features: [
         "Montagem cinematográfica",
         "Color grading profissional",
@@ -65,10 +71,12 @@ const ServicesSection: React.FC = () => {
       hoverImage: "https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1"
     },
     {
-      id: 4,
+      id: "4",
       icon: <Monitor className="w-8 h-8" />,
       title: "Finalização",
       description: "A etapa final onde garantimos que o seu projeto está pronto para qualquer plataforma, com a mais alta qualidade técnica e criativa para impressionar o seu público.",
+      priceFromKz: 100000,
+      priceDisplay: "A partir de 100.000 Kz",
       features: [
         "Masterização em múltiplos formatos",
         "Otimização para diferentes plataformas",
@@ -78,6 +86,36 @@ const ServicesSection: React.FC = () => {
       hoverImage: "https://images.pexels.com/photos/1040945/pexels-photo-1040945.jpeg?auto=compress&cs=tinysrgb&w=600&h=400&dpr=1"
     }
   ];
+
+  // Usar serviços do Firebase ou padrão
+  const displayServices = firebaseServices.length > 0 ? firebaseServices : services;
+
+  // Função para renderizar ícone baseado no nome
+  const renderIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'lightbulb':
+        return <Lightbulb className="w-8 h-8" />;
+      case 'camera':
+        return <Camera className="w-8 h-8" />;
+      case 'scissors':
+        return <Scissors className="w-8 h-8" />;
+      case 'monitor':
+        return <Monitor className="w-8 h-8" />;
+      default:
+        return <Zap className="w-8 h-8" />;
+    }
+  };
+
+  // Função para formatar preço em kwanzas
+  const formatPrice = (service: any) => {
+    if (service.priceDisplay) {
+      return service.priceDisplay;
+    }
+    if (service.priceFromKz) {
+      return `A partir de ${service.priceFromKz.toLocaleString()} Kz`;
+    }
+    return 'Consultar preço';
+  };
 
   return (
     <section className="relative py-16 lg:py-24 bg-black overflow-hidden">
@@ -103,20 +141,21 @@ const ServicesSection: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <div className="mb-16">
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-8 leading-tight">
-            Do conceito até à conclusão,<br />
-            estamos aqui para te apoiar<br />
-            em cada etapa
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-light text-white mb-4 leading-tight">
+            {servicesTitle}
           </h2>
+          <p className="text-xl text-gray-300 max-w-3xl">
+            {servicesDescription}
+          </p>
         </div>
 
         {/* Services Grid 2x2 - Largura Otimizada */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
-          {services.map((service, index) => (
+          {displayServices.map((service) => (
             <div
               key={service.id}
               className="group relative cursor-pointer"
-              onMouseEnter={() => setHoveredService(service.id)}
+              onMouseEnter={() => setHoveredService(String(service.id))}
               onMouseLeave={() => setHoveredService(null)}
             >
               {/* Service Card Elegante - Largura Otimizada */}
@@ -124,29 +163,32 @@ const ServicesSection: React.FC = () => {
 
                 {/* Ícone Elegante Acastanhado - Melhorado */}
                 <div className="relative mb-8">
-                  <div className={`w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-800/30 via-stone-700/20 to-amber-900/40 flex items-center justify-center transition-all duration-700 ${hoveredService === service.id ? 'scale-110 rotate-2 shadow-2xl shadow-amber-700/40' : 'shadow-xl shadow-stone-900/30'}`}>
-                    <div className={`transition-all duration-700 ${hoveredService === service.id ? 'scale-110 text-amber-200' : 'text-amber-500'}`}>
+                  <div className={`w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-800/30 via-stone-700/20 to-amber-900/40 flex items-center justify-center transition-all duration-700 ${hoveredService === String(service.id) ? 'scale-110 rotate-2 shadow-2xl shadow-amber-700/40' : 'shadow-xl shadow-stone-900/30'}`}>
+                    <div className={`transition-all duration-700 ${hoveredService === String(service.id) ? 'scale-110 text-amber-200' : 'text-amber-500'}`}>
                       <div className="w-12 h-12 flex items-center justify-center">
-                        {React.cloneElement(service.icon as React.ReactElement, {
-                          className: "w-10 h-10"
-                        })}
+                        {service.icon ?
+                          React.cloneElement(service.icon as React.ReactElement, {
+                            className: "w-10 h-10"
+                          }) :
+                          renderIcon(service.icon || 'zap')
+                        }
                       </div>
                     </div>
                   </div>
 
                   {/* Efeito de Brilho Sutil */}
-                  {hoveredService === service.id && (
+                  {hoveredService === String(service.id) && (
                     <div className="absolute inset-0 w-24 h-24 rounded-3xl bg-gradient-to-br from-amber-600/20 to-stone-600/10 animate-pulse"></div>
                   )}
                 </div>
 
                 {/* Efeito de Vidro Elegante */}
                 <div className={`absolute inset-0 bg-gradient-to-br from-amber-800/8 via-stone-700/5 to-amber-900/12 transition-opacity duration-700 ${
-                  hoveredService === service.id ? 'opacity-100' : 'opacity-0'
+                  hoveredService === String(service.id) ? 'opacity-100' : 'opacity-0'
                 }`} />
 
                 {/* Padrão Sutil de Textura */}
-                {hoveredService === service.id && (
+                {hoveredService === String(service.id) && (
                   <div className="absolute inset-0 opacity-5">
                     <div className="absolute inset-0" style={{
                       backgroundImage: `
@@ -164,7 +206,7 @@ const ServicesSection: React.FC = () => {
                 <div className="relative z-10">
                   {/* Title */}
                   <h3 className={`text-2xl font-light mb-5 transition-all duration-700 ease-out ${
-                    hoveredService === service.id
+                    hoveredService === String(service.id)
                       ? 'text-amber-200 transform translate-y-0'
                       : 'text-stone-200 transform translate-y-0'
                   }`}>
@@ -173,7 +215,7 @@ const ServicesSection: React.FC = () => {
 
                   {/* Description */}
                   <p className={`text-sm font-light leading-relaxed mb-7 transition-all duration-700 ease-out ${
-                    hoveredService === service.id
+                    hoveredService === String(service.id)
                       ? 'text-stone-300'
                       : 'text-stone-400'
                   }`}>
@@ -182,18 +224,27 @@ const ServicesSection: React.FC = () => {
 
                   {/* Features List */}
                   <div className="space-y-3 mb-8">
-                    {service.features.slice(0, 3).map((feature, idx) => (
+                    {service.features.slice(0, 3).map((feature: string, idx: number) => (
                       <div key={idx} className={`flex items-center text-xs transition-all duration-700 delay-${idx * 150} ${
-                        hoveredService === service.id
+                        hoveredService === String(service.id)
                           ? 'text-stone-300 opacity-100 transform translate-x-0'
                           : 'text-stone-500 opacity-80 transform translate-x-1'
                       }`}>
                         <div className={`w-1.5 h-1.5 rounded-full mr-4 transition-colors duration-700 ${
-                          hoveredService === service.id ? 'bg-amber-400' : 'bg-amber-700'
+                          hoveredService === String(service.id) ? 'bg-amber-400' : 'bg-amber-700'
                         }`}></div>
                         {feature}
                       </div>
                     ))}
+                  </div>
+
+                  {/* Price */}
+                  <div className="mb-4">
+                    <p className={`text-lg font-semibold transition-all duration-700 ${
+                      hoveredService === String(service.id) ? 'text-amber-300' : 'text-amber-400'
+                    }`}>
+                      {formatPrice(service)}
+                    </p>
                   </div>
 
                   {/* CTA Button Padronizado */}
@@ -209,10 +260,10 @@ const ServicesSection: React.FC = () => {
 
                 {/* Linhas de Elegância */}
                 <div className={`absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-amber-600/60 to-transparent transform origin-left transition-transform duration-1000 ease-out ${
-                  hoveredService === service.id ? 'scale-x-100' : 'scale-x-0'
+                  hoveredService === String(service.id) ? 'scale-x-100' : 'scale-x-0'
                 }`} />
                 <div className={`absolute bottom-0 right-0 w-full h-px bg-gradient-to-r from-transparent via-stone-500/40 to-transparent transform origin-right transition-transform duration-1000 ease-out delay-200 ${
-                  hoveredService === service.id ? 'scale-x-100' : 'scale-x-0'
+                  hoveredService === String(service.id) ? 'scale-x-100' : 'scale-x-0'
                 }`} />
               </div>
             </div>

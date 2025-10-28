@@ -59,6 +59,15 @@ const SettingsManagerNew: React.FC = () => {
         showreelVideoUrl: '',
         showreelThumbnail: '',
         
+        companyInfo: {
+          yearsOfExperience: 8,
+          foundedYear: 2016,
+          aboutTitle: 'MV Studio',
+          aboutDescription: 'Estúdio de produção audiovisual especializado em conteúdo cinematográfico de alta qualidade',
+          missionStatement: 'Desde vídeos corporativos que elevam marcas a documentários de casamento que capturam momentos únicos, nossa equipa dedica-se a criar conteúdo que ressoa com audiências e deixa uma impressão duradoura.',
+          visionStatement: 'Com anos de experiência em produção audiovisual, desenvolvemos uma metodologia que combina planeamento estratégico, execução técnica impecável e uma visão artística que distingue cada projeto.'
+        },
+
         sectionTitles: {
           about: 'Sobre Nós',
           services: 'Nossos Serviços',
@@ -67,9 +76,10 @@ const SettingsManagerNew: React.FC = () => {
           contact: 'Contacto',
           team: 'Nossa Equipa',
           process: 'Nosso Processo',
-          stats: 'Números que Falam'
+          stats: 'Números que Falam',
+          brands: 'Clientes & Parceiros'
         },
-        
+
         sectionDescriptions: {
           about: 'Conheça nossa paixão pela arte cinematográfica',
           services: 'Soluções completas em produção audiovisual',
@@ -78,7 +88,8 @@ const SettingsManagerNew: React.FC = () => {
           contact: 'Vamos criar algo incrível juntos',
           team: 'Os talentos por trás de cada projeto',
           process: 'Como transformamos ideias em realidade',
-          stats: 'Resultados que comprovam nossa qualidade'
+          stats: 'Resultados que comprovam nossa qualidade',
+          brands: 'Orgulhamo-nos de trabalhar com marcas que confiam na nossa visão criativa'
         },
         
         email: 'info@mvstudio.pt',
@@ -109,6 +120,7 @@ const SettingsManagerNew: React.FC = () => {
 
   const tabs = [
     { id: 'general', label: 'Geral', icon: Globe },
+    { id: 'company', label: 'Empresa', icon: MessageSquare },
     { id: 'hero', label: 'Hero & Showreel', icon: Video },
     { id: 'sections', label: 'Títulos das Seções', icon: Type },
     { id: 'contact', label: 'Contacto', icon: Mail },
@@ -277,6 +289,130 @@ const SettingsManagerNew: React.FC = () => {
                 value={settings.description || ''}
                 onChange={(e) => setSettings(prev => ({ ...prev, description: e.target.value }))}
                 className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+              />
+            </div>
+          </div>
+        )}
+
+        {/* Company Info Tab */}
+        {activeTab === 'company' && (
+          <div className="space-y-6">
+            <h2 className="text-lg font-semibold text-stone-900 mb-4">Informações da Empresa</h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-stone-900 mb-2">
+                  Anos de Experiência
+                </label>
+                <input
+                  type="number"
+                  value={settings.companyInfo?.yearsOfExperience || 0}
+                  onChange={(e) => setSettings(prev => ({
+                    ...prev,
+                    companyInfo: {
+                      ...prev.companyInfo,
+                      yearsOfExperience: parseInt(e.target.value) || 0
+                    }
+                  }))}
+                  className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                  min="0"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-900 mb-2">
+                  Ano de Fundação
+                </label>
+                <input
+                  type="number"
+                  value={settings.companyInfo?.foundedYear || 2016}
+                  onChange={(e) => setSettings(prev => ({
+                    ...prev,
+                    companyInfo: {
+                      ...prev.companyInfo,
+                      foundedYear: parseInt(e.target.value) || 2016
+                    }
+                  }))}
+                  className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                  min="1900"
+                  max="2030"
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-900 mb-2">
+                Título da Seção Sobre
+              </label>
+              <input
+                type="text"
+                value={settings.companyInfo?.aboutTitle || ''}
+                onChange={(e) => setSettings(prev => ({
+                  ...prev,
+                  companyInfo: {
+                    ...prev.companyInfo,
+                    aboutTitle: e.target.value
+                  }
+                }))}
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="Ex: MV Studio"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-900 mb-2">
+                Descrição da Empresa
+              </label>
+              <textarea
+                rows={3}
+                value={settings.companyInfo?.aboutDescription || ''}
+                onChange={(e) => setSettings(prev => ({
+                  ...prev,
+                  companyInfo: {
+                    ...prev.companyInfo,
+                    aboutDescription: e.target.value
+                  }
+                }))}
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="Descrição principal da empresa..."
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-900 mb-2">
+                Declaração de Missão
+              </label>
+              <textarea
+                rows={3}
+                value={settings.companyInfo?.missionStatement || ''}
+                onChange={(e) => setSettings(prev => ({
+                  ...prev,
+                  companyInfo: {
+                    ...prev.companyInfo,
+                    missionStatement: e.target.value
+                  }
+                }))}
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="Nossa missão e propósito..."
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-stone-900 mb-2">
+                Declaração de Visão
+              </label>
+              <textarea
+                rows={3}
+                value={settings.companyInfo?.visionStatement || ''}
+                onChange={(e) => setSettings(prev => ({
+                  ...prev,
+                  companyInfo: {
+                    ...prev.companyInfo,
+                    visionStatement: e.target.value
+                  }
+                }))}
+                className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+                placeholder="Nossa visão e metodologia..."
               />
             </div>
           </div>

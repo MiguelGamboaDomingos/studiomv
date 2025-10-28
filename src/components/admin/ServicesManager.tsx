@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Edit, 
-  Trash2, 
-  Eye, 
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  Eye,
   EyeOff,
   Star,
   DollarSign,
@@ -12,39 +12,29 @@ import {
   Settings,
   Camera,
   Video,
-  Palette
+  Palette,
+  Lightbulb,
+  Scissors,
+  Monitor,
+  Zap
 } from 'lucide-react';
-
-interface Service {
-  id: string;
-  title: string;
-  description: string;
-  detailedDescription: string;
-  icon: string;
-  category: string;
-  price: string;
-  duration: string;
-  features: string[];
-  process: string[];
-  deliverables: string[];
-  featured: boolean;
-  published: boolean;
-  order: number;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Service } from '../../types';
+import { useServices } from '../../hooks/useFirebase';
 
 const ServicesManager: React.FC = () => {
-  const [services, setServices] = useState<Service[]>([]);
+  const { services, loading, error, createService, updateService, deleteService } = useServices();
   const [filteredServices, setFilteredServices] = useState<Service[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingService, setEditingService] = useState<Service | null>(null);
-  const [loading, setLoading] = useState(true);
 
   const iconMap: { [key: string]: React.ReactNode } = {
-    'video': <Video className="w-5 h-5" />,
+    'lightbulb': <Lightbulb className="w-5 h-5" />,
     'camera': <Camera className="w-5 h-5" />,
+    'scissors': <Scissors className="w-5 h-5" />,
+    'monitor': <Monitor className="w-5 h-5" />,
+    'zap': <Zap className="w-5 h-5" />,
+    'video': <Video className="w-5 h-5" />,
     'palette': <Palette className="w-5 h-5" />,
     'settings': <Settings className="w-5 h-5" />,
   };
