@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Mail, Phone, MapPin, Send, Clock, MessageCircle, Zap } from 'lucide-react';
+import { Mail, Phone, MapPin, Send, Clock, MessageCircle, Zap, Circle } from 'lucide-react';
 import StandardButton from '../components/StandardButton';
 
 const ContactPage: React.FC = () => {
@@ -14,6 +14,7 @@ const ContactPage: React.FC = () => {
   });
 
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -77,40 +78,17 @@ const ContactPage: React.FC = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-stone-950 to-stone-950/20 pt-20">
-      {/* Electric Grid Background */}
-      <div className="fixed inset-0 opacity-[0.03] pointer-events-none z-0">
+    <div className="min-h-screen bg-black pt-20">
+      {/* Subtle Grid Background */}
+      <div className="fixed inset-0 opacity-[0.02] pointer-events-none z-0">
         <div className="absolute inset-0" style={{
           backgroundImage: `
-            linear-gradient(rgba(120,113,108,0.4) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(120,113,108,0.4) 1px, transparent 1px)
+            linear-gradient(rgba(120,113,108,0.3) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(120,113,108,0.3) 1px, transparent 1px)
           `,
-          backgroundSize: '50px 50px'
+          backgroundSize: '60px 60px'
         }} />
       </div>
-
-      {/* Electric Lines Animation */}
-      <div className="fixed inset-0 opacity-5 pointer-events-none z-0">
-        {[...Array(12)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute h-full w-px bg-gradient-to-b from-transparent via-stone-600/40 to-transparent animate-pulse"
-            style={{
-              left: `${(i + 1) * 8.33}%`,
-              animationDelay: `${i * 0.3}s`,
-              animationDuration: '4s'
-            }}
-          />
-        ))}
-      </div>
-
-      {/* Film Grain Eletrificado */}
-      <div className="fixed inset-0 opacity-8 pointer-events-none z-0"
-           style={{
-             backgroundImage: `radial-gradient(circle, transparent 1px, rgba(251,191,36,0.1) 1px)`,
-             backgroundSize: '4px 4px',
-             animation: 'grain 6s steps(8) infinite'
-           }} />
 
       <div className="max-w-7xl mx-auto px-6 py-16 relative z-10">
         {/* Header Eletrificado */}
@@ -369,10 +347,44 @@ const ContactPage: React.FC = () => {
           </p>
           <a
             href="tel:+244949838924"
-            className="inline-flex items-center gap-2 px-8 py-3 bg-stone-800 text-white font-bold rounded-full hover:bg-stone-700 transition-all duration-300"
+            className={`relative inline-flex items-center gap-2 px-8 py-3 rounded-full text-white font-bold shadow-lg overflow-hidden group transform transition-all duration-500 ease-out ${
+              isButtonHovered
+                ? 'bg-gray-800 border-2 border-red-500 shadow-red-500/25 scale-105'
+                : 'bg-gradient-to-r from-stone-700 via-stone-600 to-stone-800 shadow-stone-500/25 scale-100 hover:scale-105'
+            }`}
+            onMouseEnter={() => setIsButtonHovered(true)}
+            onMouseLeave={() => setIsButtonHovered(false)}
           >
-            <Phone className="w-5 h-5" />
-            Ligar Agora
+            <span className={`relative z-10 flex items-center gap-2 transition-all duration-300 ease-out ${
+              isButtonHovered ? 'transform -translate-y-0.5' : 'transform translate-y-0'
+            }`}>
+              <Circle className={`w-2 h-2 fill-red-500 text-red-500 transition-all duration-300 ease-out ${
+                isButtonHovered
+                  ? 'opacity-100 scale-100 animate-pulse'
+                  : 'opacity-0 scale-0'
+              }`} />
+              <Phone className="w-5 h-5" />
+              Ligar Agora
+            </span>
+
+            {/* Background transition overlay */}
+            <div className={`absolute inset-0 bg-gradient-to-r from-gray-800 via-gray-700 to-gray-800 transition-opacity duration-500 ease-out ${
+              isButtonHovered ? 'opacity-100' : 'opacity-0'
+            }`}></div>
+
+            {/* Efeito de raios elétricos quando hover */}
+            <div className={`absolute inset-0 transition-opacity duration-300 ease-out ${
+              isButtonHovered ? 'opacity-100' : 'opacity-0'
+            }`}>
+              <div className="absolute inset-0 animate-electric-flow opacity-60">
+                <div className="absolute top-0 left-1/4 w-px h-full bg-gradient-to-b from-transparent via-cyan-400 to-transparent animate-pulse"></div>
+                <div className="absolute top-0 right-1/3 w-px h-full bg-gradient-to-b from-transparent via-blue-400 to-transparent animate-pulse" style={{animationDelay: '0.2s'}}></div>
+              </div>
+
+              <div className="absolute inset-0 animate-electric-flow-2 opacity-40">
+                <div className="absolute left-0 top-1/3 w-full h-px bg-gradient-to-r from-transparent via-cyan-400 to-transparent animate-pulse" style={{animationDelay: '0.1s'}}></div>
+              </div>
+            </div>
           </a>
         </div>
       </div>
@@ -381,6 +393,24 @@ const ContactPage: React.FC = () => {
         @keyframes grain {
           0%, 100% { transform: translate(0, 0) }
           50% { transform: translate(-1px, 1px) }
+        }
+
+        @keyframes electric-flow {
+          0%, 100% { opacity: 0.3; }
+          50% { opacity: 0.8; }
+        }
+
+        @keyframes electric-flow-2 {
+          0%, 100% { opacity: 0.2; }
+          50% { opacity: 0.6; }
+        }
+
+        .animate-electric-flow {
+          animation: electric-flow 1.5s ease-in-out infinite;
+        }
+
+        .animate-electric-flow-2 {
+          animation: electric-flow-2 2s ease-in-out infinite;
         }
       `}</style>
     </div>
