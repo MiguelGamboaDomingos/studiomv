@@ -5,6 +5,7 @@ import DramaticTransitions from '../components/DramaticTransitions';
 import StandardButton from '../components/StandardButton';
 import { usePublicProjectsByCategory, useProjectCategories } from '../hooks/usePublicData';
 import { Project } from '../types';
+import VideoRenderer from '../components/VideoRenderer';
 
 const Portfolio: React.FC = () => {
   const [selectedCategory, setSelectedCategory] = useState('all');
@@ -135,9 +136,20 @@ const Portfolio: React.FC = () => {
                   >
                     {/* Card Moderno */}
                     <div className="relative bg-gradient-to-br from-stone-900/40 to-stone-950/60 backdrop-blur-md rounded-3xl overflow-hidden border border-stone-700/30 hover:border-stone-600/40 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-stone-600/10">
-                {/* Imagem do Projeto */}
+                {/* Mídia do Projeto */}
                 <div className="aspect-video relative overflow-hidden">
-                  {project.thumbnail ? (
+                  {/* Renderizar vídeo se disponível, senão imagem */}
+                  {project.videos && project.videos.length > 0 ? (
+                    <VideoRenderer
+                      url={project.videos[0].url}
+                      title={project.title}
+                      thumbnail={project.thumbnail}
+                      className="w-full h-full"
+                      autoPlay={false}
+                      muted={true}
+                      controls={false}
+                    />
+                  ) : project.thumbnail ? (
                     <img
                       src={project.thumbnail}
                       alt={project.title}

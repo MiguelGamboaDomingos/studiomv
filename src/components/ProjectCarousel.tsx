@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Play, Circle } from 'lucide-react';
 import { usePublicProjects, usePublicSettings } from '../hooks/usePublicData';
 import { Project as ProjectType } from '../types';
+import VideoRenderer from './VideoRenderer';
 
 const ProjectCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -359,13 +360,26 @@ const ProjectCarousel: React.FC = () => {
                     }}
                   >
                     <div className="relative bg-gray-900 rounded-xl overflow-hidden shadow-2xl h-[520px]">
-                      <img
-                        src={project.images?.[0]?.url || 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1'}
-                        alt={project.title}
-                        className="w-full h-full object-cover transition-transform duration-[750ms] group-hover:scale-110"
-                        draggable={false}
-                        style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
-                      />
+                      {/* Renderizar vídeo se disponível, senão imagem */}
+                      {project.videos && project.videos.length > 0 ? (
+                        <VideoRenderer
+                          url={project.videos[0].url}
+                          title={project.title}
+                          thumbnail={project.images?.[0]?.url}
+                          className="w-full h-full"
+                          autoPlay={false}
+                          muted={true}
+                          controls={false}
+                        />
+                      ) : (
+                        <img
+                          src={project.images?.[0]?.url || 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1'}
+                          alt={project.title}
+                          className="w-full h-full object-cover transition-transform duration-[750ms] group-hover:scale-110"
+                          draggable={false}
+                          style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
+                        />
+                      )}
 
                       {/* Efeito de Vidro Elegante (realce no cartão central) */}
                       <div
@@ -410,7 +424,7 @@ const ProjectCarousel: React.FC = () => {
                       {/* Info */}
                       <div className="absolute bottom-6 left-6 right-6 translate-y-1 group-hover:translate-y-0 transition-transform duration-300">
                         <h3 className="text-xl font-light text-white mb-0.5">{project.title}</h3>
-                        <p className="text-gray-300 text-xs font-light">{project.subtitle}</p>
+                        <p className="text-gray-300 text-xs font-light">{project.category}</p>
                       </div>
 
                       <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-black/60 to-transparent" />

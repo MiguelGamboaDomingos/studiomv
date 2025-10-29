@@ -5,6 +5,7 @@ import ImmersiveTransitions from './ImmersiveTransitions';
 import HomeParallax, { ParallaxElement } from './HomeParallax';
 import DramaticTransitions, { SectionTransition } from './DramaticTransitions';
 import { usePublicSettings } from '../hooks/usePublicData';
+import VideoRenderer from './VideoRenderer';
 
 const ShowreelSection: React.FC = () => {
   const { settings, loading: settingsLoading } = usePublicSettings();
@@ -192,34 +193,20 @@ const ShowreelSection: React.FC = () => {
         {/* Video Container com Parallax */}
         <div className="relative flex justify-center w-full mx-auto py-16 px-8 lg:px-16">
           <div className="relative w-full max-w-6xl aspect-video bg-gray-900/20 overflow-hidden rounded-3xl group transition-all duration-700 border border-amber-900/30">
-            <video
-              ref={videoRef}
-              className="w-full h-full object-cover rounded-3xl"
+            <VideoRenderer
+              url={showreelVideoUrl}
+              title="Showreel MV Studio"
+              className="w-full h-full rounded-3xl"
+              autoPlay={false}
+              muted={isMuted}
+              controls={true}
+              loop={true}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
-              onEnded={() => setIsPlaying(false)}
-              onLoadedData={() => {
-                // Configurar volume e mute quando o vídeo carregar
-                if (videoRef.current) {
-                  videoRef.current.volume = volume;
-                  videoRef.current.muted = isMuted;
-                  console.log('Vídeo carregado - Volume:', volume, 'Mutado:', isMuted);
-                }
+              onError={() => {
+                console.error('Erro ao carregar showreel:', showreelVideoUrl);
               }}
-              onVolumeChange={() => {
-                // Log quando o volume do vídeo mudar
-                if (videoRef.current) {
-                  console.log('Volume do vídeo mudou para:', videoRef.current.volume, 'Mutado:', videoRef.current.muted);
-                }
-              }}
-              loop
-              playsInline
-              muted={isMuted}
-              preload="metadata"
-            >
-              <source src={showreelVideoUrl} type="video/mp4" />
-              Seu navegador não suporta vídeo HTML5.
-            </video>
+            />
 
             {/* Controles de vídeo */}
             <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
