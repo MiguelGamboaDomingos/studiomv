@@ -13,7 +13,7 @@ import {
   CheckCircle,
   AlertCircle
 } from 'lucide-react';
-import { useProjects, useServices, useTeamMembers, useTestimonials, useBrands } from '../../hooks/useFirebase';
+import { useProjects, useServices, useTeam, useTestimonials, useBrands } from '../../hooks/useFirebase';
 
 interface DashboardStats {
   totalProjects: number;
@@ -37,7 +37,7 @@ interface ActivityItem {
 const Dashboard: React.FC = () => {
   const { projects } = useProjects();
   const { services } = useServices();
-  const { teamMembers } = useTeamMembers();
+  const { team: teamMembers } = useTeam();
   const { testimonials } = useTestimonials();
   const { brands } = useBrands();
 
