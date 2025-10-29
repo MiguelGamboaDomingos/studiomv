@@ -112,6 +112,14 @@ const ProjectsManagerFirebase: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Debug: verificar estado da mídia
+    console.log('Validação de mídia:', {
+      images: formData.images,
+      videos: formData.videos,
+      imagesLength: formData.images.length,
+      videosLength: formData.videos.length
+    });
+
     // Validação obrigatória de mídia
     if (formData.images.length === 0 && formData.videos.length === 0) {
       alert('É obrigatório adicionar pelo menos uma imagem ou vídeo ao projeto.');
@@ -541,9 +549,23 @@ const ProjectsManagerFirebase: React.FC = () => {
                 <label className="block text-sm font-medium text-stone-900 mb-2">
                   Fotos e Vídeos *
                 </label>
-                <p className="text-sm text-stone-600 mb-4">
+                <p className="text-sm text-stone-600 mb-2">
                   <strong>Obrigatório:</strong> Adicione pelo menos uma imagem ou vídeo. Use apenas links externos (YouTube, Google Drive, Dropbox, etc.). Máximo: 6 fotos e 2 vídeos.
                 </p>
+
+                {/* Contador de Mídia */}
+                <div className="flex gap-4 mb-4">
+                  <div className={`px-3 py-1 rounded-full text-sm ${formData.images.length > 0 ? 'bg-green-100 text-green-800' : 'bg-gray-100 text-gray-600'}`}>
+                    📷 {formData.images.length} foto{formData.images.length !== 1 ? 's' : ''}
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-sm ${formData.videos.length > 0 ? 'bg-blue-100 text-blue-800' : 'bg-gray-100 text-gray-600'}`}>
+                    🎥 {formData.videos.length} vídeo{formData.videos.length !== 1 ? 's' : ''}
+                  </div>
+                  <div className={`px-3 py-1 rounded-full text-sm ${(formData.images.length + formData.videos.length) > 0 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                    {(formData.images.length + formData.videos.length) > 0 ? '✅ Válido' : '❌ Adicione mídia'}
+                  </div>
+                </div>
+
                 <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
                   <p className="text-sm text-yellow-800">
                     <strong>Importante:</strong> Não é possível fazer upload direto. Use links de plataformas como YouTube, Google Drive, Dropbox ou OneDrive.

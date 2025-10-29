@@ -106,21 +106,35 @@ const TestimonialsManager: React.FC = () => {
     setFilteredTestimonials(filtered);
   }, [testimonials, searchTerm]);
 
-  const handleTogglePublished = (id: string) => {
-    setTestimonials(testimonials.map(testimonial =>
-      testimonial.id === id ? { ...testimonial, published: !testimonial.published } : testimonial
-    ));
+  const handleTogglePublished = async (id: string) => {
+    try {
+      const testimonial = testimonials.find(t => t.id === id);
+      if (testimonial) {
+        await updateTestimonial(id, { ...testimonial, published: !testimonial.published });
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar status de publicação:', error);
+    }
   };
 
-  const handleToggleFeatured = (id: string) => {
-    setTestimonials(testimonials.map(testimonial =>
-      testimonial.id === id ? { ...testimonial, featured: !testimonial.featured } : testimonial
-    ));
+  const handleToggleFeatured = async (id: string) => {
+    try {
+      const testimonial = testimonials.find(t => t.id === id);
+      if (testimonial) {
+        await updateTestimonial(id, { ...testimonial, featured: !testimonial.featured });
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar status de destaque:', error);
+    }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('Tem certeza que deseja eliminar este testemunho?')) {
-      setTestimonials(testimonials.filter(testimonial => testimonial.id !== id));
+      try {
+        await deleteTestimonial(id);
+      } catch (error) {
+        console.error('Erro ao eliminar testemunho:', error);
+      }
     }
   };
 

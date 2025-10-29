@@ -128,21 +128,35 @@ const TeamManager: React.FC = () => {
     setFilteredMembers(filtered);
   }, [teamMembers, searchTerm]);
 
-  const handleToggleActive = (id: string) => {
-    setTeamMembers(teamMembers.map(member =>
-      member.id === id ? { ...member, active: !member.active } : member
-    ));
+  const handleToggleActive = async (id: string) => {
+    try {
+      const member = teamMembers.find(m => m.id === id);
+      if (member) {
+        await updateTeamMember(id, { ...member, active: !member.active });
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar status ativo:', error);
+    }
   };
 
-  const handleToggleFeatured = (id: string) => {
-    setTeamMembers(teamMembers.map(member =>
-      member.id === id ? { ...member, featured: !member.featured } : member
-    ));
+  const handleToggleFeatured = async (id: string) => {
+    try {
+      const member = teamMembers.find(m => m.id === id);
+      if (member) {
+        await updateTeamMember(id, { ...member, featured: !member.featured });
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar status de destaque:', error);
+    }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('Tem certeza que deseja eliminar este membro da equipa?')) {
-      setTeamMembers(teamMembers.filter(member => member.id !== id));
+      try {
+        await deleteTeamMember(id);
+      } catch (error) {
+        console.error('Erro ao eliminar membro da equipa:', error);
+      }
     }
   };
 

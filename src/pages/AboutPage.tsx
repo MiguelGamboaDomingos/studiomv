@@ -113,29 +113,32 @@ const AboutPage: React.FC = () => {
 
         {/* Manifesto */}
         <div className="grid lg:grid-cols-2 gap-16 items-center mb-20">
-          <div>
-            <h2 className="text-4xl font-light text-white mb-6 relative">
-              O Nosso <span className="text-stone-400">Manifesto</span>
-              <Eye className="inline-block w-6 h-6 ml-3 text-stone-500" />
-            </h2>
-            <div className="space-y-6 text-gray-300 leading-relaxed">
-              <p>
-                No MV Studio, acreditamos que cada frame tem o poder de contar uma história única. 
-                Não criamos apenas vídeos — criamos experiências que tocam corações e transformam perspectivas.
-              </p>
-              <p>
-                A nossa missão é dar vida às suas ideias através da magia do cinema, combinando técnica 
-                profissional com visão artística para criar conteúdo que não apenas impressiona, mas inspira.
-              </p>
-              <p>
-                Cada projeto é uma nova aventura, uma oportunidade de explorar territórios criativos 
-                inexplorados e de superar as expectativas dos nossos clientes.
-              </p>
+          <AnimatedElement animation="slideLeft" delay={200}>
+            <div>
+              <h2 className="text-4xl font-light text-white mb-6 relative">
+                O Nosso <span className="text-stone-400">Manifesto</span>
+                <Eye className="inline-block w-6 h-6 ml-3 text-stone-500" />
+              </h2>
+              <div className="space-y-6 text-gray-300 leading-relaxed">
+                <p>
+                  No MV Studio, acreditamos que cada frame tem o poder de contar uma história única.
+                  Não criamos apenas vídeos — criamos experiências que tocam corações e transformam perspectivas.
+                </p>
+                <p>
+                  A nossa missão é dar vida às suas ideias através da magia do cinema, combinando técnica
+                  profissional com visão artística para criar conteúdo que não apenas impressiona, mas inspira.
+                </p>
+                <p>
+                  Cada projeto é uma nova aventura, uma oportunidade de explorar territórios criativos
+                  inexplorados e de superar as expectativas dos nossos clientes.
+                </p>
+              </div>
             </div>
-          </div>
-          
-          <div className="relative">
-            <div className="aspect-[4/5] bg-gradient-to-br from-stone-900/20 to-black rounded-lg overflow-hidden relative group">
+          </AnimatedElement>
+
+          <AnimatedElement animation="slideRight" delay={400}>
+            <div className="relative">
+              <div className="aspect-[4/5] bg-gradient-to-br from-stone-900/20 to-black rounded-lg overflow-hidden relative group hover:scale-105 transition-transform duration-500">
               <img
                 src="https://images.pexels.com/photos/7991579/pexels-photo-7991579.jpeg?auto=compress&cs=tinysrgb&w=800"
                 alt="MV Studio Team"
@@ -161,40 +164,47 @@ const AboutPage: React.FC = () => {
               {/* Overlay */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
             </div>
-          </div>
+          </AnimatedElement>
         </div>
 
         {/* Stats */}
         <div className="grid md:grid-cols-4 gap-8 mb-20">
           {stats.map((stat, index) => (
-            <div key={index} className="text-center group">
-              <div className="w-20 h-20 bg-stone-900/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-stone-900/30 transition-colors duration-300">
+            <AnimatedElement
+              key={index}
+              animation="scaleIn"
+              delay={300 + (index * 150)}
+              className="text-center group"
+            >
+              <div className="w-20 h-20 bg-stone-900/20 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-stone-900/30 transition-all duration-300 hover:scale-110">
                 <div className="text-stone-400 group-hover:scale-110 transition-transform duration-300">
                   {stat.icon}
                 </div>
               </div>
               <div className="text-4xl font-bold text-white mb-2">{stat.number}</div>
               <div className="text-gray-400">{stat.label}</div>
-            </div>
+            </AnimatedElement>
           ))}
         </div>
 
         {/* Values */}
         <div className="mb-20">
-          <div className="text-center mb-12">
+          <AnimatedElement animation="fadeIn" delay={200} className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">
               Os Nossos <span className="text-stone-400">Valores</span>
             </h2>
             <p className="text-gray-300 text-lg">
               Princípios que guiam cada decisão e cada projeto que desenvolvemos.
             </p>
-          </div>
+          </AnimatedElement>
 
           <div className="grid md:grid-cols-3 gap-8">
             {values.map((value, index) => (
-              <div
+              <AnimatedElement
                 key={index}
-                className="group text-center bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-stone-600/30 transition-all duration-500"
+                animation="slideUp"
+                delay={400 + (index * 200)}
+                className="group text-center bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 hover:bg-white/10 hover:border-stone-600/30 transition-all duration-500 hover:scale-105"
               >
                 <div className="text-stone-400 mb-6 flex justify-center group-hover:scale-110 transition-transform duration-300">
                   {value.icon}
@@ -205,31 +215,36 @@ const AboutPage: React.FC = () => {
                 <p className="text-gray-300 leading-relaxed">
                   {value.description}
                 </p>
-              </div>
+              </AnimatedElement>
             ))}
           </div>
         </div>
 
         {/* Timeline */}
         <div className="mb-20">
-          <div className="text-center mb-12">
+          <AnimatedElement animation="fadeIn" delay={200} className="text-center mb-12">
             <h2 className="text-4xl font-bold text-white mb-4">
               A Nossa <span className="text-stone-400">Jornada</span>
             </h2>
             <p className="text-gray-300 text-lg">
               Marcos importantes na evolução do MV Studio.
             </p>
-          </div>
+          </AnimatedElement>
 
           <div className="relative">
             {/* Timeline Line */}
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-stone-600/30"></div>
-            
+            <AnimatedElement animation="scaleIn" delay={400} className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-stone-600/30"></AnimatedElement>
+
             <div className="space-y-12">
               {timeline.map((item, index) => (
-                <div key={index} className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}>
+                <AnimatedElement
+                  key={index}
+                  animation={index % 2 === 0 ? "slideLeft" : "slideRight"}
+                  delay={600 + (index * 200)}
+                  className={`flex items-center ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'}`}
+                >
                   <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
-                    <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-6">
+                    <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-lg p-6 hover:bg-white/10 transition-all duration-300 hover:scale-105">
                       <div className="text-2xl font-bold text-stone-400 mb-2">{item.year}</div>
                       <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
                       <p className="text-gray-300">{item.description}</p>
@@ -237,10 +252,10 @@ const AboutPage: React.FC = () => {
                   </div>
 
                   {/* Timeline Dot */}
-                  <div className="w-4 h-4 bg-stone-600 rounded-full border-4 border-black relative z-10"></div>
-                  
+                  <div className="w-4 h-4 bg-stone-600 rounded-full border-4 border-black relative z-10 hover:bg-stone-400 transition-colors duration-300"></div>
+
                   <div className="w-1/2"></div>
-                </div>
+                </AnimatedElement>
               ))}
             </div>
           </div>

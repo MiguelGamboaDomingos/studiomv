@@ -42,19 +42,23 @@ const AboutSection: React.FC = () => {
       </ParallaxElement>
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        {/* Section Header - Centralizado */}
+        <div className="text-center mb-16">
+          <ImmersiveTransitions direction="up" delay={300} duration={1000}>
+            <div>
+              <h2 className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-6 leading-tight">
+                {aboutTitle}
+              </h2>
+              <p className="text-lg text-stone-400 max-w-3xl mx-auto">
+                {aboutDescription}
+              </p>
+            </div>
+          </ImmersiveTransitions>
+        </div>
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
           {/* Text Content */}
           <div className="space-y-8">
-            <ImmersiveTransitions direction="up" delay={300} duration={1000}>
-              <div>
-                <h2 className="text-4xl sm:text-5xl md:text-6xl font-light text-white mb-8 leading-tight">
-                  {aboutTitle}
-                </h2>
-                <p className="text-lg text-stone-400 mb-8">
-                  {aboutDescription}
-                </p>
-              </div>
-            </ImmersiveTransitions>
 
             <ImmersiveTransitions direction="up" delay={600} duration={1000}>
               <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
@@ -71,7 +75,7 @@ const AboutSection: React.FC = () => {
                 </p>
               </div>
             </ImmersiveTransitions>
-            </div>
+          </div>
 
             {/* Stats */}
             <div className="grid grid-cols-3 gap-8 pt-8 border-t border-gray-800">

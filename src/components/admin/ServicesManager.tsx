@@ -173,21 +173,35 @@ const ServicesManager: React.FC = () => {
     setFilteredServices(filtered);
   }, [services, searchTerm]);
 
-  const handleTogglePublished = (id: string) => {
-    setServices(services.map(service =>
-      service.id === id ? { ...service, published: !service.published } : service
-    ));
+  const handleTogglePublished = async (id: string) => {
+    try {
+      const service = services.find(s => s.id === id);
+      if (service) {
+        await updateService(id, { ...service, published: !service.published });
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar status de publicação:', error);
+    }
   };
 
-  const handleToggleFeatured = (id: string) => {
-    setServices(services.map(service =>
-      service.id === id ? { ...service, featured: !service.featured } : service
-    ));
+  const handleToggleFeatured = async (id: string) => {
+    try {
+      const service = services.find(s => s.id === id);
+      if (service) {
+        await updateService(id, { ...service, featured: !service.featured });
+      }
+    } catch (error) {
+      console.error('Erro ao atualizar status de destaque:', error);
+    }
   };
 
-  const handleDelete = (id: string) => {
+  const handleDelete = async (id: string) => {
     if (window.confirm('Tem certeza que deseja eliminar este serviço?')) {
-      setServices(services.filter(service => service.id !== id));
+      try {
+        await deleteService(id);
+      } catch (error) {
+        console.error('Erro ao eliminar serviço:', error);
+      }
     }
   };
 
