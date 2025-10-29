@@ -35,7 +35,7 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
   existingVideo,
   maxSizeMB = 100
 }) => {
-  const [mode, setMode] = useState<'upload' | 'link'>('upload');
+  const [mode, setMode] = useState<'upload' | 'link'>('link');
   const [videoLink, setVideoLink] = useState('');
   const [videoTitle, setVideoTitle] = useState('');
   const [uploadProgress, setUploadProgress] = useState<UploadProgress | null>(null);
@@ -242,34 +242,15 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
 
   return (
     <div className="space-y-4">
-      {/* Mode Selector */}
-      <div className="flex bg-stone-100 rounded-lg p-1">
-        <button
-          onClick={() => setMode('upload')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md transition-colors ${
-            mode === 'upload'
-              ? 'bg-white text-stone-900 shadow-sm'
-              : 'text-stone-600 hover:text-stone-900'
-          }`}
-        >
-          <Upload className="w-4 h-4" />
-          Carregar Ficheiro
-        </button>
-        <button
-          onClick={() => setMode('link')}
-          className={`flex-1 flex items-center justify-center gap-2 py-2 px-4 rounded-md transition-colors ${
-            mode === 'link'
-              ? 'bg-white text-stone-900 shadow-sm'
-              : 'text-stone-600 hover:text-stone-900'
-          }`}
-        >
-          <Link className="w-4 h-4" />
-          Link Externo
-        </button>
+      {/* Aviso sobre links externos */}
+      <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3">
+        <p className="text-sm text-yellow-800">
+          <strong>Importante:</strong> Use apenas links externos de plataformas como YouTube, Vimeo, Google Drive, Dropbox ou OneDrive. Não é possível fazer upload direto de arquivos.
+        </p>
       </div>
 
-      {/* Upload Mode */}
-      {mode === 'upload' && (
+      {/* Upload Mode - Desabilitado */}
+      {false && (
         <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-stone-900 mb-2">
@@ -333,9 +314,8 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
         </div>
       )}
 
-      {/* Link Mode */}
-      {mode === 'link' && (
-        <div className="space-y-4">
+      {/* Link Mode - Sempre ativo */}
+      <div className="space-y-4">
           <div>
             <label className="block text-sm font-medium text-stone-900 mb-2">
               Título do Vídeo
@@ -412,7 +392,6 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
             </div>
           </div>
         </div>
-      )}
 
       {/* Error Message */}
       {error && (

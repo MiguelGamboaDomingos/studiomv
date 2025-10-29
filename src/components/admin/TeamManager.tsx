@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Edit, 
-  Trash2, 
-  Eye, 
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  Eye,
   EyeOff,
   Star,
   Mail,
@@ -14,106 +14,27 @@ import {
   Globe,
   User
 } from 'lucide-react';
+import { TeamMember } from '../../types';
+import { useTeam } from '../../hooks/useFirebase';
 
-interface TeamMember {
-  id: string;
-  name: string;
-  role: string;
-  bio: string;
-  avatar: string;
-  email?: string;
-  phone?: string;
-  socialLinks: {
-    linkedin?: string;
-    instagram?: string;
-    behance?: string;
-    website?: string;
-  };
-  skills: string[];
-  featured: boolean;
-  active: boolean;
-  order: number;
-  createdAt: string;
-  updatedAt: string;
-}
+
 
 const TeamManager: React.FC = () => {
-  const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
+  const {
+    team: teamMembers,
+    loading,
+    error,
+    createTeamMember,
+    updateTeamMember,
+    deleteTeamMember
+  } = useTeam();
+
   const [filteredMembers, setFilteredMembers] = useState<TeamMember[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingMember, setEditingMember] = useState<TeamMember | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  // Simular carregamento de dados
-  useEffect(() => {
-    setTimeout(() => {
-      const mockTeamMembers: TeamMember[] = [
-        {
-          id: '1',
-          name: 'Miguel Vieira',
-          role: 'Director & Founder',
-          bio: 'Com mais de 10 anos de experiência em produção audiovisual, Miguel fundou o MV Studio com a visão de criar conteúdo cinematográfico de alta qualidade.',
-          avatar: 'https://images.pexels.com/photos/2379004/pexels-photo-2379004.jpeg?auto=compress&cs=tinysrgb&w=400',
-          email: 'miguel@mvstudio.pt',
-          phone: '+351 912 345 678',
-          socialLinks: {
-            linkedin: 'https://linkedin.com/in/miguelvieira',
-            instagram: 'https://instagram.com/miguelvieira',
-            website: 'https://miguelvieira.pt'
-          },
-          skills: ['Direção', 'Cinematografia', 'Produção', 'Storytelling'],
-          featured: true,
-          active: true,
-          order: 1,
-          createdAt: '2024-01-01T10:00:00Z',
-          updatedAt: '2024-01-01T10:00:00Z',
-        },
-        {
-          id: '2',
-          name: 'Ana Costa',
-          role: 'Creative Director',
-          bio: 'Especialista em narrativa visual e design, Ana traz uma perspectiva única para cada projeto, garantindo que cada história seja contada de forma impactante.',
-          avatar: 'https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=400',
-          email: 'ana@mvstudio.pt',
-          socialLinks: {
-            linkedin: 'https://linkedin.com/in/anacosta',
-            behance: 'https://behance.net/anacosta',
-            instagram: 'https://instagram.com/anacosta'
-          },
-          skills: ['Design', 'Storytelling', 'Art Direction', 'Motion Graphics'],
-          featured: true,
-          active: true,
-          order: 2,
-          createdAt: '2024-01-05T10:00:00Z',
-          updatedAt: '2024-01-05T10:00:00Z',
-        },
-        {
-          id: '3',
-          name: 'João Silva',
-          role: 'Editor & Colorist',
-          bio: 'Especialista em pós-produção com foco em color grading e edição narrativa. João transforma material bruto em obras cinematográficas.',
-          avatar: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400',
-          email: 'joao@mvstudio.pt',
-          socialLinks: {
-            linkedin: 'https://linkedin.com/in/joaosilva',
-            instagram: 'https://instagram.com/joaosilva'
-          },
-          skills: ['Edição', 'Color Grading', 'Sound Design', 'VFX'],
-          featured: false,
-          active: true,
-          order: 3,
-          createdAt: '2024-01-10T10:00:00Z',
-          updatedAt: '2024-01-10T10:00:00Z',
-        },
-      ];
-      setTeamMembers(mockTeamMembers);
-      setFilteredMembers(mockTeamMembers);
-      setLoading(false);
-    }, 1000);
-  }, []);
-
-  // Filtrar membros
+  // Filtrar membros baseado na pesquisa
   useEffect(() => {
     let filtered = teamMembers;
 
@@ -121,12 +42,14 @@ const TeamManager: React.FC = () => {
       filtered = filtered.filter(member =>
         member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         member.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        member.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase()))
+        (member.skills && member.skills.some(skill => skill.toLowerCase().includes(searchTerm.toLowerCase())))
       );
     }
 
     setFilteredMembers(filtered);
   }, [teamMembers, searchTerm]);
+
+
 
   const handleToggleActive = async (id: string) => {
     try {
@@ -379,6 +302,87 @@ const TeamManager: React.FC = () => {
               Adicionar Primeiro Membro
             </button>
           )}
+        </div>
+      )}
+
+      {/* Modal de Edição */}
+      {editingMember && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white rounded-lg p-6 w-full max-w-md">
+            <h3 className="text-lg font-semibold mb-4">Editar Membro da Equipa</h3>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Nome</label>
+                <input
+                  type="text"
+                  value={editingMember.name}
+                  onChange={(e) => setEditingMember({...editingMember, name: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Cargo</label>
+                <input
+                  type="text"
+                  value={editingMember.role}
+                  onChange={(e) => setEditingMember({...editingMember, role: e.target.value})}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Bio</label>
+                <textarea
+                  value={editingMember.bio}
+                  onChange={(e) => setEditingMember({...editingMember, bio: e.target.value})}
+                  rows={3}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">Avatar URL</label>
+                <input
+                  type="url"
+                  value={editingMember.avatar.url}
+                  onChange={(e) => setEditingMember({
+                    ...editingMember,
+                    avatar: {
+                      ...editingMember.avatar,
+                      url: e.target.value,
+                      thumbnailUrl: e.target.value
+                    }
+                  })}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500"
+                />
+              </div>
+            </div>
+
+            <div className="flex gap-3 mt-6">
+              <button
+                onClick={() => setEditingMember(null)}
+                className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+              >
+                Cancelar
+              </button>
+              <button
+                onClick={async () => {
+                  try {
+                    await updateTeamMember(editingMember.id, editingMember);
+                    setEditingMember(null);
+                  } catch (error) {
+                    console.error('Erro ao atualizar membro:', error);
+                    alert('Erro ao atualizar membro. Tente novamente.');
+                  }
+                }}
+                className="flex-1 px-4 py-2 bg-stone-600 text-white rounded-lg hover:bg-stone-700 transition-colors"
+              >
+                Salvar
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>
