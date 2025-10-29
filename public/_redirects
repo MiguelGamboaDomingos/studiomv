@@ -1,0 +1,25 @@
+# Netlify redirects for SPA (Single Page Application)
+# This ensures all routes are handled by React Router
+
+# Redirect all routes to index.html for client-side routing
+/*    /index.html   200
+
+# API routes (if any) - keep these before the catch-all
+/api/*  /api/:splat  200
+
+# Admin routes
+/admin  /index.html  200
+/admin/*  /index.html  200
+
+# Main routes
+/portfolio  /index.html  200
+/services  /index.html  200
+/catalogo  /index.html  200
+/about  /index.html  200
+/contact  /index.html  200
+
+# Legacy redirects (if needed)
+/home  /  301
+/services-page  /services  301
+/about-page  /about  301
+/contact-page  /contact  301

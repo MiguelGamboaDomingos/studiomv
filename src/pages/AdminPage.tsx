@@ -14,7 +14,7 @@ import {
   Star,
   Mail
 } from 'lucide-react';
-import AdminDashboard from '../components/admin/AdminDashboard';
+import Dashboard from '../components/admin/Dashboard';
 import ProjectsManagerFirebase from '../components/admin/ProjectsManagerFirebase';
 import ServicesManager from '../components/admin/ServicesManager';
 import TeamManager from '../components/admin/TeamManager';
@@ -74,7 +74,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
   const renderContent = () => {
     switch (activeSection) {
       case 'dashboard':
-        return <AdminDashboard />;
+        return <Dashboard />;
       case 'projects':
         return <ProjectsManagerFirebase />;
       case 'services':
@@ -94,7 +94,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
       case 'test':
         return <TestButton />;
       default:
-        return <AdminDashboard />;
+        return <Dashboard />;
     }
   };
 

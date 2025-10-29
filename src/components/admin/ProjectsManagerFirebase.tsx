@@ -18,7 +18,7 @@ import {
 } from 'lucide-react';
 import { Project, ProjectMedia } from '../../types';
 import { useProjects } from '../../hooks/useFirebase';
-import MediaUploader from './MediaUploader';
+import MediaLinkUploader from './MediaLinkUploader';
 
 const ProjectsManagerFirebase: React.FC = () => {
   const { 
@@ -112,6 +112,28 @@ const ProjectsManagerFirebase: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Validação obrigatória de mídia
+    if (formData.images.length === 0 && formData.videos.length === 0) {
+      alert('É obrigatório adicionar pelo menos uma imagem ou vídeo ao projeto.');
+      return;
+    }
+
+    // Validação de campos obrigatórios
+    if (!formData.title.trim()) {
+      alert('O título do projeto é obrigatório.');
+      return;
+    }
+
+    if (!formData.description.trim()) {
+      alert('A descrição do projeto é obrigatória.');
+      return;
+    }
+
+    if (!formData.category.trim()) {
+      alert('A categoria do projeto é obrigatória.');
+      return;
+    }
+
     try {
       // Preparar dados do projeto
       const projectData = {
@@ -141,6 +163,7 @@ const ProjectsManagerFirebase: React.FC = () => {
       });
     } catch (error) {
       console.error('Erro ao salvar projeto:', error);
+      alert('Erro ao salvar projeto. Tente novamente.');
     }
   };
 
@@ -516,21 +539,23 @@ const ProjectsManagerFirebase: React.FC = () => {
 
               <div>
                 <label className="block text-sm font-medium text-stone-900 mb-2">
-                  Fotos e Vídeos
+                  Fotos e Vídeos *
                 </label>
                 <p className="text-sm text-stone-600 mb-4">
-                  Adicione até 6 fotos e 2 vídeos para este projeto. A primeira imagem será usada como thumbnail principal.
+                  <strong>Obrigatório:</strong> Adicione pelo menos uma imagem ou vídeo. Use apenas links externos (YouTube, Google Drive, Dropbox, etc.). Máximo: 6 fotos e 2 vídeos.
                 </p>
-                <MediaUploader
-                  projectId={editingProject?.id}
+                <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-3 mb-4">
+                  <p className="text-sm text-yellow-800">
+                    <strong>Importante:</strong> Não é possível fazer upload direto. Use links de plataformas como YouTube, Google Drive, Dropbox ou OneDrive.
+                  </p>
+                </div>
+                <MediaLinkUploader
                   images={formData.images}
                   videos={formData.videos}
                   onImagesChange={(images) => setFormData(prev => ({ ...prev, images }))}
                   onVideosChange={(videos) => setFormData(prev => ({ ...prev, videos }))}
                   maxImages={6}
                   maxVideos={2}
-                  maxImageSizeMB={10}
-                  maxVideoSizeMB={100}
                 />
               </div>
 
