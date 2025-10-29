@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { useScrollAnimation } from '../hooks/useParallax';
+import { useScrollAnimation as useParallaxScrollAnimation } from '../hooks/useParallax';
 import { ParallaxElement, ParallaxLayers } from './HomeParallax';
 import DramaticTransitions, { TypewriterEffect } from './DramaticTransitions';
 import { usePublicSettings } from '../hooks/usePublicData';
@@ -60,7 +60,7 @@ const useSplineAutoClick = (splineRef: React.RefObject<any>) => {
 const Hero: React.FC = () => {
   const { settings } = usePublicSettings();
   const splineRef = useRef<any>(null);
-  const { elementRef: heroRef } = useScrollAnimation(0.1);
+  const { elementRef: heroRef } = useParallaxScrollAnimation(0.1);
   const [isHoveringTitle, setIsHoveringTitle] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
