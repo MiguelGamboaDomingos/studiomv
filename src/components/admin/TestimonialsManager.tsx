@@ -1,95 +1,27 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  Plus, 
-  Search, 
-  Edit, 
-  Trash2, 
-  Eye, 
+import {
+  Plus,
+  Search,
+  Edit,
+  Trash2,
+  Eye,
   EyeOff,
   Star,
   User,
   Building,
   Quote
 } from 'lucide-react';
-
-interface Testimonial {
-  id: string;
-  clientName: string;
-  clientRole: string;
-  clientCompany: string;
-  clientAvatar?: string;
-  content: string;
-  rating: number;
-  featured: boolean;
-  published: boolean;
-  order: number;
-  projectId?: string;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Testimonial } from '../../types';
+import { useTestimonials } from '../../hooks/useFirebase';
 
 const TestimonialsManager: React.FC = () => {
-  const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const { testimonials, loading, error, createTestimonial, updateTestimonial, deleteTestimonial } = useTestimonials();
   const [filteredTestimonials, setFilteredTestimonials] = useState<Testimonial[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [showForm, setShowForm] = useState(false);
   const [editingTestimonial, setEditingTestimonial] = useState<Testimonial | null>(null);
-  const [loading, setLoading] = useState(true);
 
-  // Simular carregamento de dados
-  useEffect(() => {
-    setTimeout(() => {
-      const mockTestimonials: Testimonial[] = [
-        {
-          id: '1',
-          clientName: 'Carlos Mendes',
-          clientRole: 'CEO',
-          clientCompany: 'TechCorp Solutions',
-          clientAvatar: 'https://images.pexels.com/photos/2182970/pexels-photo-2182970.jpeg?auto=compress&cs=tinysrgb&w=400',
-          content: 'O MV Studio superou todas as nossas expectativas. O vídeo corporativo que criaram capturou perfeitamente a essência da nossa empresa e ajudou-nos a comunicar a nossa visão de forma clara e impactante.',
-          rating: 5,
-          featured: true,
-          published: true,
-          order: 1,
-          projectId: '1',
-          createdAt: '2024-01-20T10:00:00Z',
-          updatedAt: '2024-01-20T10:00:00Z',
-        },
-        {
-          id: '2',
-          clientName: 'Maria Silva',
-          clientRole: 'Noiva',
-          clientCompany: '',
-          clientAvatar: 'https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=400',
-          content: 'O nosso vídeo de casamento ficou absolutamente perfeito! Cada momento foi capturado com uma sensibilidade e qualidade cinematográfica incrível. Recomendamos vivamente o MV Studio.',
-          rating: 5,
-          featured: true,
-          published: true,
-          order: 2,
-          projectId: '2',
-          createdAt: '2024-02-15T14:30:00Z',
-          updatedAt: '2024-02-15T14:30:00Z',
-        },
-        {
-          id: '3',
-          clientName: 'Ana Costa',
-          clientRole: 'Marketing Director',
-          clientCompany: 'InnovateTech',
-          content: 'Trabalhar com o MV Studio foi uma experiência fantástica. A equipa é profissional, criativa e entrega sempre resultados excepcionais. O nosso vídeo promocional teve um impacto tremendo.',
-          rating: 5,
-          featured: false,
-          published: true,
-          order: 3,
-          projectId: '3',
-          createdAt: '2024-03-01T16:45:00Z',
-          updatedAt: '2024-03-01T16:45:00Z',
-        },
-      ];
-      setTestimonials(mockTestimonials);
-      setFilteredTestimonials(mockTestimonials);
-      setLoading(false);
-    }, 1000);
-  }, []);
+
 
   // Filtrar testemunhos
   useEffect(() => {

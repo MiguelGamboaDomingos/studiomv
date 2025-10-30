@@ -2,13 +2,14 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Play, Circle } from 'lucide-react';
 import { usePublicFeaturedProjects, usePublicSettings } from '../hooks/usePublicData';
 import { Project as ProjectType } from '../types';
-import VideoRenderer from './VideoRenderer';
+import VideoModal from './VideoModal';
 
 const ProjectCarousel: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const carouselRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
+  const [selectedVideo, setSelectedVideo] = useState<{ url: string; title: string; description?: string } | null>(null);
 
   const { projects: featuredProjects, loading } = usePublicFeaturedProjects();
   const { settings } = usePublicSettings();
@@ -357,27 +358,39 @@ const ProjectCarousel: React.FC = () => {
                     }}
                   >
                     <div className="relative bg-gray-900 rounded-xl overflow-hidden shadow-2xl h-[520px]">
-                      {/* Renderizar vídeo se disponível, senão imagem */}
-                      {project.videos && project.videos.length > 0 ? (
-                        <VideoRenderer
-                          url={project.videos[0].url}
-                          title={project.title}
-                          thumbnail={project.images?.[0]?.url}
-                          className="w-full h-full"
-                          autoPlay={false}
-                          muted={true}
-                          controls={false}
-                          showPlayButton={true}
-                        />
-                      ) : (
+                      {/* Renderizar thumbnail com botão de play para vídeos */}
+                      <div className="relative w-full h-full">
                         <img
-                          src={project.images?.[0]?.url || 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1'}
+                          src={project.videos && project.videos.length > 0
+                            ? (project.images?.[0]?.url || project.videos[0].thumbnailUrl || 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1')
+                            : (project.images?.[0]?.url || 'https://images.pexels.com/photos/1444442/pexels-photo-1444442.jpeg?auto=compress&cs=tinysrgb&w=600&h=800&dpr=1')
+                          }
                           alt={project.title}
                           className="w-full h-full object-cover transition-transform duration-[750ms] group-hover:scale-110"
                           draggable={false}
                           style={{ transitionTimingFunction: 'cubic-bezier(0.22, 1, 0.36, 1)' }}
                         />
-                      )}
+
+                        {/* Botão de play apenas no hover para vídeos */}
+                        {project.videos && project.videos.length > 0 && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setSelectedVideo({
+                                  url: project.videos[0].url,
+                                  title: project.title,
+                                  description: project.description
+                                });
+                              }}
+                              className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center hover:bg-white/30 hover:scale-110 transition-all duration-300"
+                              aria-label={`Reproduzir vídeo: ${project.title}`}
+                            >
+                              <Play className="w-6 h-6 text-white ml-1" />
+                            </button>
+                          </div>
+                        )}
+                      </div>
 
                       {/* Efeito de Vidro Elegante (realce no cartão central) */}
                       <div
@@ -472,6 +485,17 @@ const ProjectCarousel: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {/* Modal de Vídeo */}
+      {selectedVideo && (
+        <VideoModal
+          isOpen={!!selectedVideo}
+          onClose={() => setSelectedVideo(null)}
+          videoUrl={selectedVideo.url}
+          title={selectedVideo.title}
+          description={selectedVideo.description}
+        />
+      )}
     </section>
   );
 };
