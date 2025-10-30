@@ -316,83 +316,45 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
 
       {/* Link Mode - Sempre ativo */}
       <div className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-stone-900 mb-2">
-              Título do Vídeo
-            </label>
-            <input
-              type="text"
-              value={videoTitle}
-              onChange={(e) => setVideoTitle(e.target.value)}
-              placeholder="Digite o título do vídeo..."
-              className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-stone-900 mb-2">
-              Link do Vídeo
-            </label>
-            <input
-              type="url"
-              value={videoLink}
-              onChange={(e) => setVideoLink(e.target.value)}
-              placeholder="https://youtube.com/watch?v=... ou link direto"
-              className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
-            />
-            <p className="text-xs text-stone-500 mt-1">
-              Suporta YouTube, Vimeo ou links diretos para ficheiros de vídeo
-            </p>
-          </div>
-
-          <button
-            onClick={handleLinkSubmit}
-            disabled={!videoLink.trim() || !videoTitle.trim()}
-            className="w-full bg-stone-800 text-white py-2 px-4 rounded-lg hover:bg-stone-700 disabled:bg-stone-300 disabled:cursor-not-allowed transition-colors"
-          >
-            Adicionar Vídeo
-          </button>
+        <div>
+          <label className="block text-sm font-medium text-stone-900 mb-2">
+            Título do Vídeo
+          </label>
+          <input
+            type="text"
+            value={videoTitle}
+            onChange={(e) => setVideoTitle(e.target.value)}
+            placeholder="Digite o título do vídeo..."
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+          />
         </div>
-      )}
 
-      {/* Upload Progress */}
-      {uploadProgress && (
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <div className="flex items-center gap-3">
-            {uploadProgress.status === 'uploading' && (
-              <Loader className="w-5 h-5 text-blue-600 animate-spin" />
-            )}
-            {uploadProgress.status === 'completed' && (
-              <CheckCircle className="w-5 h-5 text-green-600" />
-            )}
-            {uploadProgress.status === 'error' && (
-              <AlertCircle className="w-5 h-5 text-red-600" />
-            )}
-            
-            <div className="flex-1">
-              <p className="text-sm font-medium text-stone-900">
-                {uploadProgress.status === 'uploading' && 'A carregar vídeo...'}
-                {uploadProgress.status === 'completed' && 'Upload concluído!'}
-                {uploadProgress.status === 'error' && 'Erro no upload'}
-              </p>
-              
-              {uploadProgress.status === 'uploading' && (
-                <div className="mt-2">
-                  <div className="bg-blue-200 rounded-full h-2">
-                    <div
-                      className="bg-blue-600 h-2 rounded-full transition-all duration-300"
-                      style={{ width: `${uploadProgress.progress}%` }}
-                    />
-                  </div>
-                  <p className="text-xs text-blue-600 mt-1">
-                    {Math.round(uploadProgress.progress)}%
-                  </p>
-                </div>
-              )}
-            </div>
-          </div>
+        <div>
+          <label className="block text-sm font-medium text-stone-900 mb-2">
+            Link do Vídeo
+          </label>
+          <input
+            type="url"
+            value={videoLink}
+            onChange={(e) => setVideoLink(e.target.value)}
+            placeholder="https://youtube.com/watch?v=... ou link direto"
+            className="w-full px-3 py-2 border border-stone-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-stone-500 focus:border-transparent"
+          />
+          <p className="text-xs text-stone-500 mt-1">
+            Suporta YouTube, Vimeo ou links diretos para ficheiros de vídeo
+          </p>
         </div>
-      )}
+
+        <button
+          onClick={handleLinkSubmit}
+          disabled={!videoLink.trim() || !videoTitle.trim()}
+          className="w-full bg-stone-800 text-white py-2 px-4 rounded-lg hover:bg-stone-700 disabled:bg-stone-300 disabled:cursor-not-allowed transition-colors"
+        >
+          Adicionar Vídeo
+        </button>
+      </div>
+
+
 
       {/* Error Message */}
       {error && (
