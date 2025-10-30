@@ -392,6 +392,7 @@ const VideoUploader: React.FC<VideoUploaderProps> = ({
             </div>
           </div>
         </div>
+      )}
 
       {/* Error Message */}
       {error && (

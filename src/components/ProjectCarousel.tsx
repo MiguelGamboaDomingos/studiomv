@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { ChevronLeft, ChevronRight, Play, Circle } from 'lucide-react';
-import { usePublicProjects, usePublicSettings } from '../hooks/usePublicData';
+import { usePublicFeaturedProjects, usePublicSettings } from '../hooks/usePublicData';
 import { Project as ProjectType } from '../types';
 import VideoRenderer from './VideoRenderer';
 
@@ -10,15 +10,12 @@ const ProjectCarousel: React.FC = () => {
   const carouselRef = useRef<HTMLDivElement>(null);
   const sectionRef = useRef<HTMLElement>(null);
 
-  const { projects: firebaseProjects, loading } = usePublicProjects();
+  const { projects: featuredProjects, loading } = usePublicFeaturedProjects();
   const { settings } = usePublicSettings();
 
   // Títulos da seção (do Firebase ou padrão)
   const portfolioTitle = settings?.sectionTitles?.portfolio || 'Nosso Portfólio';
   const portfolioDescription = settings?.sectionDescriptions?.portfolio || 'Projetos que definem nossa excelência criativa';
-
-  // Filtrar apenas projetos em destaque
-  const featuredProjects = firebaseProjects.filter(project => project.featured && project.published);
 
   // Projetos padrão se não houver projetos do Firebase
   const defaultProjects = [

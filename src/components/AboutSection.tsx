@@ -56,11 +56,10 @@ const AboutSection: React.FC = () => {
           </ImmersiveTransitions>
         </div>
 
-        {/* Container com margens laterais adequadas */}
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
-            {/* Text Content */}
-            <div className="space-y-8">
+        {/* Content Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+          {/* Text Content */}
+          <div className="space-y-8">
 
             <ImmersiveTransitions direction="up" delay={600} duration={1000}>
               <div className="space-y-6 text-gray-300 text-lg leading-relaxed">
@@ -128,7 +127,6 @@ const AboutSection: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
       </div>
     </section>
   );
