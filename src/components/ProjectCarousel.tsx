@@ -367,6 +367,7 @@ const ProjectCarousel: React.FC = () => {
                           autoPlay={false}
                           muted={true}
                           controls={false}
+                          showPlayButton={true}
                         />
                       ) : (
                         <img

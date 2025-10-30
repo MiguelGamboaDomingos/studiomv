@@ -10,6 +10,7 @@ interface VideoRendererProps {
   muted?: boolean;
   controls?: boolean;
   loop?: boolean;
+  showPlayButton?: boolean;
   onPlay?: () => void;
   onPause?: () => void;
   onError?: () => void;
@@ -54,24 +55,31 @@ const getVideoType = (url: string) => {
 };
 
 // Função para converter URL do YouTube para embed
-const getYouTubeEmbedUrl = (url: string) => {
+const getYouTubeEmbedUrl = (url: string, autoPlay: boolean = false, muted: boolean = true) => {
   let videoId = '';
-  
+
   if (url.includes('youtube.com/watch')) {
     const urlParams = new URLSearchParams(url.split('?')[1]);
     videoId = urlParams.get('v') || '';
   } else if (url.includes('youtu.be/')) {
     videoId = url.split('youtu.be/')[1].split('?')[0];
   }
-  
-  return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=0&mute=1&controls=1` : '';
+
+  const autoPlayParam = autoPlay ? '1' : '0';
+  const mutedParam = muted ? '1' : '0';
+
+  return videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=${autoPlayParam}&mute=${mutedParam}&controls=1&rel=0&modestbranding=1` : '';
 };
 
 // Função para converter URL do Vimeo para embed
-const getVimeoEmbedUrl = (url: string) => {
+const getVimeoEmbedUrl = (url: string, autoPlay: boolean = false, muted: boolean = true) => {
   const match = url.match(/vimeo\.com\/(\d+)/);
   const videoId = match ? match[1] : '';
-  return videoId ? `https://player.vimeo.com/video/${videoId}?autoplay=0&muted=1` : '';
+
+  const autoPlayParam = autoPlay ? '1' : '0';
+  const mutedParam = muted ? '1' : '0';
+
+  return videoId ? `https://player.vimeo.com/video/${videoId}?autoplay=${autoPlayParam}&muted=${mutedParam}&controls=1` : '';
 };
 
 // Função para converter Google Drive para visualização direta
@@ -90,6 +98,7 @@ const VideoRenderer: React.FC<VideoRendererProps> = ({
   muted = true,
   controls = true,
   loop = false,
+  showPlayButton = false,
   onPlay,
   onPause,
   onError
@@ -177,7 +186,7 @@ const VideoRenderer: React.FC<VideoRendererProps> = ({
 
   // Renderizar YouTube
   if (videoType === 'youtube') {
-    const embedUrl = getYouTubeEmbedUrl(url);
+    const embedUrl = getYouTubeEmbedUrl(url, autoPlay, muted);
     
     if (!embedUrl) {
       return (
@@ -210,13 +219,30 @@ const VideoRenderer: React.FC<VideoRendererProps> = ({
           allowFullScreen
           onError={handleError}
         />
+
+        {/* Play Button Overlay para YouTube */}
+        {showPlayButton && !autoPlay && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors cursor-pointer group"
+               onClick={() => {
+                 // Para YouTube/Vimeo, precisamos recarregar com autoplay
+                 const newEmbedUrl = getYouTubeEmbedUrl(url, true, muted);
+                 if (iframeRef.current) {
+                   iframeRef.current.src = newEmbedUrl;
+                 }
+                 handlePlay();
+               }}>
+            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
+              <Play className="w-6 h-6 text-white ml-1" />
+            </div>
+          </div>
+        )}
       </div>
     );
   }
 
   // Renderizar Vimeo
   if (videoType === 'vimeo') {
-    const embedUrl = getVimeoEmbedUrl(url);
+    const embedUrl = getVimeoEmbedUrl(url, autoPlay, muted);
     
     if (!embedUrl) {
       return (
@@ -240,6 +266,7 @@ const VideoRenderer: React.FC<VideoRendererProps> = ({
     return (
       <div className={`relative bg-black rounded overflow-hidden ${className}`}>
         <iframe
+          ref={iframeRef}
           src={embedUrl}
           title={title}
           className="w-full h-full"
@@ -248,6 +275,23 @@ const VideoRenderer: React.FC<VideoRendererProps> = ({
           allowFullScreen
           onError={handleError}
         />
+
+        {/* Play Button Overlay para Vimeo */}
+        {showPlayButton && !autoPlay && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/30 transition-colors cursor-pointer group"
+               onClick={() => {
+                 // Para Vimeo, precisamos recarregar com autoplay
+                 const newEmbedUrl = getVimeoEmbedUrl(url, true, muted);
+                 if (iframeRef.current) {
+                   iframeRef.current.src = newEmbedUrl;
+                 }
+                 handlePlay();
+               }}>
+            <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm border-2 border-white/40 flex items-center justify-center group-hover:bg-white/30 group-hover:scale-110 transition-all duration-300">
+              <Play className="w-6 h-6 text-white ml-1" />
+            </div>
+          </div>
+        )}
       </div>
     );
   }

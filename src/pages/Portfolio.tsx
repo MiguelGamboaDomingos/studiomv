@@ -148,6 +148,7 @@ const Portfolio: React.FC = () => {
                       autoPlay={false}
                       muted={true}
                       controls={false}
+                      showPlayButton={true}
                     />
                   ) : project.thumbnail ? (
                     <img

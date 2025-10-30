@@ -197,7 +197,7 @@ const ShowreelSection: React.FC = () => {
               url={showreelVideoUrl}
               title="Showreel MV Studio"
               className="w-full h-full rounded-3xl"
-              autoPlay={false}
+              autoPlay={isInView}
               muted={isMuted}
               controls={true}
               loop={true}
